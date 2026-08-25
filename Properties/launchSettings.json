@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NotiRelay (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "NotiRelay (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
