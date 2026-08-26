@@ -31,6 +31,8 @@ namespace NotiRelay
 
 		private async void RootGrid_Loaded(object sender, RoutedEventArgs e)
 		{
+			await LoadSourceApplicationsAsync();
+
 			if (_notificationListener.GetAccessStatus() ==
 				UserNotificationListenerAccessStatus.Allowed)
 			{
@@ -150,6 +152,7 @@ namespace NotiRelay
 
 				var baselineNotifications = await _notificationListener.GetNotificationsAsync(
 					NotificationKinds.Toast);
+				await DiscoverSourceApplicationsAsync(baselineNotifications);
 				var baselineSkippedCount = AddNotificationsToBaseline(baselineNotifications);
 				var baselineCount = _knownNotifications.Count;
 
@@ -160,6 +163,7 @@ namespace NotiRelay
 
 				var currentNotifications = await _notificationListener.GetNotificationsAsync(
 					NotificationKinds.Toast);
+				await DiscoverSourceApplicationsAsync(currentNotifications);
 				var (newCount, currentSkippedCount) = CaptureNewNotifications(currentNotifications);
 
 				var skippedCount = baselineSkippedCount + currentSkippedCount;
@@ -214,6 +218,7 @@ namespace NotiRelay
 
 				var currentNotifications = await _notificationListener.GetNotificationsAsync(
 					NotificationKinds.Toast);
+				await DiscoverSourceApplicationsAsync(currentNotifications);
 				var (newCount, skippedCount) = CaptureNewNotifications(currentNotifications);
 
 				StatusText.Text = skippedCount == 0
@@ -299,15 +304,7 @@ namespace NotiRelay
 		private static CapturedNotification CreateCapturedNotification(
 			UserNotification userNotification)
 		{
-			var sourceApplicationId = userNotification.AppInfo.AppUserModelId;
-			var sourceApplicationName = userNotification.AppInfo.DisplayInfo.DisplayName;
-
-			if (string.IsNullOrWhiteSpace(sourceApplicationName))
-			{
-				sourceApplicationName = string.IsNullOrWhiteSpace(sourceApplicationId)
-					? "Unknown application"
-					: sourceApplicationId;
-			}
+			var sourceApplication = CreateSourceApplicationDescriptor(userNotification);
 
 			var toastBinding = userNotification.Notification.Visual.GetBinding(
 				KnownNotificationBindings.ToastGeneric);
@@ -323,8 +320,8 @@ namespace NotiRelay
 						.Where(text => !string.IsNullOrWhiteSpace(text)));
 
 			return new CapturedNotification(
-				sourceApplicationId,
-				sourceApplicationName,
+				sourceApplication.ApplicationUserModelId,
+				sourceApplication.DisplayName,
 				title,
 				body,
 				userNotification.CreationTime,
@@ -340,6 +337,22 @@ namespace NotiRelay
 				userNotification.CreationTime);
 		}
 
+		private static SourceApplicationDescriptor CreateSourceApplicationDescriptor(
+			UserNotification userNotification)
+		{
+			var applicationUserModelId = userNotification.AppInfo.AppUserModelId;
+			var displayName = userNotification.AppInfo.DisplayInfo.DisplayName;
+
+			if (string.IsNullOrWhiteSpace(displayName))
+			{
+				displayName = string.IsNullOrWhiteSpace(applicationUserModelId)
+					? "Unknown application"
+					: applicationUserModelId;
+			}
+
+			return new SourceApplicationDescriptor(applicationUserModelId, displayName);
+		}
+
 		private static NotificationIdentity CreateNotificationIdentity(
 			CapturedNotification capturedNotification)
 		{
@@ -353,5 +366,9 @@ namespace NotiRelay
 			string SourceApplicationId,
 			uint WindowsNotificationId,
 			DateTimeOffset CreatedAt);
+
+		private readonly record struct SourceApplicationDescriptor(
+			string ApplicationUserModelId,
+			string DisplayName);
 	}
 }

@@ -9,7 +9,7 @@ separate product version for every implementation step.
 | Slice | Status |
 | --- | --- |
 | Windows notification capture | Complete |
-| Source Application allowlist | Planned |
+| Source Application allowlist | Complete |
 | Bark direct delivery | Planned |
 | Configuration and credential persistence | Planned |
 | Tray lifecycle | Planned |
