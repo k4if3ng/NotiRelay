@@ -1,0 +1,3 @@
+# Use compile-time destination adapters
+
+Destination Types will be implemented as adapters compiled and shipped with NotiRelay rather than dynamically loaded third-party DLLs. An adapter validates its own configuration, constructs provider requests, and classifies provider responses; it does not own filtering, routing, persistence, retries, UI, or application lifecycle. This keeps the extension boundary type-safe and testable while avoiding plugin ABI, dependency isolation, arbitrary-code, trimming, and Microsoft Store packaging problems; a runtime plugin protocol can be reconsidered only after a concrete third-party extension need appears.
