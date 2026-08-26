@@ -8,7 +8,7 @@ separate product version for every implementation step.
 
 | Slice | Status |
 | --- | --- |
-| Windows notification capture | In progress |
+| Windows notification capture | Complete |
 | Source Application allowlist | Planned |
 | Bark direct delivery | Planned |
 | Configuration and credential persistence | Planned |
