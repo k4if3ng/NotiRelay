@@ -25,7 +25,8 @@ The implementation loop is:
 1. Implement all tightly related checkpoints in the slice.
 2. Inspect the resulting diff and keep unrelated work out of the slice.
 3. Run the applicable automated checks.
-4. Request interactive validation only when real Windows state is required.
+4. Validate real Windows behavior with Computer Use when the target window and
+   scenario are accessible; otherwise request user validation.
 5. Fix failures and repeat only the affected checks.
 6. Update the milestone state and validation log.
 7. Create one local commit for the complete slice.
@@ -46,11 +47,23 @@ Use the smallest check that proves the relevant technical property:
 Do not create low-value tests merely to claim that a UI-only change has tests.
 Do not report a check as passed unless it was actually run.
 
-## Interactive Validation
+## Runtime Validation
 
-Interactive validation is required when correctness depends on real desktop
-state that source inspection, compilation, or ordinary automated tests cannot
-prove. Examples include:
+Runtime validation is required when correctness depends on real desktop state
+that source inspection, compilation, or ordinary automated tests cannot prove.
+It may be completed in either of these ways:
+
+1. **Computer Use validation** — preferred when the running target window and
+   complete acceptance scenario are accessible to automation.
+2. **User validation** — used when the scenario depends on a permission,
+   security, or privacy prompt; requires an unavailable external event; or the
+   target application does not expose an automatable window.
+
+The two methods are equivalent only when they exercise the same acceptance
+scenario and inspect the same observable result. Computer Use must not act on
+Windows permission, security, or privacy prompts.
+
+Examples of behavior that requires runtime validation include:
 
 - Windows permission prompts and privacy settings;
 - real Notification Center contents and notification-change events;
@@ -61,11 +74,11 @@ prove. Examples include:
 - real-device or architecture compatibility.
 
 Documentation, pure models, behavior-preserving refactors, and sufficiently
-tested pure logic normally do not require interactive validation.
+tested pure logic normally do not require runtime validation.
 
 Validation records must not contain credentials or notification content. Record
-only the date, Windows version and architecture, scenarios checked, result, and
-relevant known limitations.
+only the date, Windows version and architecture, validation method, scenarios
+checked, result, and relevant known limitations.
 
 ## Git
 

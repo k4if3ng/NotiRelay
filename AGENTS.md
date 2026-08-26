@@ -36,8 +36,10 @@ notifications to external destinations.
   boundaries.
 - For code slices, run `dotnet build NotiRelay.slnx` before validation or commit.
 - For documentation-only slices, inspect the diff but do not build.
-- Request interactive validation only for behavior that depends on real Windows
-  state, such as permissions, Notification Center, WinUI interaction, or tray
-  lifecycle.
+- Validate behavior that depends on real Windows state with Computer Use when
+  the target window and scenario are accessible; otherwise request user
+  validation. Never automate Windows permission, security, or privacy prompts.
+- Treat user validation and Computer Use validation as equivalent evidence when
+  they exercise the same acceptance scenario, and record which method was used.
 - After required checks pass, update milestone status and create one local commit
   for the slice. Do not push or rewrite Git history unless requested.
