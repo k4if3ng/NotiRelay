@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:models="using:NotiRelay.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tb="using:H.NotifyIcon"
     mc:Ignorable="d"
     Title="NotiRelay">
 
@@ -13,15 +14,45 @@
 		<MicaBackdrop />
 	</Window.SystemBackdrop>
 
-		<Grid
-			x:Name="RootGrid"
-			Margin="24"
-			RowSpacing="16"
-			Loaded="RootGrid_Loaded">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="*" />
+	<Grid
+		x:Name="RootGrid"
+		Margin="24"
+		RowSpacing="16"
+		Loaded="RootGrid_Loaded">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
+		<Grid.Resources>
+			<MenuFlyout x:Key="NotificationAreaContextMenu">
+				<MenuFlyoutItem
+					Text="Show NotiRelay"
+					Command="{x:Bind ShowMainWindowCommand}" />
+				<MenuFlyoutSeparator />
+				<MenuFlyoutItem
+					Text="Exit"
+					Command="{x:Bind ExitApplicationCommand}" />
+			</MenuFlyout>
+		</Grid.Resources>
+
+			<tb:TaskbarIcon
+				x:Name="NotificationAreaIcon"
+				Width="0"
+				Height="0"
+				ContextFlyout="{StaticResource NotificationAreaContextMenu}"
+				CustomName="NotiRelay"
+				LeftClickCommand="{x:Bind ShowMainWindowCommand}"
+				NoLeftClickDelay="True"
+				ToolTipText="NotiRelay">
+				<tb:TaskbarIcon.IconSource>
+					<tb:GeneratedIconSource
+						Text="N"
+						Background="#0067C0"
+						FontSize="72"
+						FontWeight="Bold"
+						Foreground="White" />
+				</tb:TaskbarIcon.IconSource>
+			</tb:TaskbarIcon>
 
 			<Grid
 				Grid.Row="0"

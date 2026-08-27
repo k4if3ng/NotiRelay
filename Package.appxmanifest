@@ -5,13 +5,14 @@
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  xmlns:uap5="http://schemas.microsoft.com/appx/manifest/uap/windows10/5"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap uap3 rescap">
+  IgnorableNamespaces="uap uap3 uap5 rescap">
 
   <Identity
     Name="82b780c3-1e89-4b2b-b8eb-4201f8b1ed81"
     Publisher="CN=kaifeng"
-    Version="1.0.0.0" />
+    Version="0.1.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="82b780c3-1e89-4b2b-b8eb-4201f8b1ed81" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -43,6 +44,17 @@
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" />
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <uap5:Extension
+          Category="windows.startupTask"
+          Executable="NotiRelay.exe"
+          EntryPoint="Windows.FullTrustApplication">
+          <uap5:StartupTask
+            TaskId="NotiRelayStartupTask"
+            Enabled="false"
+            DisplayName="NotiRelay" />
+        </uap5:Extension>
+      </Extensions>
     </Application>
   </Applications>
 

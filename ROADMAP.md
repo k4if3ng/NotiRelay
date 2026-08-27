@@ -2,8 +2,8 @@
 
 ## Current Target
 
-The active target is the [v0.1.0 personal-use MVP](docs/milestones/v0.1.0.md).
-It is developed as a small number of complete development slices rather than a
+The [v0.1.0 personal-use MVP](docs/milestones/v0.1.0.md) is complete. It was
+developed as a small number of complete development slices rather than a
 separate product version for every implementation step.
 
 | Slice | Status |
@@ -12,8 +12,8 @@ separate product version for every implementation step.
 | Source Application allowlist | Complete |
 | Bark direct delivery | Complete |
 | Configuration and credential persistence | Complete |
-| Tray lifecycle | Planned |
-| MVP stabilization | Planned |
+| Tray lifecycle | Complete |
+| MVP stabilization | Complete |
 
 ## After the MVP
 

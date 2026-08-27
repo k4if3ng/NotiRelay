@@ -1,4 +1,5 @@
 using Microsoft.UI.Xaml;
+using NotiRelay.Infrastructure;
 using NotiRelay.Models;
 using System;
 using System.Collections.Generic;
@@ -13,18 +14,24 @@ namespace NotiRelay
 {
 	public sealed partial class MainWindow : Window
 	{
+		private const int MaximumDisplayedNotificationCount = 100;
+
 		private readonly UserNotificationListener _notificationListener =
 			UserNotificationListener.Current;
 		private readonly HashSet<NotificationIdentity> _knownNotifications = new();
 		private readonly SemaphoreSlim _synchronizationLock = new(1, 1);
 		private bool _isMonitoring;
 		private bool _isClosed;
+		private int _capturedNotificationCount;
 
 		public ObservableCollection<CapturedNotification> CapturedNotifications { get; } = new();
 
 		public MainWindow()
 		{
+			ShowMainWindowCommand = new RelayCommand(ShowAndActivate);
+			ExitApplicationCommand = new RelayCommand(ExitApplication);
 			InitializeComponent();
+			InitializeTrayLifecycle();
 			Closed += MainWindow_Closed;
 			UpdateAccessUi(_notificationListener.GetAccessStatus());
 		}
@@ -39,6 +46,8 @@ namespace NotiRelay
 			{
 				await StartMonitoringAsync();
 			}
+
+			await ShowStartupOnboardingAsync();
 		}
 
 		private async void RequestAccessButton_Click(object sender, RoutedEventArgs e)
@@ -149,6 +158,7 @@ namespace NotiRelay
 
 				StatusText.Text = "Establishing notification baseline...";
 				CapturedNotifications.Clear();
+				_capturedNotificationCount = 0;
 				_knownNotifications.Clear();
 
 				var baselineNotifications = await _notificationListener.GetNotificationsAsync(
@@ -227,9 +237,9 @@ namespace NotiRelay
 				await DeliverNotificationsAsync(newNotifications);
 
 				StatusText.Text = skippedCount == 0
-					? $"Monitoring. {CapturedNotifications.Count} captured this session; " +
+					? $"Monitoring. {_capturedNotificationCount} captured this session; " +
 						$"{newNotifications.Count} added by the latest synchronization."
-					: $"Monitoring. {CapturedNotifications.Count} captured this session; " +
+					: $"Monitoring. {_capturedNotificationCount} captured this session; " +
 						$"{newNotifications.Count} added; {skippedCount} could not be read.";
 			}
 			catch (Exception exception)
@@ -290,6 +300,12 @@ namespace NotiRelay
 				capturedNotification => capturedNotification.CreatedAt))
 			{
 				CapturedNotifications.Insert(0, capturedNotification);
+				_capturedNotificationCount++;
+
+				if (CapturedNotifications.Count > MaximumDisplayedNotificationCount)
+				{
+					CapturedNotifications.RemoveAt(CapturedNotifications.Count - 1);
+				}
 			}
 
 			return (newNotifications, skippedCount);
@@ -297,9 +313,14 @@ namespace NotiRelay
 
 		private void MainWindow_Closed(object sender, WindowEventArgs args)
 		{
-			_isClosed = true;
-			StopMonitoring();
-			_barkDestinationAdapter.Dispose();
+			if (!_isExiting)
+			{
+				args.Handled = true;
+				HideToNotificationArea();
+				return;
+			}
+
+			Shutdown();
 		}
 
 		private void StopMonitoring()
