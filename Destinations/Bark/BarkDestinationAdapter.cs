@@ -5,6 +5,7 @@ using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using NotiRelay.Services;
 
 namespace NotiRelay.Destinations.Bark
 {
@@ -25,10 +26,14 @@ namespace NotiRelay.Destinations.Bark
 			try
 			{
 				var endpoint = new Uri(destinationProfile.ServerBaseUri, "push");
-				var request = new BarkPushRequest(
-					destinationProfile.DeviceKey,
-					notificationEnvelope.Title,
-					notificationEnvelope.Body,
+					var suffix = "… [Truncated by NotiRelay]";
+					var title = TextTruncator.ToUtf8Bytes(notificationEnvelope.Title, 256, suffix);
+					var remainingBodyBytes = Math.Max(0, 3000 - System.Text.Encoding.UTF8.GetByteCount(title));
+					var body = TextTruncator.ToUtf8Bytes(notificationEnvelope.Body, remainingBodyBytes, suffix);
+					var request = new BarkPushRequest(
+						destinationProfile.DeviceKey,
+						title,
+						body,
 					"NotiRelay");
 				using var response = await _httpClient.PostAsJsonAsync(
 					endpoint,
@@ -37,8 +42,9 @@ namespace NotiRelay.Destinations.Bark
 
 				if (!response.IsSuccessStatusCode)
 				{
-					return DeliveryAttemptResult.Failure(
-						$"Bark returned HTTP {(int)response.StatusCode}.");
+						return DeliveryAttemptResult.Failure(
+							$"Bark returned HTTP {(int)response.StatusCode}.",
+							(int)response.StatusCode >= 500 || (int)response.StatusCode == 429);
 				}
 
 				var barkResponse = await response.Content.ReadFromJsonAsync<BarkPushResponse>(
@@ -46,8 +52,8 @@ namespace NotiRelay.Destinations.Bark
 
 				return barkResponse?.Code == 200
 					? DeliveryAttemptResult.Success("Bark accepted the Delivery.")
-					: DeliveryAttemptResult.Failure(
-						$"Bark returned application code {barkResponse?.Code ?? 0}.");
+						: DeliveryAttemptResult.Failure(
+							$"Bark returned application code {barkResponse?.Code ?? 0}.", false);
 			}
 			catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
 			{

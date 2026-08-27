@@ -36,7 +36,7 @@ namespace NotiRelay
 
 				var dialog = new ContentDialog
 				{
-					XamlRoot = RootGrid.XamlRoot,
+					XamlRoot = ShellRoot.XamlRoot,
 					Title = "Start NotiRelay when you sign in?",
 					Content =
 						"NotiRelay can start hidden in the notification area so it can " +
@@ -59,9 +59,9 @@ namespace NotiRelay
 					await ShowStartupUnavailableDialogAsync(resultingState);
 				}
 			}
-			catch (Exception exception)
+			catch (Exception)
 			{
-				StatusText.Text = $"Unable to configure startup: {exception.Message}";
+				// Startup configuration failure is non-fatal; Settings exposes the current state.
 			}
 			finally
 			{
@@ -84,7 +84,7 @@ namespace NotiRelay
 
 			var dialog = new ContentDialog
 			{
-				XamlRoot = RootGrid.XamlRoot,
+					XamlRoot = ShellRoot.XamlRoot,
 				Title = "Startup was not enabled",
 				Content = message,
 				CloseButtonText = "OK"

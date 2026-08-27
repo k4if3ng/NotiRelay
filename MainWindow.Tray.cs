@@ -53,10 +53,8 @@ namespace NotiRelay
 			}
 
 			_isShutdownComplete = true;
-			_isClosed = true;
-			StopMonitoring();
-			NotificationAreaIcon.Dispose();
-			_barkDestinationAdapter.Dispose();
+				NotificationAreaIcon.Dispose();
+				((App)Application.Current).Runtime.Dispose();
 		}
 	}
 }

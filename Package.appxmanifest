@@ -12,7 +12,7 @@
   <Identity
     Name="82b780c3-1e89-4b2b-b8eb-4201f8b1ed81"
     Publisher="CN=kaifeng"
-    Version="0.1.0.0" />
+    Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="82b780c3-1e89-4b2b-b8eb-4201f8b1ed81" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -23,8 +23,8 @@
   </Properties>
 
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.26226.0" />
-    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.26226.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.22621.0" MaxVersionTested="10.0.26226.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.22621.0" MaxVersionTested="10.0.26226.0" />
   </Dependencies>
 
   <Resources>

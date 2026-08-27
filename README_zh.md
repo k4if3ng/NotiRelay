@@ -6,26 +6,27 @@ NotiRelay 是一个 Windows 11 通知转发工具。它读取 Windows 通知中�
 
 ## 当前状态
 
-NotiRelay v0.1.0 是一个供个人使用的 MVP。它可以捕获明确启用的来源应用所产生的新 Windows 通知，并将通知转发到一个在本地配置的 Bark 目标配置。
+NotiRelay v1.0.0 可以捕获明确启用的来源应用所产生的新 Windows 通知，并持久化转发到 Bark、通用 Webhook 和 Telegram。
 
 MVP 重点包括：
 
 - 捕获新产生的 Windows 通知，同时避免转发启动前的通知积压；
 - 通过明确的来源应用允许列表决定哪些通知可以转发；
-- 将允许的通知转发到一个已配置的 Bark 目标；
+- 通过来源允许列表和包含/排除关键词过滤通知；
+- 将通知转发到 Bark、通用 Webhook 和 Telegram；
+- 通过 SQLite Outbox 在重启后继续重试临时失败的投递；
 - 在本地保存普通配置，并安全保存凭据；
 - 以通知区域应用的方式运行，并提供明确的退出行为。
 
-持久化重试、Telegram、通用 Webhook、高级过滤以及 Microsoft Store / WinGet 公开发布属于 MVP 之后的工作。
-
-MVP 使用尽力而为的直接投递方式：投递失败时会在本地显示错误，但不会将失败任务持久化，也不会在应用重启后恢复。
+投递语义为至少一次；远端已接收而本地尚未确认时发生崩溃，可能产生重复通知。
 
 ## 使用方法
 
 1. 启动打包后的应用，并在 Windows 询问时授予通知访问权限。
 2. 只启用需要转发新通知的来源应用。
-3. 输入 Bark 服务器地址和设备密钥，然后保存目标配置。
-4. 使用 **Send test** 验证 Bark 配置。
+3. 配置一个或多个 Bark、通用 Webhook 或 Telegram 目标。
+4. 可选：保存以分号分隔的包含/排除关键词。
+5. 使用 **Send test** 验证各目标配置。
 5. 关闭主窗口后，NotiRelay 会继续在通知区域中监听；通过通知区域菜单可以重新显示窗口或明确退出。
 
 设备密钥保存在 Windows 凭据管理器中，其他 MVP 配置保存在应用本地数据中。通知内容只在当前会话的内存中保留，界面最多显示最近 100 条已捕获通知。
@@ -53,6 +54,8 @@ dotnet build NotiRelay.slnx
 
 - [领域语言](CONTEXT.md)
 - [路线图](ROADMAP.md)
-- [当前 v0.1.0 里程碑](docs/milestones/v0.1.0.md)
+- [当前 v1.0.0 里程碑](docs/milestones/v1.0.0.md)
+- [隐私说明](docs/privacy.md)
+- [发布清单](docs/publishing.md)
 - [开发流程](docs/development-workflow.md)
 - [架构决策](docs/adr/)

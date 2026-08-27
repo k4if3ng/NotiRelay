@@ -3,279 +3,50 @@
     x:Class="NotiRelay.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:models="using:NotiRelay.Models"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tb="using:H.NotifyIcon"
-    mc:Ignorable="d"
     Title="NotiRelay">
+    <Window.SystemBackdrop><MicaBackdrop /></Window.SystemBackdrop>
+    <Grid x:Name="ShellRoot" Loaded="ShellRoot_Loaded">
+        <Grid.Resources>
+            <MenuFlyout x:Key="NotificationAreaContextMenu">
+                <MenuFlyoutItem Text="Show NotiRelay" Command="{x:Bind ShowMainWindowCommand}" />
+                <MenuFlyoutSeparator />
+                <MenuFlyoutItem Text="Exit" Command="{x:Bind ExitApplicationCommand}" />
+            </MenuFlyout>
+        </Grid.Resources>
+        <tb:TaskbarIcon
+            x:Name="NotificationAreaIcon" Width="0" Height="0"
+            ContextFlyout="{StaticResource NotificationAreaContextMenu}"
+            CustomName="NotiRelay" LeftClickCommand="{x:Bind ShowMainWindowCommand}"
+            NoLeftClickDelay="True" ToolTipText="NotiRelay">
+            <tb:TaskbarIcon.IconSource>
+                <tb:GeneratedIconSource Text="N" Background="#0067C0" FontSize="72" FontWeight="Bold" Foreground="White" />
+            </tb:TaskbarIcon.IconSource>
+        </tb:TaskbarIcon>
 
-	<Window.SystemBackdrop>
-		<MicaBackdrop />
-	</Window.SystemBackdrop>
-
-	<Grid
-		x:Name="RootGrid"
-		Margin="24"
-		RowSpacing="16"
-		Loaded="RootGrid_Loaded">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
-		<Grid.Resources>
-			<MenuFlyout x:Key="NotificationAreaContextMenu">
-				<MenuFlyoutItem
-					Text="Show NotiRelay"
-					Command="{x:Bind ShowMainWindowCommand}" />
-				<MenuFlyoutSeparator />
-				<MenuFlyoutItem
-					Text="Exit"
-					Command="{x:Bind ExitApplicationCommand}" />
-			</MenuFlyout>
-		</Grid.Resources>
-
-			<tb:TaskbarIcon
-				x:Name="NotificationAreaIcon"
-				Width="0"
-				Height="0"
-				ContextFlyout="{StaticResource NotificationAreaContextMenu}"
-				CustomName="NotiRelay"
-				LeftClickCommand="{x:Bind ShowMainWindowCommand}"
-				NoLeftClickDelay="True"
-				ToolTipText="NotiRelay">
-				<tb:TaskbarIcon.IconSource>
-					<tb:GeneratedIconSource
-						Text="N"
-						Background="#0067C0"
-						FontSize="72"
-						FontWeight="Bold"
-						Foreground="White" />
-				</tb:TaskbarIcon.IconSource>
-			</tb:TaskbarIcon>
-
-			<Grid
-				Grid.Row="0"
-				ColumnSpacing="12">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-
-				<TextBlock
-					Text="NotiRelay"
-				FontSize="28"
-				FontWeight="SemiBold" />
-
-				<TextBlock
-					x:Name="StatusText"
-					Grid.Column="1"
-					VerticalAlignment="Center"
-					TextTrimming="CharacterEllipsis"
-					Text="Checking notification access..." />
-
-				<Button
-					x:Name="RequestAccessButton"
-					Grid.Column="2"
-					Content="Request notification access"
-					Click="RequestAccessButton_Click" />
-
-				<Button
-					x:Name="RefreshNotificationsButton"
-					Grid.Column="3"
-					Content="Refresh notifications"
-					IsEnabled="False"
-					Click="RefreshNotificationsButton_Click" />
-			</Grid>
-
-			<Grid Grid.Row="1" ColumnSpacing="16">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="320" />
-					<ColumnDefinition Width="*" />
-				</Grid.ColumnDefinitions>
-
-				<Border
-					Grid.Column="0"
-					Padding="16"
-					Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-					CornerRadius="8">
-					<Grid RowSpacing="12">
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="*" />
-						</Grid.RowDefinitions>
-
-						<TextBlock
-							Text="Source applications"
-							FontSize="20"
-							FontWeight="SemiBold" />
-
-						<TextBlock
-							x:Name="SourceApplicationsStatusText"
-							Grid.Row="1"
-							Text="Loading source applications..."
-							TextWrapping="Wrap" />
-
-						<ListView
-							Grid.Row="2"
-							ItemsSource="{x:Bind SourceApplications}">
-							<ListView.ItemTemplate>
-								<DataTemplate x:DataType="models:SourceApplication">
-									<Grid Padding="4,8" ColumnSpacing="12">
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="*" />
-											<ColumnDefinition Width="Auto" />
-										</Grid.ColumnDefinitions>
-
-										<StackPanel Spacing="2">
-											<TextBlock
-												Text="{x:Bind DisplayName, Mode=OneWay}"
-												FontWeight="SemiBold"
-												TextWrapping="Wrap" />
-											<TextBlock
-												Text="{x:Bind ApplicationUserModelId}"
-												FontSize="11"
-												Opacity="0.6"
-												TextTrimming="CharacterEllipsis" />
-										</StackPanel>
-
-										<ToggleSwitch
-											Grid.Column="1"
-											AutomationProperties.Name="Enable source application"
-											IsOn="{x:Bind IsEnabled, Mode=TwoWay}"
-											Toggled="SourceApplicationToggleSwitch_Toggled" />
-									</Grid>
-								</DataTemplate>
-							</ListView.ItemTemplate>
-						</ListView>
-					</Grid>
-				</Border>
-
-				<Border
-					Grid.Column="1"
-					Padding="16"
-					Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-					CornerRadius="8">
-					<Grid RowSpacing="12">
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="Auto" />
-							<RowDefinition Height="*" />
-						</Grid.RowDefinitions>
-
-						<TextBlock
-							Text="Bark destination"
-							FontSize="20"
-							FontWeight="SemiBold" />
-
-						<Grid Grid.Row="1" ColumnSpacing="8">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="*" />
-							</Grid.ColumnDefinitions>
-
-							<TextBox
-								x:Name="BarkServerUrlTextBox"
-								Header="Server URL"
-								PlaceholderText="https://api.day.app"
-								Text="https://api.day.app" />
-
-							<PasswordBox
-								x:Name="BarkDeviceKeyPasswordBox"
-								Grid.Column="1"
-								Header="Device key"
-								PasswordRevealMode="Peek" />
-
-						</Grid>
-
-						<StackPanel
-							Grid.Row="2"
-							Orientation="Horizontal"
-							Spacing="8">
-							<Button
-								x:Name="SaveBarkDestinationProfileButton"
-								Content="Save profile"
-								Click="SaveBarkDestinationProfileButton_Click" />
-							<Button
-								x:Name="TestBarkDestinationButton"
-								Content="Send test"
-								Click="TestBarkDestinationButton_Click" />
-							<Button
-								x:Name="ClearBarkDestinationProfileButton"
-								Content="Clear profile"
-								Click="ClearBarkDestinationProfileButton_Click" />
-						</StackPanel>
-
-						<TextBlock
-							x:Name="BarkDeliveryStatusText"
-							Grid.Row="3"
-							Text="Loading Bark Destination Profile..."
-							TextWrapping="Wrap" />
-
-						<Grid Grid.Row="4" ColumnSpacing="12">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="*" />
-								<ColumnDefinition Width="Auto" />
-							</Grid.ColumnDefinitions>
-
-							<TextBlock
-								VerticalAlignment="Center"
-								Text="Captured notifications"
-								FontSize="20"
-								FontWeight="SemiBold" />
-
-							<Button
-								x:Name="GenerateTestNotificationButton"
-								Grid.Column="1"
-								Content="Generate test notification"
-								Click="GenerateTestNotificationButton_Click" />
-						</Grid>
-
-						<ListView
-							Grid.Row="5"
-							ItemsSource="{x:Bind CapturedNotifications}">
-							<ListView.ItemTemplate>
-								<DataTemplate x:DataType="models:CapturedNotification">
-									<StackPanel Padding="12" Spacing="4">
-										<TextBlock
-											Text="{x:Bind SourceApplicationName}"
-											FontSize="16"
-											FontWeight="SemiBold" />
-										<TextBlock
-											Text="{x:Bind Title}"
-											FontWeight="SemiBold"
-											TextWrapping="Wrap" />
-										<TextBlock
-											Text="{x:Bind Body}"
-											TextWrapping="Wrap" />
-										<StackPanel Orientation="Horizontal" Spacing="12">
-											<TextBlock
-												Text="{x:Bind CreatedAt}"
-												FontSize="12"
-												Opacity="0.6" />
-											<StackPanel Orientation="Horizontal" Spacing="4">
-												<TextBlock
-													Text="Windows ID:"
-													FontSize="12"
-													Opacity="0.6" />
-												<TextBlock
-													Text="{x:Bind WindowsNotificationId}"
-													FontSize="12"
-													Opacity="0.6" />
-											</StackPanel>
-										</StackPanel>
-									</StackPanel>
-								</DataTemplate>
-							</ListView.ItemTemplate>
-						</ListView>
-					</Grid>
-				</Border>
-			</Grid>
-		</Grid>
-	</Window>
+        <NavigationView
+            x:Name="NavigationShell"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="True"
+            IsTitleBarAutoPaddingEnabled="True"
+            PaneDisplayMode="Auto"
+            OpenPaneLength="220"
+            CompactPaneLength="48"
+            SelectionChanged="NavigationShell_SelectionChanged">
+            <NavigationView.PaneHeader>
+                <StackPanel x:Name="AppTitleBar" Orientation="Horizontal" Spacing="10" Padding="4,0,0,0">
+                    <FontIcon Glyph="&#xE7F4;" FontSize="18" />
+                    <TextBlock Text="NotiRelay" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" />
+                </StackPanel>
+            </NavigationView.PaneHeader>
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Home" Tag="home"><NavigationViewItem.Icon><SymbolIcon Symbol="Home" /></NavigationViewItem.Icon></NavigationViewItem>
+                <NavigationViewItem Content="Sources" Tag="sources"><NavigationViewItem.Icon><SymbolIcon Symbol="People" /></NavigationViewItem.Icon></NavigationViewItem>
+                <NavigationViewItem Content="Destinations" Tag="destinations"><NavigationViewItem.Icon><SymbolIcon Symbol="Send" /></NavigationViewItem.Icon></NavigationViewItem>
+                <NavigationViewItem Content="Filters" Tag="filters"><NavigationViewItem.Icon><SymbolIcon Symbol="Filter" /></NavigationViewItem.Icon></NavigationViewItem>
+                <NavigationViewItem Content="Activity" Tag="activity"><NavigationViewItem.Icon><SymbolIcon Symbol="Clock" /></NavigationViewItem.Icon></NavigationViewItem>
+            </NavigationView.MenuItems>
+            <Frame x:Name="ContentFrame" />
+        </NavigationView>
+    </Grid>
+</Window>

@@ -2,59 +2,38 @@
 
 ## Current Target
 
-The [v0.1.0 personal-use MVP](docs/milestones/v0.1.0.md) is complete. It was
-developed as a small number of complete development slices rather than a
-separate product version for every implementation step.
+The [v1.0.0 stable release](docs/milestones/v1.0.0.md) is the active target.
+The former v0.2–v0.9 steps were collapsed into one rapid-convergence milestone;
+they are implementation slices, not separately released product versions.
 
 | Slice | Status |
 | --- | --- |
-| Windows notification capture | Complete |
-| Source Application allowlist | Complete |
-| Bark direct delivery | Complete |
-| Configuration and credential persistence | Complete |
-| Tray lifecycle | Complete |
-| MVP stabilization | Complete |
+| v0.1 personal-use Bark MVP | Complete |
+| Durable SQLite Outbox and restart recovery | Implemented |
+| Generic Webhook and Telegram adapters | Implemented |
+| Source allowlist and keyword filters | Implemented |
+| v1 UI and operational status | Implemented |
+| Navigation Shell, Pause relay, and bounded long-content handling | Implemented |
+| Publishing documentation and release metadata | Implemented |
+| Centralized release validation | Pending |
 
-## After the MVP
+## v1.0.0 Supported Scope
 
-The order below is provisional. Each version is grilled again before work starts.
-
-### v0.2.0 — Durable Delivery
-
-Add SQLite-backed Delivery persistence, Delivery Attempts, retry scheduling,
-expiry, and restart recovery.
-
-### v0.3.0 — Generic Webhook
-
-Add a fixed-JSON Generic Webhook Destination Adapter and use it to validate that
-the adapter boundary is not coupled to Bark.
-
-### v0.4.0 — Telegram
-
-Add the Telegram Destination Adapter and validate another structurally different
-external API.
-
-### v0.5.0 — Filters and Routes
-
-Add keyword filtering and user-configurable routing beyond the Source
-Application allowlist.
-
-### v0.9.0 — Public Release Preparation
-
-Validate packaging, supported platforms, privacy documentation, Store flighting,
-and the Store-backed WinGet distribution path.
-
-### v1.0.0 — First Stable Public Release
-
-Publish only after the supported feature set and device matrix are explicitly
-defined and validated.
+- Windows 11 build 22621 or later, x64
+- Notification-area lifecycle and startup option
+- Windows Notification Center capture with startup baseline
+- Source Application allowlist
+- Case-insensitive include/exclude keyword Filters
+- Bark, Generic Webhook, and Telegram Destination Profiles
+- Durable at-least-once Delivery with bounded retry and restart recovery
+- Local configuration, Credential Locker secrets, and minimized retained content
 
 ## Deferred
 
 - Slack, Feishu/Lark, WeCom, and DingTalk
+- Multiple profiles of the same Destination Type and a visual route editor
 - Runtime-loaded third-party adapters
 - Windows background-task hosting
-- Encrypted configuration backup and restore
+- Configuration import/export and cloud telemetry
 - Full notification-content history and search
-- Cloud telemetry
-- Official ARM64 support before real-device validation
+- Official ARM64 support before physical-device validation

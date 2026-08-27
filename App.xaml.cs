@@ -2,6 +2,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using System;
+using NotiRelay.Services;
 
 namespace NotiRelay
 {
@@ -12,6 +13,7 @@ namespace NotiRelay
 		private DispatcherQueue? _dispatcherQueue;
 		private AppInstance? _mainInstance;
 		private MainWindow? _window;
+		public RelayRuntime Runtime { get; private set; } = null!;
 
 		public App()
 		{
@@ -32,7 +34,8 @@ namespace NotiRelay
 
 			_mainInstance = mainInstance;
 			_mainInstance.Activated += MainInstance_Activated;
-			_dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+				_dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+				Runtime = new RelayRuntime(_dispatcherQueue);
 			_window = new MainWindow();
 			_window.Activate();
 
