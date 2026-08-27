@@ -164,14 +164,17 @@ namespace NotiRelay
 				var currentNotifications = await _notificationListener.GetNotificationsAsync(
 					NotificationKinds.Toast);
 				await DiscoverSourceApplicationsAsync(currentNotifications);
-				var (newCount, currentSkippedCount) = CaptureNewNotifications(currentNotifications);
+				var (newNotifications, currentSkippedCount) =
+					CaptureNewNotifications(currentNotifications);
+				await DeliverNotificationsAsync(newNotifications);
 
 				var skippedCount = baselineSkippedCount + currentSkippedCount;
 				StatusText.Text = skippedCount == 0
 					? $"Monitoring. {baselineCount} existing notifications ignored as baseline; " +
-						$"{newCount} new notifications captured."
+						$"{newNotifications.Count} new notifications captured."
 					: $"Monitoring. {baselineCount} existing notifications ignored as baseline; " +
-						$"{newCount} new notifications captured; {skippedCount} could not be read.";
+						$"{newNotifications.Count} new notifications captured; " +
+						$"{skippedCount} could not be read.";
 			}
 			catch (Exception exception)
 			{
@@ -219,13 +222,14 @@ namespace NotiRelay
 				var currentNotifications = await _notificationListener.GetNotificationsAsync(
 					NotificationKinds.Toast);
 				await DiscoverSourceApplicationsAsync(currentNotifications);
-				var (newCount, skippedCount) = CaptureNewNotifications(currentNotifications);
+				var (newNotifications, skippedCount) = CaptureNewNotifications(currentNotifications);
+				await DeliverNotificationsAsync(newNotifications);
 
 				StatusText.Text = skippedCount == 0
 					? $"Monitoring. {CapturedNotifications.Count} captured this session; " +
-						$"{newCount} added by the latest synchronization."
+						$"{newNotifications.Count} added by the latest synchronization."
 					: $"Monitoring. {CapturedNotifications.Count} captured this session; " +
-						$"{newCount} added; {skippedCount} could not be read.";
+						$"{newNotifications.Count} added; {skippedCount} could not be read.";
 			}
 			catch (Exception exception)
 			{
@@ -256,7 +260,8 @@ namespace NotiRelay
 			return skippedCount;
 		}
 
-		private (int NewCount, int SkippedCount) CaptureNewNotifications(
+		private (IReadOnlyList<CapturedNotification> NewNotifications, int SkippedCount)
+			CaptureNewNotifications(
 			IEnumerable<UserNotification> userNotifications)
 		{
 			var newNotifications = new List<CapturedNotification>();
@@ -286,13 +291,14 @@ namespace NotiRelay
 				CapturedNotifications.Insert(0, capturedNotification);
 			}
 
-			return (newNotifications.Count, skippedCount);
+			return (newNotifications, skippedCount);
 		}
 
 		private void MainWindow_Closed(object sender, WindowEventArgs args)
 		{
 			_isClosed = true;
 			StopMonitoring();
+			_barkDestinationAdapter.Dispose();
 		}
 
 		private void StopMonitoring()
