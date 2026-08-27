@@ -31,6 +31,7 @@ namespace NotiRelay
 
 		private async void RootGrid_Loaded(object sender, RoutedEventArgs e)
 		{
+			await LoadBarkDestinationProfileAsync();
 			await LoadSourceApplicationsAsync();
 
 			if (_notificationListener.GetAccessStatus() ==

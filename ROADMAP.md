@@ -11,7 +11,7 @@ separate product version for every implementation step.
 | Windows notification capture | Complete |
 | Source Application allowlist | Complete |
 | Bark direct delivery | Complete |
-| Configuration and credential persistence | Planned |
+| Configuration and credential persistence | Complete |
 | Tray lifecycle | Planned |
 | MVP stabilization | Planned |
 
