@@ -18,7 +18,9 @@ The MVP focuses on:
 - filtering title/body text with include and exclude keywords;
 - using Bark, Generic Webhook, and Telegram destinations;
 - storing ordinary configuration locally and credentials securely; and
-- running as a notification-area application with explicit exit behavior.
+- running as a notification-area application with explicit exit behavior;
+- providing an English and Simplified Chinese Fluent interface; and
+- using a custom application, package, and notification-area icon.
 
 Transient failures are persisted in a SQLite Outbox and retried after restart.
 Exactly-once delivery is not promised; a crash at the remote-acknowledgement
@@ -33,7 +35,7 @@ boundary can produce a duplicate.
 3. Configure one or more Bark, Generic Webhook, or Telegram destinations.
 4. Optionally save semicolon-separated include/exclude keyword filters.
 5. Use **Send test** to verify each destination.
-5. Close the main window to keep NotiRelay monitoring in the notification area;
+6. Close the main window to keep NotiRelay monitoring in the notification area;
    use the notification-area menu to show the window or exit explicitly.
 
 Secrets are stored in Windows Credential Locker. Retryable content is stored in

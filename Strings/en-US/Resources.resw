@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
+
+  <data name="AppDisplayName" xml:space="preserve"><value>NotiRelay</value></data>
+  <data name="AppDescription" xml:space="preserve"><value>Relay selected Windows notifications to external destinations.</value></data>
+  <data name="TrayShow.Text" xml:space="preserve"><value>Show NotiRelay</value></data>
+  <data name="TrayExit.Text" xml:space="preserve"><value>Exit</value></data>
+  <data name="NavHome.Content" xml:space="preserve"><value>Home</value></data>
+  <data name="NavSources.Content" xml:space="preserve"><value>Sources</value></data>
+  <data name="NavDestinations.Content" xml:space="preserve"><value>Destinations</value></data>
+  <data name="NavFilters.Content" xml:space="preserve"><value>Filters</value></data>
+  <data name="NavActivity.Content" xml:space="preserve"><value>Activity</value></data>
+
+  <data name="HomeTitle.Text" xml:space="preserve"><value>Home</value></data>
+  <data name="HomeSubtitle.Text" xml:space="preserve"><value>Relay status and quick actions</value></data>
+  <data name="HomeStatusTitle.Text" xml:space="preserve"><value>NotiRelay status</value></data>
+  <data name="HomePauseRelay.Header" xml:space="preserve"><value>Pause relay</value></data>
+  <data name="HomeEnabledSources.Text" xml:space="preserve"><value>Enabled sources</value></data>
+  <data name="HomeDestinations.Text" xml:space="preserve"><value>Destinations</value></data>
+  <data name="HomePending.Text" xml:space="preserve"><value>Pending</value></data>
+  <data name="HomeFailed.Text" xml:space="preserve"><value>Failed</value></data>
+  <data name="HomeQuickActions.Text" xml:space="preserve"><value>Quick actions</value></data>
+  <data name="RequestNotificationAccess.Content" xml:space="preserve"><value>Request notification access</value></data>
+  <data name="RefreshNow.Content" xml:space="preserve"><value>Refresh now</value></data>
+  <data name="GenerateTestNotification.Content" xml:space="preserve"><value>Generate test notification</value></data>
+
+  <data name="SourcesTitle.Text" xml:space="preserve"><value>Sources</value></data>
+  <data name="SourcesSubtitle.Text" xml:space="preserve"><value>New Source Applications are disabled by default.</value></data>
+  <data name="SourcesSearch.PlaceholderText" xml:space="preserve"><value>Search applications</value></data>
+  <data name="SourceEnabled.AutomationProperties.Name" xml:space="preserve"><value>Enable source application</value></data>
+
+  <data name="DestinationsTitle.Text" xml:space="preserve"><value>Destinations</value></data>
+  <data name="DestinationsSubtitle.Text" xml:space="preserve"><value>Configure one profile for each supported destination.</value></data>
+  <data name="GenericWebhookCard.Content" xml:space="preserve"><value>Generic Webhook</value></data>
+  <data name="BarkProfileTitle.Text" xml:space="preserve"><value>Bark profile</value></data>
+  <data name="BarkServerUrl.Header" xml:space="preserve"><value>Server URL</value></data>
+  <data name="BarkDeviceKey.Header" xml:space="preserve"><value>Device key</value></data>
+  <data name="WebhookProfileTitle.Text" xml:space="preserve"><value>Generic Webhook profile</value></data>
+  <data name="WebhookEndpoint.Header" xml:space="preserve"><value>Endpoint URL</value></data>
+  <data name="WebhookToken.Header" xml:space="preserve"><value>Bearer token (optional)</value></data>
+  <data name="TelegramProfileTitle.Text" xml:space="preserve"><value>Telegram profile</value></data>
+  <data name="TelegramBotToken.Header" xml:space="preserve"><value>Bot token</value></data>
+  <data name="TelegramChatId.Header" xml:space="preserve"><value>Chat ID</value></data>
+  <data name="SaveProfile.Content" xml:space="preserve"><value>Save</value></data>
+  <data name="SendTest.Content" xml:space="preserve"><value>Send test</value></data>
+  <data name="ClearProfile.Content" xml:space="preserve"><value>Clear</value></data>
+
+  <data name="FiltersTitle.Text" xml:space="preserve"><value>Global filters</value></data>
+  <data name="FiltersSubtitle.Text" xml:space="preserve"><value>Exclude takes priority over include. Keywords are case-insensitive and separated by semicolons.</value></data>
+  <data name="FiltersInclude.Header" xml:space="preserve"><value>Include any (empty allows all)</value></data>
+  <data name="FiltersExclude.Header" xml:space="preserve"><value>Exclude any</value></data>
+  <data name="SaveFilters.Content" xml:space="preserve"><value>Save filters</value></data>
+  <data name="ResetFilters.Content" xml:space="preserve"><value>Reset editor</value></data>
+
+  <data name="ActivityTitle.Text" xml:space="preserve"><value>Activity</value></data>
+  <data name="ActivitySubtitle.Text" xml:space="preserve"><value>Delivery summary and Captured Notifications from this session.</value></data>
+  <data name="ActivityPending.Text" xml:space="preserve"><value>Pending</value></data>
+  <data name="ActivitySucceeded.Text" xml:space="preserve"><value>Succeeded</value></data>
+  <data name="ActivityFailed.Text" xml:space="preserve"><value>Failed</value></data>
+  <data name="ActivityQueueState.Title" xml:space="preserve"><value>Latest queue state</value></data>
+
+  <data name="SettingsTitle.Text" xml:space="preserve"><value>Settings</value></data>
+  <data name="SettingsSystem.Text" xml:space="preserve"><value>System</value></data>
+  <data name="Refresh.Content" xml:space="preserve"><value>Refresh</value></data>
+  <data name="StartupAtSignIn.Header" xml:space="preserve"><value>Start NotiRelay when I sign in</value></data>
+  <data name="SettingsLanguage.Text" xml:space="preserve"><value>Language</value></data>
+  <data name="LanguageSystem.Content" xml:space="preserve"><value>System default</value></data>
+  <data name="LanguageEnglish.Content" xml:space="preserve"><value>English</value></data>
+  <data name="LanguageChinese.Content" xml:space="preserve"><value>简体中文</value></data>
+  <data name="SettingsPrivacy.Text" xml:space="preserve"><value>Privacy and data</value></data>
+  <data name="SettingsPrivacyDescription.Text" xml:space="preserve"><value>Secrets are stored in Windows Credential Locker. Terminal Delivery records do not retain notification content.</value></data>
+  <data name="ClearDeliveryMetadata.Content" xml:space="preserve"><value>Clear completed Delivery metadata</value></data>
+  <data name="SettingsAbout.Text" xml:space="preserve"><value>About</value></data>
+  <data name="SettingsPlatform.Text" xml:space="preserve"><value>Windows 11 build 22621 or later · x64 supported</value></data>
+
+  <data name="Runtime_TruncatedSuffix" xml:space="preserve"><value>… [Truncated by NotiRelay]</value></data>
+  <data name="Runtime_Starting" xml:space="preserve"><value>Starting NotiRelay...</value></data>
+  <data name="Runtime_QueueStarting" xml:space="preserve"><value>Delivery queue starting...</value></data>
+  <data name="Runtime_Paused" xml:space="preserve"><value>Relay paused. Notifications are still captured but new Deliveries are not created.</value></data>
+  <data name="Runtime_Resumed" xml:space="preserve"><value>Relay resumed.</value></data>
+  <data name="Runtime_AccessRequired" xml:space="preserve"><value>Notification access is required.</value></data>
+  <data name="Runtime_AccessNotGranted" xml:space="preserve"><value>Notification access was not granted.</value></data>
+  <data name="Runtime_AccessRequestFailed" xml:space="preserve"><value>Unable to request notification access: {0}</value></data>
+  <data name="Runtime_TestNotificationTitle" xml:space="preserve"><value>NotiRelay capture test</value></data>
+  <data name="Runtime_TestNotificationBody" xml:space="preserve"><value>Generated at {0:T}.</value></data>
+  <data name="Runtime_TestNotificationSubmitted" xml:space="preserve"><value>A test notification was submitted to Windows.</value></data>
+  <data name="Runtime_BarkSaved" xml:space="preserve"><value>Bark profile saved.</value></data>
+  <data name="Runtime_BarkCleared" xml:space="preserve"><value>Bark profile cleared.</value></data>
+  <data name="Runtime_WebhookSaved" xml:space="preserve"><value>Generic Webhook profile saved.</value></data>
+  <data name="Runtime_WebhookCleared" xml:space="preserve"><value>Generic Webhook profile cleared.</value></data>
+  <data name="Runtime_TelegramSaved" xml:space="preserve"><value>Telegram profile saved.</value></data>
+  <data name="Runtime_TelegramCleared" xml:space="preserve"><value>Telegram profile cleared.</value></data>
+  <data name="Runtime_EstablishingBaseline" xml:space="preserve"><value>Establishing notification baseline...</value></data>
+  <data name="Runtime_MonitoringPaused" xml:space="preserve"><value>Monitoring; relay is paused.</value></data>
+  <data name="Runtime_MonitoringBaseline" xml:space="preserve"><value>Monitoring. {0} notifications are in the current baseline.</value></data>
+  <data name="Runtime_MonitoringStartFailed" xml:space="preserve"><value>Unable to start monitoring: {0}</value></data>
+  <data name="Runtime_MonitoringSessionPaused" xml:space="preserve"><value>Monitoring; relay paused. {0} captured this session.</value></data>
+  <data name="Runtime_MonitoringSession" xml:space="preserve"><value>Monitoring. {0} captured this session; {1} added.</value></data>
+  <data name="Runtime_SynchronizeFailed" xml:space="preserve"><value>Unable to synchronize notifications: {0}</value></data>
+  <data name="Runtime_ProfileUnavailable" xml:space="preserve"><value>The {0} profile is unavailable.</value></data>
+  <data name="Runtime_NewNotification" xml:space="preserve"><value>New Windows notification.</value></data>
+  <data name="Runtime_TestDeliveryTitle" xml:space="preserve"><value>NotiRelay test</value></data>
+  <data name="Runtime_TestDeliveryBody" xml:space="preserve"><value>The Destination Profile is working.</value></data>
+  <data name="Runtime_InvalidBark" xml:space="preserve"><value>Enter a valid Bark URL and device key.</value></data>
+  <data name="Runtime_InvalidWebhook" xml:space="preserve"><value>Enter a valid Webhook URL.</value></data>
+  <data name="Runtime_InvalidTelegram" xml:space="preserve"><value>Enter a Telegram bot token and chat ID.</value></data>
+  <data name="Filters_Preview" xml:space="preserve"><value>Preview: {0} would pass; {1} would be filtered from this session.</value></data>
+
+  <data name="Queue_Status" xml:space="preserve"><value>Delivery queue: {0} pending, {1} succeeded, {2} failed.</value></data>
+  <data name="Queue_Error" xml:space="preserve"><value>Delivery queue error: {0}</value></data>
+  <data name="Queue_UnexpectedFailure" xml:space="preserve"><value>The Delivery failed unexpectedly.</value></data>
+  <data name="Bark_HttpError" xml:space="preserve"><value>Bark returned HTTP {0}.</value></data>
+  <data name="Bark_Accepted" xml:space="preserve"><value>Bark accepted the Delivery.</value></data>
+  <data name="Bark_ApplicationError" xml:space="preserve"><value>Bark returned application code {0}.</value></data>
+  <data name="Bark_Timeout" xml:space="preserve"><value>The Bark Delivery timed out.</value></data>
+  <data name="Bark_Unreachable" xml:space="preserve"><value>The Bark server could not be reached.</value></data>
+  <data name="Bark_Unexpected" xml:space="preserve"><value>The Bark Delivery failed unexpectedly.</value></data>
+  <data name="Webhook_Accepted" xml:space="preserve"><value>Webhook accepted the Delivery.</value></data>
+  <data name="Webhook_HttpError" xml:space="preserve"><value>Webhook returned HTTP {0}.</value></data>
+  <data name="Webhook_Timeout" xml:space="preserve"><value>The Webhook Delivery timed out.</value></data>
+  <data name="Webhook_Unreachable" xml:space="preserve"><value>The Webhook endpoint could not be reached.</value></data>
+  <data name="Telegram_Accepted" xml:space="preserve"><value>Telegram accepted the Delivery.</value></data>
+  <data name="Telegram_HttpError" xml:space="preserve"><value>Telegram returned HTTP {0}.</value></data>
+  <data name="Telegram_Timeout" xml:space="preserve"><value>The Telegram Delivery timed out.</value></data>
+  <data name="Telegram_Unreachable" xml:space="preserve"><value>Telegram could not be reached.</value></data>
+
+  <data name="Settings_AccessStatus" xml:space="preserve"><value>Notification access: {0}</value></data>
+  <data name="Access_Allowed" xml:space="preserve"><value>Allowed</value></data>
+  <data name="Access_Denied" xml:space="preserve"><value>Denied</value></data>
+  <data name="Access_Unknown" xml:space="preserve"><value>Unknown</value></data>
+  <data name="Settings_ClearTitle" xml:space="preserve"><value>Clear completed metadata?</value></data>
+  <data name="Settings_ClearContent" xml:space="preserve"><value>Pending and retry-scheduled Deliveries will not be deleted.</value></data>
+  <data name="Common_Clear" xml:space="preserve"><value>Clear</value></data>
+  <data name="Common_Cancel" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Common_OK" xml:space="preserve"><value>OK</value></data>
+  <data name="Settings_ClearSuccess" xml:space="preserve"><value>Completed Delivery metadata cleared.</value></data>
+  <data name="Settings_StartupUnavailable" xml:space="preserve"><value>Startup management is unavailable for this installation.</value></data>
+  <data name="Settings_LanguageRestartTitle" xml:space="preserve"><value>Restart NotiRelay?</value></data>
+  <data name="Settings_LanguageRestartContent" xml:space="preserve"><value>NotiRelay must restart to apply the selected language.</value></data>
+  <data name="Settings_Restart" xml:space="preserve"><value>Restart</value></data>
+  <data name="Settings_RestartFailed" xml:space="preserve"><value>Windows could not restart NotiRelay: {0}</value></data>
+
+  <data name="Startup_Title" xml:space="preserve"><value>Start NotiRelay when you sign in?</value></data>
+  <data name="Startup_Content" xml:space="preserve"><value>NotiRelay can start hidden in the notification area so it can monitor new Windows notifications. You can change this later in Settings.</value></data>
+  <data name="Startup_Enable" xml:space="preserve"><value>Start at sign-in</value></data>
+  <data name="Startup_NotNow" xml:space="preserve"><value>Not now</value></data>
+  <data name="Startup_DisabledByUser" xml:space="preserve"><value>Startup is disabled by your Windows Startup Apps setting. Enable NotiRelay there if you want it to start when you sign in.</value></data>
+  <data name="Startup_DisabledByPolicy" xml:space="preserve"><value>Startup is disabled by Windows policy on this device.</value></data>
+  <data name="Startup_NotEnabled" xml:space="preserve"><value>Windows did not enable the NotiRelay startup task.</value></data>
+  <data name="Startup_UnavailableTitle" xml:space="preserve"><value>Startup was not enabled</value></data>
+</root>

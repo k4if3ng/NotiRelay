@@ -1,4 +1,5 @@
 using NotiRelay.Models;
+using NotiRelay.Services;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -38,18 +39,18 @@ namespace NotiRelay.Destinations.GenericWebhook
 
 				using var response = await _httpClient.SendAsync(request, cancellationToken);
 				return response.IsSuccessStatusCode
-					? DeliveryAttemptResult.Success("Webhook accepted the Delivery.")
+					? DeliveryAttemptResult.Success(LocalizationService.Get("Webhook_Accepted"))
 					: DeliveryAttemptResult.Failure(
-						$"Webhook returned HTTP {(int)response.StatusCode}.",
+						LocalizationService.Format("Webhook_HttpError", (int)response.StatusCode),
 						(int)response.StatusCode >= 500 || (int)response.StatusCode is 408 or 429);
 			}
 			catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
 			{
-				return DeliveryAttemptResult.Failure("The Webhook Delivery timed out.");
+				return DeliveryAttemptResult.Failure(LocalizationService.Get("Webhook_Timeout"));
 			}
 			catch (HttpRequestException)
 			{
-				return DeliveryAttemptResult.Failure("The Webhook endpoint could not be reached.");
+				return DeliveryAttemptResult.Failure(LocalizationService.Get("Webhook_Unreachable"));
 			}
 		}
 

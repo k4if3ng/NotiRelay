@@ -9,20 +9,17 @@
     <Grid x:Name="ShellRoot" Loaded="ShellRoot_Loaded">
         <Grid.Resources>
             <MenuFlyout x:Key="NotificationAreaContextMenu">
-                <MenuFlyoutItem Text="Show NotiRelay" Command="{x:Bind ShowMainWindowCommand}" />
+                <MenuFlyoutItem x:Uid="TrayShow" Command="{x:Bind ShowMainWindowCommand}" />
                 <MenuFlyoutSeparator />
-                <MenuFlyoutItem Text="Exit" Command="{x:Bind ExitApplicationCommand}" />
+                <MenuFlyoutItem x:Uid="TrayExit" Command="{x:Bind ExitApplicationCommand}" />
             </MenuFlyout>
         </Grid.Resources>
         <tb:TaskbarIcon
             x:Name="NotificationAreaIcon" Width="0" Height="0"
             ContextFlyout="{StaticResource NotificationAreaContextMenu}"
             CustomName="NotiRelay" LeftClickCommand="{x:Bind ShowMainWindowCommand}"
-            NoLeftClickDelay="True" ToolTipText="NotiRelay">
-            <tb:TaskbarIcon.IconSource>
-                <tb:GeneratedIconSource Text="N" Background="#0067C0" FontSize="72" FontWeight="Bold" Foreground="White" />
-            </tb:TaskbarIcon.IconSource>
-        </tb:TaskbarIcon>
+            IconSource="/Assets/NotiRelay.ico"
+            NoLeftClickDelay="True" ToolTipText="NotiRelay" />
 
         <NavigationView
             x:Name="NavigationShell"
@@ -40,11 +37,11 @@
                 </StackPanel>
             </NavigationView.PaneHeader>
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Home" Tag="home"><NavigationViewItem.Icon><SymbolIcon Symbol="Home" /></NavigationViewItem.Icon></NavigationViewItem>
-                <NavigationViewItem Content="Sources" Tag="sources"><NavigationViewItem.Icon><SymbolIcon Symbol="People" /></NavigationViewItem.Icon></NavigationViewItem>
-                <NavigationViewItem Content="Destinations" Tag="destinations"><NavigationViewItem.Icon><SymbolIcon Symbol="Send" /></NavigationViewItem.Icon></NavigationViewItem>
-                <NavigationViewItem Content="Filters" Tag="filters"><NavigationViewItem.Icon><SymbolIcon Symbol="Filter" /></NavigationViewItem.Icon></NavigationViewItem>
-                <NavigationViewItem Content="Activity" Tag="activity"><NavigationViewItem.Icon><SymbolIcon Symbol="Clock" /></NavigationViewItem.Icon></NavigationViewItem>
+                <NavigationViewItem x:Uid="NavHome" Tag="home"><NavigationViewItem.Icon><SymbolIcon Symbol="Home" /></NavigationViewItem.Icon></NavigationViewItem>
+                <NavigationViewItem x:Uid="NavSources" Tag="sources"><NavigationViewItem.Icon><SymbolIcon Symbol="People" /></NavigationViewItem.Icon></NavigationViewItem>
+                <NavigationViewItem x:Uid="NavDestinations" Tag="destinations"><NavigationViewItem.Icon><SymbolIcon Symbol="Send" /></NavigationViewItem.Icon></NavigationViewItem>
+                <NavigationViewItem x:Uid="NavFilters" Tag="filters"><NavigationViewItem.Icon><SymbolIcon Symbol="Filter" /></NavigationViewItem.Icon></NavigationViewItem>
+                <NavigationViewItem x:Uid="NavActivity" Tag="activity"><NavigationViewItem.Icon><SymbolIcon Symbol="Clock" /></NavigationViewItem.Icon></NavigationViewItem>
             </NavigationView.MenuItems>
             <Frame x:Name="ContentFrame" />
         </NavigationView>

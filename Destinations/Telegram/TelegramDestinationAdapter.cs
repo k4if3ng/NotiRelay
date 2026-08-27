@@ -1,10 +1,10 @@
 using NotiRelay.Models;
+using NotiRelay.Services;
 using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using NotiRelay.Services;
 
 namespace NotiRelay.Destinations.Telegram
 {
@@ -22,7 +22,7 @@ namespace NotiRelay.Destinations.Telegram
 			{
 				var endpoint = new Uri(
 					$"https://api.telegram.org/bot{destinationProfile.BotToken}/sendMessage");
-				var suffix = "… [Truncated by NotiRelay]";
+				var suffix = LocalizationService.Get("Runtime_TruncatedSuffix");
 				var prefix = notificationEnvelope.Title + "\n";
 				var footer = "\n\n— " + notificationEnvelope.SourceApplicationName;
 				var bodyBudget = Math.Max(0, 4096 - new System.Globalization.StringInfo(prefix + footer).LengthInTextElements);
@@ -33,18 +33,18 @@ namespace NotiRelay.Destinations.Telegram
 					text = prefix + body + footer
 				}, cancellationToken);
 				return response.IsSuccessStatusCode
-					? DeliveryAttemptResult.Success("Telegram accepted the Delivery.")
+					? DeliveryAttemptResult.Success(LocalizationService.Get("Telegram_Accepted"))
 					: DeliveryAttemptResult.Failure(
-						$"Telegram returned HTTP {(int)response.StatusCode}.",
+						LocalizationService.Format("Telegram_HttpError", (int)response.StatusCode),
 						(int)response.StatusCode >= 500 || (int)response.StatusCode == 429);
 			}
 			catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
 			{
-				return DeliveryAttemptResult.Failure("The Telegram Delivery timed out.");
+				return DeliveryAttemptResult.Failure(LocalizationService.Get("Telegram_Timeout"));
 			}
 			catch (HttpRequestException)
 			{
-				return DeliveryAttemptResult.Failure("Telegram could not be reached.");
+				return DeliveryAttemptResult.Failure(LocalizationService.Get("Telegram_Unreachable"));
 			}
 		}
 

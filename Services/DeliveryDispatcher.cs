@@ -40,7 +40,7 @@ namespace NotiRelay.Services
 							.GroupBy(item => item.DestinationType)
 							.Select(group => DeliverProfileQueueAsync(group, cancellationToken)));
 						var stats = await _repository.GetStatisticsAsync(cancellationToken);
-						StatusChanged?.Invoke(this, $"Delivery queue: {stats.Pending} pending, {stats.Succeeded} succeeded, {stats.Failed} failed.");
+						StatusChanged?.Invoke(this, LocalizationService.Format("Queue_Status", stats.Pending, stats.Succeeded, stats.Failed));
 						continue;
 					}
 					await _wakeSignal.WaitAsync(TimeSpan.FromSeconds(5), cancellationToken);
@@ -48,7 +48,7 @@ namespace NotiRelay.Services
 				catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { break; }
 				catch (Exception exception)
 				{
-					StatusChanged?.Invoke(this, $"Delivery queue error: {exception.Message}");
+					StatusChanged?.Invoke(this, LocalizationService.Format("Queue_Error", exception.Message));
 					await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
 				}
 			}
@@ -58,7 +58,7 @@ namespace NotiRelay.Services
 		{
 			DeliveryAttemptResult result;
 			try { result = await _deliver(item, cancellationToken); }
-			catch (Exception) { result = DeliveryAttemptResult.Failure("The Delivery failed unexpectedly."); }
+			catch (Exception) { result = DeliveryAttemptResult.Failure(LocalizationService.Get("Queue_UnexpectedFailure")); }
 			await _repository.RecordResultAsync(item, result, cancellationToken);
 		}
 

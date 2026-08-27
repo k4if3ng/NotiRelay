@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="background" x1="128" y1="96" x2="896" y2="928" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#168CFF"/>
+      <stop offset="0.52" stop-color="#0768D7"/>
+      <stop offset="1" stop-color="#0047B3"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(316 216) rotate(45) scale(690)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#62D9FF" stop-opacity="0.36"/>
+      <stop offset="1" stop-color="#62D9FF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="relay" x1="248" y1="760" x2="776" y2="246" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#35D8FF"/>
+      <stop offset="0.42" stop-color="#B7F4FF"/>
+      <stop offset="1" stop-color="#FFFFFF"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="48" y="48" width="928" height="928" rx="224" fill="url(#background)"/>
+  <rect x="48" y="48" width="928" height="928" rx="224" fill="url(#glow)"/>
+  <path d="M105 694C213 790 383 860 575 850C746 841 878 772 949 686V920C949 936 936 949 920 949H178C138 949 105 916 105 876V694Z" fill="#003E9B" opacity="0.16"/>
+
+  <!-- C1.5 relay mark: one continuous N-shaped route between two endpoints. -->
+  <path d="M260 764V326C260 289 305 271 331 297L692 743C718 769 764 751 764 714V322"
+        fill="none" stroke="#003A86" stroke-opacity="0.36" stroke-width="112" stroke-linecap="round" stroke-linejoin="round"/>
+  <g>
+    <path d="M260 742V304C260 267 305 249 331 275L692 721C718 747 764 729 764 692V300"
+          fill="none" stroke="url(#relay)" stroke-width="112" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Source endpoint: open center and a quiet outer pulse. -->
+    <circle cx="260" cy="742" r="92" fill="#3BE0FF" opacity="0.20"/>
+    <circle cx="260" cy="742" r="68" fill="url(#relay)"/>
+    <circle cx="260" cy="742" r="31" fill="#0870DD"/>
+
+    <!-- Destination endpoint: larger solid core for an implicit left-to-right direction. -->
+    <circle cx="764" cy="246" r="94" fill="#8AEBFF" opacity="0.22"/>
+    <circle cx="764" cy="246" r="70" fill="url(#relay)"/>
+    <circle cx="764" cy="246" r="38" fill="#FFFFFF"/>
+
+    <!-- A small forward cut, readable at medium sizes without becoming a separate arrow. -->
+    <path d="M708 410L764 342L820 410H784V492H744V410H708Z" fill="#FFFFFF" opacity="0.96"/>
+  </g>
+
+  <path d="M244 94H780C858 94 922 158 922 236" fill="none" stroke="#FFFFFF" stroke-width="18" stroke-linecap="round" opacity="0.12"/>
+</svg>

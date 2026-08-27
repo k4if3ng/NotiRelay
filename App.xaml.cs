@@ -3,6 +3,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using System;
 using NotiRelay.Services;
+using Windows.Globalization;
+using Windows.Storage;
 
 namespace NotiRelay
 {
@@ -17,6 +19,8 @@ namespace NotiRelay
 
 		public App()
 		{
+			ApplicationLanguages.PrimaryLanguageOverride =
+				ApplicationData.Current.LocalSettings.Values["AppLanguage"] as string ?? string.Empty;
 			InitializeComponent();
 		}
 

@@ -14,6 +14,7 @@ they are implementation slices, not separately released product versions.
 | Source allowlist and keyword filters | Implemented |
 | v1 UI and operational status | Implemented |
 | Navigation Shell, Pause relay, and bounded long-content handling | Implemented |
+| Fluent branding and English/Simplified Chinese localization | Implemented |
 | Publishing documentation and release metadata | Implemented |
 | Centralized release validation | Pending |
 

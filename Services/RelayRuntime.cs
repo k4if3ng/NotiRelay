@@ -20,7 +20,7 @@ namespace NotiRelay.Services
 	public sealed class RelayRuntime : INotifyPropertyChanged, IDisposable
 	{
 		private const int MaximumDisplayedNotificationCount = 100;
-		private const string TruncatedSuffix = "… [Truncated by NotiRelay]";
+		private static string TruncatedSuffix => LocalizationService.Get("Runtime_TruncatedSuffix");
 		private readonly DispatcherQueue _dispatcherQueue;
 		private readonly UserNotificationListener _listener = UserNotificationListener.Current;
 		private readonly HashSet<NotificationIdentity> _knownNotifications = new();
@@ -42,8 +42,8 @@ namespace NotiRelay.Services
 		private bool _initialized;
 		private bool _monitoring;
 		private bool _disposed;
-		private string _status = "Starting NotiRelay...";
-		private string _queueStatus = "Delivery queue starting...";
+		private string _status = LocalizationService.Get("Runtime_Starting");
+		private string _queueStatus = LocalizationService.Get("Runtime_QueueStarting");
 		private string _latestError = string.Empty;
 		private int _capturedCount;
 		private int _pendingCount;
@@ -76,7 +76,7 @@ namespace NotiRelay.Services
 			{
 				if (!Set(ref _isPaused, value)) return;
 				ApplicationData.Current.LocalSettings.Values["RelayPaused"] = value;
-				Status = value ? "Relay paused. Notifications are still captured but new Deliveries are not created." : "Relay resumed.";
+					Status = LocalizationService.Get(value ? "Runtime_Paused" : "Runtime_Resumed");
 			}
 		}
 		public string IncludeKeywords { get; private set; } = string.Empty;
@@ -106,7 +106,7 @@ namespace NotiRelay.Services
 			await RefreshQueueStatisticsAsync();
 			_dispatcher.Start();
 			if (AccessStatus == UserNotificationListenerAccessStatus.Allowed) await StartMonitoringAsync();
-			else Status = "Notification access is required.";
+				else Status = LocalizationService.Get("Runtime_AccessRequired");
 		}
 
 		public async Task RequestAccessAsync()
@@ -116,9 +116,9 @@ namespace NotiRelay.Services
 				var status = await _listener.RequestAccessAsync();
 				OnPropertyChanged(nameof(AccessStatus));
 				if (status == UserNotificationListenerAccessStatus.Allowed) await StartMonitoringAsync();
-				else Status = "Notification access was not granted.";
-			}
-			catch (Exception exception) { SetError($"Unable to request notification access: {exception.Message}"); }
+					else Status = LocalizationService.Get("Runtime_AccessNotGranted");
+				}
+				catch (Exception exception) { SetError(LocalizationService.Format("Runtime_AccessRequestFailed", exception.Message)); }
 		}
 
 		public Task RefreshAsync() => _monitoring ? SynchronizeAsync() : StartMonitoringAsync();
@@ -127,10 +127,10 @@ namespace NotiRelay.Services
 		{
 			var xml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
 			var text = xml.GetElementsByTagName("text");
-			text[0].AppendChild(xml.CreateTextNode("NotiRelay capture test"));
-			text[1].AppendChild(xml.CreateTextNode($"Generated at {DateTimeOffset.Now:T}."));
-			ToastNotificationManager.CreateToastNotifier().Show(new ToastNotification(xml));
-			Status = "A test notification was submitted to Windows.";
+				text[0].AppendChild(xml.CreateTextNode(LocalizationService.Get("Runtime_TestNotificationTitle")));
+				text[1].AppendChild(xml.CreateTextNode(LocalizationService.Format("Runtime_TestNotificationBody", DateTimeOffset.Now)));
+				ToastNotificationManager.CreateToastNotifier().Show(new ToastNotification(xml));
+				Status = LocalizationService.Get("Runtime_TestNotificationSubmitted");
 		}
 
 		public async Task UpdateSourceAsync(SourceApplication source)
@@ -156,30 +156,30 @@ namespace NotiRelay.Services
 		{
 			if (!TryBark(out var profile, out var error)) return error;
 			await _barkRepository.SaveAsync(profile.ServerBaseUri); _barkCredentials.SaveDeviceKey(profile.DeviceKey); _barkProfile = profile;
-			OnPropertyChanged(nameof(ConfiguredDestinationCount)); return "Bark profile saved.";
-		}
-		public async Task<string> TestBarkAsync() => TryBark(out var value, out var error) ? (await _barkAdapter.DeliverAsync(TestEnvelope(), value)).Message : error;
-		public async Task<string> ClearBarkAsync() { await _barkRepository.DeleteAsync(); _barkCredentials.RemoveDeviceKey(); _barkProfile = null; BarkServerUrl = "https://api.day.app"; BarkDeviceKey = ""; OnPropertyChanged(nameof(ConfiguredDestinationCount)); return "Bark profile cleared."; }
+				OnPropertyChanged(nameof(ConfiguredDestinationCount)); return LocalizationService.Get("Runtime_BarkSaved");
+			}
+			public async Task<string> TestBarkAsync() => TryBark(out var value, out var error) ? (await _barkAdapter.DeliverAsync(TestEnvelope(), value)).Message : error;
+			public async Task<string> ClearBarkAsync() { await _barkRepository.DeleteAsync(); _barkCredentials.RemoveDeviceKey(); _barkProfile = null; BarkServerUrl = "https://api.day.app"; BarkDeviceKey = ""; OnPropertyChanged(nameof(ConfiguredDestinationCount)); return LocalizationService.Get("Runtime_BarkCleared"); }
 
 		public async Task<string> SaveWebhookAsync()
 		{
 			if (!TryWebhook(out var profile, out var error)) return error;
 			await _settingsRepository.SaveAsync("webhook-default", new Dictionary<string, string> { ["Endpoint"] = profile.Endpoint.AbsoluteUri });
 			_credentials.Save("webhook-default", profile.BearerToken ?? ""); _webhookProfile = profile;
-			OnPropertyChanged(nameof(ConfiguredDestinationCount)); return "Generic Webhook profile saved.";
-		}
-		public async Task<string> TestWebhookAsync() => TryWebhook(out var value, out var error) ? (await _webhookAdapter.DeliverAsync(TestEnvelope(), value)).Message : error;
-		public async Task<string> ClearWebhookAsync() { await _settingsRepository.SaveAsync("webhook-default", new Dictionary<string, string>()); _credentials.Remove("webhook-default"); _webhookProfile = null; WebhookEndpoint = WebhookBearerToken = ""; OnPropertyChanged(nameof(ConfiguredDestinationCount)); return "Generic Webhook profile cleared."; }
+				OnPropertyChanged(nameof(ConfiguredDestinationCount)); return LocalizationService.Get("Runtime_WebhookSaved");
+			}
+			public async Task<string> TestWebhookAsync() => TryWebhook(out var value, out var error) ? (await _webhookAdapter.DeliverAsync(TestEnvelope(), value)).Message : error;
+			public async Task<string> ClearWebhookAsync() { await _settingsRepository.SaveAsync("webhook-default", new Dictionary<string, string>()); _credentials.Remove("webhook-default"); _webhookProfile = null; WebhookEndpoint = WebhookBearerToken = ""; OnPropertyChanged(nameof(ConfiguredDestinationCount)); return LocalizationService.Get("Runtime_WebhookCleared"); }
 
 		public async Task<string> SaveTelegramAsync()
 		{
 			if (!TryTelegram(out var profile, out var error)) return error;
 			await _settingsRepository.SaveAsync("telegram-default", new Dictionary<string, string> { ["ChatId"] = profile.ChatId });
 			_credentials.Save("telegram-default", profile.BotToken); _telegramProfile = profile;
-			OnPropertyChanged(nameof(ConfiguredDestinationCount)); return "Telegram profile saved.";
-		}
-		public async Task<string> TestTelegramAsync() => TryTelegram(out var value, out var error) ? (await _telegramAdapter.DeliverAsync(TestEnvelope(), value)).Message : error;
-		public async Task<string> ClearTelegramAsync() { await _settingsRepository.SaveAsync("telegram-default", new Dictionary<string, string>()); _credentials.Remove("telegram-default"); _telegramProfile = null; TelegramBotToken = TelegramChatId = ""; OnPropertyChanged(nameof(ConfiguredDestinationCount)); return "Telegram profile cleared."; }
+				OnPropertyChanged(nameof(ConfiguredDestinationCount)); return LocalizationService.Get("Runtime_TelegramSaved");
+			}
+			public async Task<string> TestTelegramAsync() => TryTelegram(out var value, out var error) ? (await _telegramAdapter.DeliverAsync(TestEnvelope(), value)).Message : error;
+			public async Task<string> ClearTelegramAsync() { await _settingsRepository.SaveAsync("telegram-default", new Dictionary<string, string>()); _credentials.Remove("telegram-default"); _telegramProfile = null; TelegramBotToken = TelegramChatId = ""; OnPropertyChanged(nameof(ConfiguredDestinationCount)); return LocalizationService.Get("Runtime_TelegramCleared"); }
 
 		public async Task ClearCompletedMetadataAsync() { await _deliveryRepository.ClearCompletedAsync(); await RefreshQueueStatisticsAsync(); }
 
@@ -206,16 +206,16 @@ namespace NotiRelay.Services
 			await _synchronizationLock.WaitAsync();
 			try
 			{
-				Status = "Establishing notification baseline..."; _knownNotifications.Clear(); CapturedNotifications.Clear(); CapturedCount = 0;
+					Status = LocalizationService.Get("Runtime_EstablishingBaseline"); _knownNotifications.Clear(); CapturedNotifications.Clear(); CapturedCount = 0;
 				var baseline = await _listener.GetNotificationsAsync(NotificationKinds.Toast);
 				await DiscoverSourcesAsync(baseline);
 				foreach (var item in baseline) try { _knownNotifications.Add(Identity(item)); } catch { }
 				_monitoring = true; _listener.NotificationChanged += Listener_NotificationChanged;
 				var current = await _listener.GetNotificationsAsync(NotificationKinds.Toast);
 				await CaptureAndRouteAsync(current);
-				Status = IsPaused ? "Monitoring; relay is paused." : $"Monitoring. {_knownNotifications.Count} notifications are in the current baseline.";
-			}
-			catch (Exception exception) { StopMonitoring(); SetError($"Unable to start monitoring: {exception.Message}"); }
+					Status = IsPaused ? LocalizationService.Get("Runtime_MonitoringPaused") : LocalizationService.Format("Runtime_MonitoringBaseline", _knownNotifications.Count);
+				}
+				catch (Exception exception) { StopMonitoring(); SetError(LocalizationService.Format("Runtime_MonitoringStartFailed", exception.Message)); }
 			finally { _synchronizationLock.Release(); }
 		}
 
@@ -232,9 +232,9 @@ namespace NotiRelay.Services
 				if (!_monitoring || AccessStatus != UserNotificationListenerAccessStatus.Allowed) return;
 				var current = await _listener.GetNotificationsAsync(NotificationKinds.Toast);
 				var added = await CaptureAndRouteAsync(current);
-				Status = IsPaused ? $"Monitoring; relay paused. {CapturedCount} captured this session." : $"Monitoring. {CapturedCount} captured this session; {added} added.";
-			}
-			catch (Exception exception) { SetError($"Unable to synchronize notifications: {exception.Message}"); }
+					Status = IsPaused ? LocalizationService.Format("Runtime_MonitoringSessionPaused", CapturedCount) : LocalizationService.Format("Runtime_MonitoringSession", CapturedCount, added);
+				}
+				catch (Exception exception) { SetError(LocalizationService.Format("Runtime_SynchronizeFailed", exception.Message)); }
 			finally { _synchronizationLock.Release(); }
 		}
 
@@ -299,7 +299,7 @@ namespace NotiRelay.Services
 			DestinationType.Bark when _barkProfile is { } value => await _barkAdapter.DeliverAsync(item.NotificationEnvelope, value, token),
 			DestinationType.GenericWebhook when _webhookProfile is { } value => await _webhookAdapter.DeliverAsync(item.NotificationEnvelope, value, token),
 			DestinationType.Telegram when _telegramProfile is { } value => await _telegramAdapter.DeliverAsync(item.NotificationEnvelope, value, token),
-			_ => DeliveryAttemptResult.Failure($"The {item.DestinationType} profile is unavailable.", false)
+				_ => DeliveryAttemptResult.Failure(LocalizationService.Format("Runtime_ProfileUnavailable", item.DestinationType), false)
 		};
 
 		private IReadOnlyList<DestinationType> ConfiguredTypes()
@@ -323,25 +323,25 @@ namespace NotiRelay.Services
 			var id = item.AppInfo.AppUserModelId; var name = item.AppInfo.DisplayInfo.DisplayName; if (string.IsNullOrWhiteSpace(name)) name = id;
 			return new CapturedNotification(id, name, title, body, item.CreationTime, item.Id);
 		}
-		private static NotificationEnvelope Envelope(CapturedNotification value) => new(string.IsNullOrWhiteSpace(value.Title) ? value.SourceApplicationName : value.Title, string.IsNullOrWhiteSpace(value.Body) ? "New Windows notification." : value.Body, value.SourceApplicationName, value.CreatedAt);
-		private static NotificationEnvelope TestEnvelope() => new("NotiRelay test", "The Destination Profile is working.", "NotiRelay", DateTimeOffset.Now);
+		private static NotificationEnvelope Envelope(CapturedNotification value) => new(string.IsNullOrWhiteSpace(value.Title) ? value.SourceApplicationName : value.Title, string.IsNullOrWhiteSpace(value.Body) ? LocalizationService.Get("Runtime_NewNotification") : value.Body, value.SourceApplicationName, value.CreatedAt);
+		private static NotificationEnvelope TestEnvelope() => new(LocalizationService.Get("Runtime_TestDeliveryTitle"), LocalizationService.Get("Runtime_TestDeliveryBody"), "NotiRelay", DateTimeOffset.Now);
 		private static NotificationIdentity Identity(UserNotification value) => new(value.AppInfo.AppUserModelId, value.Id, value.CreationTime);
 		private static NotificationIdentity Identity(CapturedNotification value) => new(value.SourceApplicationId, value.WindowsNotificationId, value.CreatedAt);
 
 		private bool TryBark(out BarkDestinationProfile profile, out string error)
 		{
 			var url = BarkServerUrl.Trim(); if (!url.EndsWith('/')) url += '/';
-			if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || (uri.Scheme != "https" && uri.Scheme != "http") || string.IsNullOrWhiteSpace(BarkDeviceKey)) { profile = null!; error = "Enter a valid Bark URL and device key."; return false; }
+				if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || (uri.Scheme != "https" && uri.Scheme != "http") || string.IsNullOrWhiteSpace(BarkDeviceKey)) { profile = null!; error = LocalizationService.Get("Runtime_InvalidBark"); return false; }
 			profile = new(uri, BarkDeviceKey.Trim()); error = ""; return true;
 		}
 		private bool TryWebhook(out GenericWebhookDestinationProfile profile, out string error)
 		{
-			if (!Uri.TryCreate(WebhookEndpoint.Trim(), UriKind.Absolute, out var uri) || (uri.Scheme != "https" && uri.Scheme != "http")) { profile = null!; error = "Enter a valid Webhook URL."; return false; }
+				if (!Uri.TryCreate(WebhookEndpoint.Trim(), UriKind.Absolute, out var uri) || (uri.Scheme != "https" && uri.Scheme != "http")) { profile = null!; error = LocalizationService.Get("Runtime_InvalidWebhook"); return false; }
 			profile = new(uri, WebhookBearerToken.Trim()); error = ""; return true;
 		}
 		private bool TryTelegram(out TelegramDestinationProfile profile, out string error)
 		{
-			if (string.IsNullOrWhiteSpace(TelegramBotToken) || string.IsNullOrWhiteSpace(TelegramChatId)) { profile = null!; error = "Enter a Telegram bot token and chat ID."; return false; }
+				if (string.IsNullOrWhiteSpace(TelegramBotToken) || string.IsNullOrWhiteSpace(TelegramChatId)) { profile = null!; error = LocalizationService.Get("Runtime_InvalidTelegram"); return false; }
 			profile = new(TelegramBotToken.Trim(), TelegramChatId.Trim()); error = ""; return true;
 		}
 

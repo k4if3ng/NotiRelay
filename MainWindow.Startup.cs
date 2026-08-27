@@ -1,4 +1,5 @@
 using Microsoft.UI.Xaml.Controls;
+using NotiRelay.Services;
 using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -37,13 +38,10 @@ namespace NotiRelay
 				var dialog = new ContentDialog
 				{
 					XamlRoot = ShellRoot.XamlRoot,
-					Title = "Start NotiRelay when you sign in?",
-					Content =
-						"NotiRelay can start hidden in the notification area so it can " +
-						"monitor new Windows notifications. You can change this later in " +
-						"Windows Startup Apps settings.",
-					PrimaryButtonText = "Start at sign-in",
-					CloseButtonText = "Not now",
+						Title = LocalizationService.Get("Startup_Title"),
+						Content = LocalizationService.Get("Startup_Content"),
+						PrimaryButtonText = LocalizationService.Get("Startup_Enable"),
+						CloseButtonText = LocalizationService.Get("Startup_NotNow"),
 					DefaultButton = ContentDialogButton.Primary
 				};
 
@@ -74,20 +72,17 @@ namespace NotiRelay
 		{
 			var message = startupTaskState switch
 			{
-				StartupTaskState.DisabledByUser =>
-					"Startup is disabled by your Windows Startup Apps setting. " +
-					"Enable NotiRelay there if you want it to start when you sign in.",
-				StartupTaskState.DisabledByPolicy =>
-					"Startup is disabled by Windows policy on this device.",
-				_ => "Windows did not enable the NotiRelay startup task."
+					StartupTaskState.DisabledByUser => LocalizationService.Get("Startup_DisabledByUser"),
+					StartupTaskState.DisabledByPolicy => LocalizationService.Get("Startup_DisabledByPolicy"),
+					_ => LocalizationService.Get("Startup_NotEnabled")
 			};
 
 			var dialog = new ContentDialog
 			{
 					XamlRoot = ShellRoot.XamlRoot,
-				Title = "Startup was not enabled",
-				Content = message,
-				CloseButtonText = "OK"
+					Title = LocalizationService.Get("Startup_UnavailableTitle"),
+					Content = message,
+					CloseButtonText = LocalizationService.Get("Common_OK")
 			};
 
 			await dialog.ShowAsync();

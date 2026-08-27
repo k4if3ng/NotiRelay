@@ -1,11 +1,11 @@
 using NotiRelay.Models;
+using NotiRelay.Services;
 using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using NotiRelay.Services;
 
 namespace NotiRelay.Destinations.Bark
 {
@@ -26,7 +26,7 @@ namespace NotiRelay.Destinations.Bark
 			try
 			{
 				var endpoint = new Uri(destinationProfile.ServerBaseUri, "push");
-					var suffix = "… [Truncated by NotiRelay]";
+					var suffix = LocalizationService.Get("Runtime_TruncatedSuffix");
 					var title = TextTruncator.ToUtf8Bytes(notificationEnvelope.Title, 256, suffix);
 					var remainingBodyBytes = Math.Max(0, 3000 - System.Text.Encoding.UTF8.GetByteCount(title));
 					var body = TextTruncator.ToUtf8Bytes(notificationEnvelope.Body, remainingBodyBytes, suffix);
@@ -43,7 +43,7 @@ namespace NotiRelay.Destinations.Bark
 				if (!response.IsSuccessStatusCode)
 				{
 						return DeliveryAttemptResult.Failure(
-							$"Bark returned HTTP {(int)response.StatusCode}.",
+							LocalizationService.Format("Bark_HttpError", (int)response.StatusCode),
 							(int)response.StatusCode >= 500 || (int)response.StatusCode == 429);
 				}
 
@@ -51,21 +51,21 @@ namespace NotiRelay.Destinations.Bark
 					cancellationToken: cancellationToken);
 
 				return barkResponse?.Code == 200
-					? DeliveryAttemptResult.Success("Bark accepted the Delivery.")
-						: DeliveryAttemptResult.Failure(
-							$"Bark returned application code {barkResponse?.Code ?? 0}.", false);
+					? DeliveryAttemptResult.Success(LocalizationService.Get("Bark_Accepted"))
+					: DeliveryAttemptResult.Failure(
+							LocalizationService.Format("Bark_ApplicationError", barkResponse?.Code ?? 0), false);
 			}
 			catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
 			{
-				return DeliveryAttemptResult.Failure("The Bark Delivery timed out.");
+				return DeliveryAttemptResult.Failure(LocalizationService.Get("Bark_Timeout"));
 			}
 			catch (HttpRequestException)
 			{
-				return DeliveryAttemptResult.Failure("The Bark server could not be reached.");
+				return DeliveryAttemptResult.Failure(LocalizationService.Get("Bark_Unreachable"));
 			}
 			catch (Exception)
 			{
-				return DeliveryAttemptResult.Failure("The Bark Delivery failed unexpectedly.");
+				return DeliveryAttemptResult.Failure(LocalizationService.Get("Bark_Unexpected"));
 			}
 		}
 

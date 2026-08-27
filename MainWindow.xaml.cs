@@ -18,10 +18,11 @@ namespace NotiRelay
 			ExitApplicationCommand = new RelayCommand(ExitApplication);
 			InitializeComponent();
 			ExtendsContentIntoTitleBar = true;
-			SetTitleBar(AppTitleBar);
-			AppWindow.Resize(new SizeInt32(1100, 720));
-			AppWindow.SetPresenter(AppWindowPresenterKind.Default);
-			InitializeTrayLifecycle();
+				SetTitleBar(AppTitleBar);
+				AppWindow.Resize(new SizeInt32(1100, 720));
+				AppWindow.SetPresenter(AppWindowPresenterKind.Default);
+				AppWindow.SetIcon("Assets/NotiRelay.ico");
+				InitializeTrayLifecycle();
 			Closed += MainWindow_Closed;
 		}
 
