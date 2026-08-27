@@ -14,7 +14,7 @@ namespace NotiRelay
 
 		private void InitializeTrayLifecycle()
 		{
-			NotificationAreaIcon.ForceCreate(enablesEfficiencyMode: false);
+			NotificationAreaIcon.ForceCreate(enablesEfficiencyMode: true);
 		}
 
 		internal void ShowAndActivate()
@@ -30,7 +30,7 @@ namespace NotiRelay
 
 		internal void HideToNotificationArea()
 		{
-			this.Hide(enableEfficiencyMode: false);
+			this.Hide(enableEfficiencyMode: true);
 		}
 
 		private void ExitApplication()

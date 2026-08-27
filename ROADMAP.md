@@ -16,7 +16,7 @@ they are implementation slices, not separately released product versions.
 | Navigation Shell, Pause relay, and bounded long-content handling | Implemented |
 | Fluent branding and English/Simplified Chinese localization | Implemented |
 | Publishing documentation and release metadata | Implemented |
-| Centralized release validation | Pending |
+| Centralized release validation | Complete |
 
 ## v1.0.0 Supported Scope
 

@@ -50,6 +50,8 @@ _Avoid_: Provider payload
 The application state in which new Windows notifications are captured and considered for filtering and routing.
 _Avoid_: Running, started
 
-**Delivery Paused**:
-The application state in which Deliveries remain durable but automatic Delivery Attempts are temporarily suspended.
-_Avoid_: Stopped
+**Relay Paused**:
+The application state in which Monitoring continues but newly Captured Notifications
+do not create Deliveries. Notifications captured while paused are not backfilled.
+Existing Outbox Items continue their automatic Delivery Attempts.
+_Avoid_: Delivery Paused, Stopped

@@ -24,7 +24,11 @@ namespace NotiRelay.Destinations.Telegram
 					$"https://api.telegram.org/bot{destinationProfile.BotToken}/sendMessage");
 				var suffix = LocalizationService.Get("Runtime_TruncatedSuffix");
 				var prefix = notificationEnvelope.Title + "\n";
-				var footer = "\n\n— " + notificationEnvelope.SourceApplicationName;
+				var sourceApplicationName = TextTruncator.ToTextElements(
+					notificationEnvelope.SourceApplicationName,
+					512,
+					suffix);
+				var footer = "\n\n— " + sourceApplicationName;
 				var bodyBudget = Math.Max(0, 4096 - new System.Globalization.StringInfo(prefix + footer).LengthInTextElements);
 				var body = TextTruncator.ToTextElements(notificationEnvelope.Body, bodyBudget, suffix);
 				using var response = await _httpClient.PostAsJsonAsync(endpoint, new
@@ -36,7 +40,7 @@ namespace NotiRelay.Destinations.Telegram
 					? DeliveryAttemptResult.Success(LocalizationService.Get("Telegram_Accepted"))
 					: DeliveryAttemptResult.Failure(
 						LocalizationService.Format("Telegram_HttpError", (int)response.StatusCode),
-						(int)response.StatusCode >= 500 || (int)response.StatusCode == 429);
+						(int)response.StatusCode >= 500 || (int)response.StatusCode is 408 or 429);
 			}
 			catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
 			{

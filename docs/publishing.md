@@ -1,5 +1,26 @@
 # Publishing Checklist
 
+## Local release-candidate commands
+
+```powershell
+dotnet build NotiRelay.slnx -c Release -p:Platform=x64
+dotnet build NotiRelay.slnx -c Release -p:Platform=ARM64
+dotnet publish NotiRelay.csproj -c Release -p:Platform=x64 `
+  -p:PublishProfile=win-x64 `
+  -p:GenerateAppxPackageOnBuild=true `
+  -p:AppxPackageSigningEnabled=false `
+  -p:AppxBundle=Never `
+  -p:AppxSymbolPackageEnabled=false `
+  -p:DebugSymbols=false `
+  -p:DebugType=None
+```
+
+The local command produces an unsigned test MSIX under `AppPackages/`. Store
+association or a trusted publisher certificate is required before distributing
+an installable package. Generated packages and certificates stay outside Git.
+
+## Store publication
+
 1. Reserve the NotiRelay product name in Partner Center.
 2. Associate the project with the Store so `Package.appxmanifest` receives the
    Store-managed Identity and Publisher values.

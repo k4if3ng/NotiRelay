@@ -44,7 +44,7 @@ namespace NotiRelay.Destinations.Bark
 				{
 						return DeliveryAttemptResult.Failure(
 							LocalizationService.Format("Bark_HttpError", (int)response.StatusCode),
-							(int)response.StatusCode >= 500 || (int)response.StatusCode == 429);
+							(int)response.StatusCode >= 500 || (int)response.StatusCode is 408 or 429);
 				}
 
 				var barkResponse = await response.Content.ReadFromJsonAsync<BarkPushResponse>(

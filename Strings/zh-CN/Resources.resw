@@ -80,7 +80,7 @@
   <data name="Runtime_TruncatedSuffix" xml:space="preserve"><value>… [已由 NotiRelay 截断]</value></data>
   <data name="Runtime_Starting" xml:space="preserve"><value>正在启动 NotiRelay...</value></data>
   <data name="Runtime_QueueStarting" xml:space="preserve"><value>正在启动投递队列...</value></data>
-  <data name="Runtime_Paused" xml:space="preserve"><value>中继已暂停。仍会捕获通知，但不会创建新的投递。</value></data>
+  <data name="Runtime_Paused" xml:space="preserve"><value>中继已暂停。仍会捕获通知，但不会创建新的投递；队列中的投递会继续处理。</value></data>
   <data name="Runtime_Resumed" xml:space="preserve"><value>中继已恢复。</value></data>
   <data name="Runtime_AccessRequired" xml:space="preserve"><value>需要通知访问权限。</value></data>
   <data name="Runtime_AccessNotGranted" xml:space="preserve"><value>未授予通知访问权限。</value></data>

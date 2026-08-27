@@ -180,27 +180,30 @@ namespace NotiRelay.Services
 		}
 
 		public Task ClearCompletedAsync(CancellationToken cancellationToken = default) =>
-			DeleteTerminalAsync("1=1", cancellationToken);
+			DeleteTerminalAsync(null, cancellationToken);
 
 		public Task RunMaintenanceAsync(CancellationToken cancellationToken = default) =>
-			DeleteTerminalAsync(
-				"EnqueuedAt < datetime('now','-30 days') OR Id NOT IN (SELECT Id FROM Deliveries WHERE Status IN ('Succeeded','Failed') ORDER BY rowid DESC LIMIT 5000)",
-				cancellationToken);
+			DeleteTerminalAsync(DateTimeOffset.UtcNow.AddDays(-30), cancellationToken);
 
-		private async Task DeleteTerminalAsync(string additionalPredicate, CancellationToken cancellationToken)
+		private async Task DeleteTerminalAsync(DateTimeOffset? cutoff, CancellationToken cancellationToken)
 		{
 			await _databaseLock.WaitAsync(cancellationToken);
 			try
 			{
 				await using var connection = await OpenAsync(cancellationToken);
 				using var transaction = connection.BeginTransaction();
+				var predicate = cutoff.HasValue
+					? "EnqueuedAt < $cutoff OR Id NOT IN (SELECT Id FROM Deliveries WHERE Status IN ('Succeeded','Failed') ORDER BY rowid DESC LIMIT 5000)"
+					: "1=1";
 				var attempts = connection.CreateCommand();
 				attempts.Transaction = transaction;
-				attempts.CommandText = $"DELETE FROM DeliveryAttempts WHERE DeliveryId IN (SELECT Id FROM Deliveries WHERE Status IN ('Succeeded','Failed') AND ({additionalPredicate}));";
+				attempts.CommandText = $"DELETE FROM DeliveryAttempts WHERE DeliveryId IN (SELECT Id FROM Deliveries WHERE Status IN ('Succeeded','Failed') AND ({predicate}));";
+				if (cutoff.HasValue) attempts.Parameters.AddWithValue("$cutoff", Format(cutoff.Value));
 				await attempts.ExecuteNonQueryAsync(cancellationToken);
 				var deliveries = connection.CreateCommand();
 				deliveries.Transaction = transaction;
-				deliveries.CommandText = $"DELETE FROM Deliveries WHERE Status IN ('Succeeded','Failed') AND ({additionalPredicate});";
+				deliveries.CommandText = $"DELETE FROM Deliveries WHERE Status IN ('Succeeded','Failed') AND ({predicate});";
+				if (cutoff.HasValue) deliveries.Parameters.AddWithValue("$cutoff", Format(cutoff.Value));
 				await deliveries.ExecuteNonQueryAsync(cancellationToken);
 				transaction.Commit();
 			}

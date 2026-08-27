@@ -80,7 +80,7 @@
   <data name="Runtime_TruncatedSuffix" xml:space="preserve"><value>… [Truncated by NotiRelay]</value></data>
   <data name="Runtime_Starting" xml:space="preserve"><value>Starting NotiRelay...</value></data>
   <data name="Runtime_QueueStarting" xml:space="preserve"><value>Delivery queue starting...</value></data>
-  <data name="Runtime_Paused" xml:space="preserve"><value>Relay paused. Notifications are still captured but new Deliveries are not created.</value></data>
+  <data name="Runtime_Paused" xml:space="preserve"><value>Relay paused. Notifications are still captured but new Deliveries are not created; queued Deliveries continue.</value></data>
   <data name="Runtime_Resumed" xml:space="preserve"><value>Relay resumed.</value></data>
   <data name="Runtime_AccessRequired" xml:space="preserve"><value>Notification access is required.</value></data>
   <data name="Runtime_AccessNotGranted" xml:space="preserve"><value>Notification access was not granted.</value></data>
