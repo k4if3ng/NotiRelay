@@ -7,8 +7,9 @@ Notification Center and relays them to user-configured external destinations.
 
 ## Status
 
-NotiRelay v1.0.0 relays newly arriving Windows notifications from explicitly
-enabled Source Applications to Bark, Generic Webhook, and Telegram.
+NotiRelay v1.0.0 is the current stable repository release. v1.1.0 is in active
+development and redesigns the forwarding experience around a Windows
+Settings-style interface and an explicit Notification forwarding state.
 
 The MVP focuses on:
 
@@ -65,7 +66,8 @@ not yet been validated on a physical ARM64 device.
 
 - [Domain language](CONTEXT.md)
 - [Roadmap](ROADMAP.md)
-- [Current v1.0.0 milestone](docs/milestones/v1.0.0.md)
+- [Active v1.1.0 milestone](docs/milestones/v1.1.0.md)
+- [Stable v1.0.0 milestone](docs/milestones/v1.0.0.md)
 - [Privacy](docs/privacy.md)
 - [Publishing](docs/publishing.md)
 - [Development workflow](docs/development-workflow.md)

@@ -19,6 +19,7 @@ namespace NotiRelay
 
 		public App()
 		{
+			DevelopmentDataResetService.ResetIfRequired();
 			ApplicationLanguages.PrimaryLanguageOverride =
 				ApplicationData.Current.LocalSettings.Values["AppLanguage"] as string ?? string.Empty;
 			InitializeComponent();

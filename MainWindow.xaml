@@ -6,7 +6,13 @@
     xmlns:tb="using:H.NotifyIcon"
     Title="NotiRelay">
     <Window.SystemBackdrop><MicaBackdrop /></Window.SystemBackdrop>
-    <Grid x:Name="ShellRoot" Loaded="ShellRoot_Loaded">
+    <Grid
+        x:Name="ShellRoot"
+        Loaded="ShellRoot_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Grid.Resources>
             <MenuFlyout x:Key="NotificationAreaContextMenu">
                 <MenuFlyoutItem x:Uid="TrayShow" Command="{x:Bind ShowMainWindowCommand}" />
@@ -14,36 +20,95 @@
                 <MenuFlyoutItem x:Uid="TrayExit" Command="{x:Bind ExitApplicationCommand}" />
             </MenuFlyout>
         </Grid.Resources>
+
         <tb:TaskbarIcon
-            x:Name="NotificationAreaIcon" Width="0" Height="0"
+            x:Name="NotificationAreaIcon"
+            Grid.Row="1"
+            Width="0"
+            Height="0"
             ContextFlyout="{StaticResource NotificationAreaContextMenu}"
-            CustomName="NotiRelay" LeftClickCommand="{x:Bind ShowMainWindowCommand}"
+            CustomName="NotiRelay"
             IconSource="/Assets/NotiRelay.ico"
-            NoLeftClickDelay="True" ToolTipText="NotiRelay" />
+            LeftClickCommand="{x:Bind ShowMainWindowCommand}"
+            NoLeftClickDelay="True"
+            ToolTipText="NotiRelay" />
+
+        <Grid
+            x:Name="AppTitleBar"
+            Grid.Row="0"
+            Height="32">
+            <StackPanel
+                x:Name="TitleBarBrandPanel"
+                Margin="16,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="8">
+                <Image
+                    Width="20"
+                    Height="20"
+                    AutomationProperties.AccessibilityView="Raw"
+                    Source="ms-appx:///Assets/Brand/NotiRelay.svg" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Text="NotiRelay" />
+            </StackPanel>
+        </Grid>
 
         <NavigationView
             x:Name="NavigationShell"
-            IsBackButtonVisible="Collapsed"
-            IsSettingsVisible="True"
-            IsTitleBarAutoPaddingEnabled="True"
-            PaneDisplayMode="Auto"
-            OpenPaneLength="220"
+            Grid.Row="1"
+            AlwaysShowHeader="False"
             CompactPaneLength="48"
-            SelectionChanged="NavigationShell_SelectionChanged">
-            <NavigationView.PaneHeader>
-                <StackPanel x:Name="AppTitleBar" Orientation="Horizontal" Spacing="10" Padding="4,0,0,0">
-                    <FontIcon Glyph="&#xE7F4;" FontSize="18" />
-                    <TextBlock Text="NotiRelay" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" />
-                </StackPanel>
-            </NavigationView.PaneHeader>
+            IsBackButtonVisible="Collapsed"
+            IsPaneToggleButtonVisible="False"
+            IsSettingsVisible="True"
+            IsTitleBarAutoPaddingEnabled="False"
+            OpenPaneLength="220"
+            ItemInvoked="NavigationShell_ItemInvoked"
+            PaneClosed="NavigationShell_PaneClosed"
+            PaneOpened="NavigationShell_PaneOpened"
+            PaneDisplayMode="Left">
+            <NavigationView.Resources>
+                <x:Double x:Key="NavigationViewItemOnLeftMinHeight">44</x:Double>
+            </NavigationView.Resources>
             <NavigationView.MenuItems>
-                <NavigationViewItem x:Uid="NavHome" Tag="home"><NavigationViewItem.Icon><SymbolIcon Symbol="Home" /></NavigationViewItem.Icon></NavigationViewItem>
+                <NavigationViewItem
+                    x:Name="NavigationPaneToggleItem"
+                    SelectsOnInvoked="False"
+                    Tag="navigation-toggle">
+                    <NavigationViewItem.Icon>
+                        <SymbolIcon Symbol="GlobalNavigationButton" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Name="HomeNavigationItem" x:Uid="NavHome" Tag="home"><NavigationViewItem.Icon><SymbolIcon Symbol="Home" /></NavigationViewItem.Icon></NavigationViewItem>
                 <NavigationViewItem x:Uid="NavSources" Tag="sources"><NavigationViewItem.Icon><SymbolIcon Symbol="People" /></NavigationViewItem.Icon></NavigationViewItem>
                 <NavigationViewItem x:Uid="NavDestinations" Tag="destinations"><NavigationViewItem.Icon><SymbolIcon Symbol="Send" /></NavigationViewItem.Icon></NavigationViewItem>
                 <NavigationViewItem x:Uid="NavFilters" Tag="filters"><NavigationViewItem.Icon><SymbolIcon Symbol="Filter" /></NavigationViewItem.Icon></NavigationViewItem>
                 <NavigationViewItem x:Uid="NavActivity" Tag="activity"><NavigationViewItem.Icon><SymbolIcon Symbol="Clock" /></NavigationViewItem.Icon></NavigationViewItem>
             </NavigationView.MenuItems>
-            <Frame x:Name="ContentFrame" />
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem
+                    x:Name="ForwardingStatusNavigationItem"
+                    x:Uid="NavForwardingStatus"
+                    SelectsOnInvoked="False"
+                    Tag="forwarding-status">
+                    <NavigationViewItem.Icon><SymbolIcon x:Name="ForwardingStatusIcon" Symbol="Sync" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
+            <Frame x:Name="ContentFrame">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition>
+                            <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                <EntranceNavigationTransitionInfo />
+                            </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                        </NavigationThemeTransition>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
         </NavigationView>
     </Grid>
 </Window>

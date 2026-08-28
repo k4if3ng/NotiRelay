@@ -1,8 +1,9 @@
 <Page x:Class="NotiRelay.Views.SourcesPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:NotiRelay.Controls"
     xmlns:models="using:NotiRelay.Models">
-    <Grid Padding="32" RowSpacing="16"><Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
-        <StackPanel Spacing="4"><TextBlock x:Uid="SourcesTitle" FontSize="28" FontWeight="SemiBold" /><TextBlock x:Uid="SourcesSubtitle" Opacity="0.7" /></StackPanel>
+    <Grid x:Name="PageRoot" Padding="20" RowSpacing="16"><Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="*" /></Grid.RowDefinitions>
+        <controls:PageHeader x:Uid="SourcesHeader" />
         <TextBox x:Uid="SourcesSearch" x:Name="SearchTextBox" Grid.Row="1" TextChanged="SearchTextBox_TextChanged" />
         <ListView Grid.Row="2" ItemsSource="{x:Bind FilteredSources}"><ListView.ItemTemplate><DataTemplate x:DataType="models:SourceApplication">
             <Grid Padding="8" ColumnSpacing="16"><Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
@@ -10,5 +11,11 @@
                 <ToggleSwitch x:Uid="SourceEnabled" Grid.Column="1" IsOn="{x:Bind IsEnabled, Mode=TwoWay}" Toggled="SourceToggleSwitch_Toggled" />
             </Grid>
         </DataTemplate></ListView.ItemTemplate></ListView>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Narrow"><VisualState.StateTriggers><AdaptiveTrigger MinWindowWidth="0" /></VisualState.StateTriggers></VisualState>
+                <VisualState x:Name="Wide"><VisualState.StateTriggers><AdaptiveTrigger MinWindowWidth="1008" /></VisualState.StateTriggers><VisualState.Setters><Setter Target="PageRoot.Padding" Value="32" /></VisualState.Setters></VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
 </Page>

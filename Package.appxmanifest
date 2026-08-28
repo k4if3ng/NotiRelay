@@ -12,7 +12,7 @@
   <Identity
     Name="82b780c3-1e89-4b2b-b8eb-4201f8b1ed81"
     Publisher="CN=kaifeng"
-    Version="1.0.0.0" />
+    Version="1.1.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="82b780c3-1e89-4b2b-b8eb-4201f8b1ed81" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

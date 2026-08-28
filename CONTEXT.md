@@ -46,12 +46,35 @@ _Avoid_: Queue message
 The provider-neutral content prepared from a Captured Notification for delivery to Destination Profiles.
 _Avoid_: Provider payload
 
-**Monitoring**:
-The application state in which new Windows notifications are captured and considered for filtering and routing.
-_Avoid_: Running, started
+**Forwarding**:
+The application capability that monitors for new Captured Notifications and creates
+Deliveries for notifications that satisfy the active Source Application, Filter, and
+Route policies.
+_Avoid_: Relay, Monitoring
 
-**Relay Paused**:
-The application state in which Monitoring continues but newly Captured Notifications
-do not create Deliveries. Notifications captured while paused are not backfilled.
-Existing Outbox Items continue their automatic Delivery Attempts.
-_Avoid_: Delivery Paused, Stopped
+**Forwarding Enabled**:
+The application state in which Forwarding accepts new Captured Notifications and
+the Outbox performs Delivery Attempts.
+_Avoid_: Relay resumed, Monitoring
+
+**Forwarding Disabled**:
+The application state in which new notifications are not captured, no new
+Deliveries are created, and the Outbox does not begin additional Delivery Attempts.
+Existing Outbox Items remain durable. Notifications that arrive while Forwarding is
+Disabled are not backfilled when Forwarding is enabled again.
+_Avoid_: Relay paused, Delivery paused
+
+## User-facing language
+
+Domain language remains precise in code and architecture. The interface uses simpler
+language for the same concepts.
+
+| Domain term | English UI | Simplified Chinese UI |
+| --- | --- | --- |
+| Forwarding | Notification forwarding | 通知转发 |
+| Source Application | App | 应用 |
+| Destination Profile | Destination / configuration | 目标 / 配置 |
+| Filter | Rule | 规则 |
+| Delivery | Send task | 发送任务 |
+| Delivery Attempt | Send attempt | 发送尝试 |
+| Outbox Item | Pending task | 待发送任务 |

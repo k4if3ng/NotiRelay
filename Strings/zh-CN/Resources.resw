@@ -6,14 +6,38 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
 
   <data name="AppDisplayName" xml:space="preserve"><value>NotiRelay</value></data>
-  <data name="AppDescription" xml:space="preserve"><value>将选定的 Windows 通知中继到外部目标。</value></data>
+  <data name="AppDescription" xml:space="preserve"><value>将选定的 Windows 通知转发到外部目标。</value></data>
   <data name="TrayShow.Text" xml:space="preserve"><value>显示 NotiRelay</value></data>
   <data name="TrayExit.Text" xml:space="preserve"><value>退出</value></data>
+  <data name="NavCollapseNavigation" xml:space="preserve"><value>收起导航</value></data>
+  <data name="NavExpandNavigation" xml:space="preserve"><value>展开导航</value></data>
   <data name="NavHome.Content" xml:space="preserve"><value>主页</value></data>
-  <data name="NavSources.Content" xml:space="preserve"><value>来源</value></data>
+  <data name="NavHome.ToolTipService.ToolTip" xml:space="preserve"><value>主页</value></data>
+  <data name="NavSources.Content" xml:space="preserve"><value>应用</value></data>
+  <data name="NavSources.ToolTipService.ToolTip" xml:space="preserve"><value>应用</value></data>
   <data name="NavDestinations.Content" xml:space="preserve"><value>目标</value></data>
-  <data name="NavFilters.Content" xml:space="preserve"><value>过滤器</value></data>
+  <data name="NavDestinations.ToolTipService.ToolTip" xml:space="preserve"><value>目标</value></data>
+  <data name="NavFilters.Content" xml:space="preserve"><value>规则</value></data>
+  <data name="NavFilters.ToolTipService.ToolTip" xml:space="preserve"><value>规则</value></data>
   <data name="NavActivity.Content" xml:space="preserve"><value>活动</value></data>
+  <data name="NavActivity.ToolTipService.ToolTip" xml:space="preserve"><value>活动</value></data>
+  <data name="NavForwardingStatus.Content" xml:space="preserve"><value>转发状态</value></data>
+  <data name="NavForwardingStatus.ToolTipService.ToolTip" xml:space="preserve"><value>转发状态</value></data>
+  <data name="NavForwardingEnabled" xml:space="preserve"><value>转发已开启</value></data>
+  <data name="NavForwardingDisabled" xml:space="preserve"><value>转发已关闭</value></data>
+
+  <data name="HomeHeader.Title" xml:space="preserve"><value>主页</value></data>
+  <data name="HomeHeader.Subtitle" xml:space="preserve"><value>通知转发状态与设置</value></data>
+  <data name="SourcesHeader.Title" xml:space="preserve"><value>应用通知</value></data>
+  <data name="SourcesHeader.Subtitle" xml:space="preserve"><value>选择需要转发通知的应用。新发现的应用默认关闭。</value></data>
+  <data name="DestinationsHeader.Title" xml:space="preserve"><value>转发目标</value></data>
+  <data name="DestinationsHeader.Subtitle" xml:space="preserve"><value>设置接收转发通知的服务。</value></data>
+  <data name="FiltersHeader.Title" xml:space="preserve"><value>筛选规则</value></data>
+  <data name="FiltersHeader.Subtitle" xml:space="preserve"><value>使用包含和排除关键词决定哪些通知可以转发。</value></data>
+  <data name="ActivityHeader.Title" xml:space="preserve"><value>转发活动</value></data>
+  <data name="ActivityHeader.Subtitle" xml:space="preserve"><value>查看近期发送状态和需要处理的问题。</value></data>
+  <data name="SettingsHeader.Title" xml:space="preserve"><value>设置</value></data>
+  <data name="SettingsHeader.Subtitle" xml:space="preserve"><value>管理系统集成和 NotiRelay 偏好。</value></data>
 
   <data name="HomeTitle.Text" xml:space="preserve"><value>主页</value></data>
   <data name="HomeSubtitle.Text" xml:space="preserve"><value>中继状态与快捷操作</value></data>

@@ -6,14 +6,38 @@
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms</value></resheader>
 
   <data name="AppDisplayName" xml:space="preserve"><value>NotiRelay</value></data>
-  <data name="AppDescription" xml:space="preserve"><value>Relay selected Windows notifications to external destinations.</value></data>
+  <data name="AppDescription" xml:space="preserve"><value>Forward selected Windows notifications to external destinations.</value></data>
   <data name="TrayShow.Text" xml:space="preserve"><value>Show NotiRelay</value></data>
   <data name="TrayExit.Text" xml:space="preserve"><value>Exit</value></data>
+  <data name="NavCollapseNavigation" xml:space="preserve"><value>Collapse navigation</value></data>
+  <data name="NavExpandNavigation" xml:space="preserve"><value>Expand navigation</value></data>
   <data name="NavHome.Content" xml:space="preserve"><value>Home</value></data>
-  <data name="NavSources.Content" xml:space="preserve"><value>Sources</value></data>
+  <data name="NavHome.ToolTipService.ToolTip" xml:space="preserve"><value>Home</value></data>
+  <data name="NavSources.Content" xml:space="preserve"><value>Apps</value></data>
+  <data name="NavSources.ToolTipService.ToolTip" xml:space="preserve"><value>Apps</value></data>
   <data name="NavDestinations.Content" xml:space="preserve"><value>Destinations</value></data>
-  <data name="NavFilters.Content" xml:space="preserve"><value>Filters</value></data>
+  <data name="NavDestinations.ToolTipService.ToolTip" xml:space="preserve"><value>Destinations</value></data>
+  <data name="NavFilters.Content" xml:space="preserve"><value>Rules</value></data>
+  <data name="NavFilters.ToolTipService.ToolTip" xml:space="preserve"><value>Rules</value></data>
   <data name="NavActivity.Content" xml:space="preserve"><value>Activity</value></data>
+  <data name="NavActivity.ToolTipService.ToolTip" xml:space="preserve"><value>Activity</value></data>
+  <data name="NavForwardingStatus.Content" xml:space="preserve"><value>Forwarding status</value></data>
+  <data name="NavForwardingStatus.ToolTipService.ToolTip" xml:space="preserve"><value>Forwarding status</value></data>
+  <data name="NavForwardingEnabled" xml:space="preserve"><value>Forwarding on</value></data>
+  <data name="NavForwardingDisabled" xml:space="preserve"><value>Forwarding off</value></data>
+
+  <data name="HomeHeader.Title" xml:space="preserve"><value>Home</value></data>
+  <data name="HomeHeader.Subtitle" xml:space="preserve"><value>Notification forwarding status and setup</value></data>
+  <data name="SourcesHeader.Title" xml:space="preserve"><value>App notifications</value></data>
+  <data name="SourcesHeader.Subtitle" xml:space="preserve"><value>Choose which apps can forward notifications. Newly discovered apps are off by default.</value></data>
+  <data name="DestinationsHeader.Title" xml:space="preserve"><value>Forwarding destinations</value></data>
+  <data name="DestinationsHeader.Subtitle" xml:space="preserve"><value>Configure services that receive forwarded notifications.</value></data>
+  <data name="FiltersHeader.Title" xml:space="preserve"><value>Forwarding rules</value></data>
+  <data name="FiltersHeader.Subtitle" xml:space="preserve"><value>Use include and exclude keywords to decide which notifications can be forwarded.</value></data>
+  <data name="ActivityHeader.Title" xml:space="preserve"><value>Forwarding activity</value></data>
+  <data name="ActivityHeader.Subtitle" xml:space="preserve"><value>Review recent send status and issues that need attention.</value></data>
+  <data name="SettingsHeader.Title" xml:space="preserve"><value>Settings</value></data>
+  <data name="SettingsHeader.Subtitle" xml:space="preserve"><value>Manage system integration and NotiRelay preferences.</value></data>
 
   <data name="HomeTitle.Text" xml:space="preserve"><value>Home</value></data>
   <data name="HomeSubtitle.Text" xml:space="preserve"><value>Relay status and quick actions</value></data>
