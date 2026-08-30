@@ -11,7 +11,7 @@
                 <controls:PageHeader x:Uid="DestinationsHeader" />
                 <StackPanel Style="{StaticResource CardStackStyle}">
                     <toolkit:SettingsExpander x:Name="BarkGroup" x:Uid="DestinationBarkGroup">
-                        <toolkit:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE774;" /></toolkit:SettingsExpander.HeaderIcon>
+                        <toolkit:SettingsExpander.HeaderIcon><FontIcon FontSize="{StaticResource StandardIconSize}" Glyph="&#xE774;" /></toolkit:SettingsExpander.HeaderIcon>
                         <toolkit:SettingsExpander.Content>
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource SpacingM}">
                                 <TextBlock x:Name="BarkHeaderStatusText" VerticalAlignment="Center" Style="{StaticResource DescriptionTextBlockStyle}" />
@@ -64,7 +64,7 @@
                     </toolkit:SettingsExpander>
 
                     <toolkit:SettingsExpander x:Name="WebhookGroup" x:Uid="DestinationWebhookGroup">
-                        <toolkit:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE71B;" /></toolkit:SettingsExpander.HeaderIcon>
+                        <toolkit:SettingsExpander.HeaderIcon><FontIcon FontSize="{StaticResource StandardIconSize}" Glyph="&#xE71B;" /></toolkit:SettingsExpander.HeaderIcon>
                         <toolkit:SettingsExpander.Content>
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource SpacingM}">
                                 <TextBlock x:Name="WebhookHeaderStatusText" VerticalAlignment="Center" Style="{StaticResource DescriptionTextBlockStyle}" />
@@ -117,7 +117,7 @@
                     </toolkit:SettingsExpander>
 
                     <toolkit:SettingsExpander x:Name="TelegramGroup" x:Uid="DestinationTelegramGroup">
-                        <toolkit:SettingsExpander.HeaderIcon><FontIcon Glyph="&#xE724;" /></toolkit:SettingsExpander.HeaderIcon>
+                        <toolkit:SettingsExpander.HeaderIcon><FontIcon FontSize="{StaticResource StandardIconSize}" Glyph="&#xE724;" /></toolkit:SettingsExpander.HeaderIcon>
                         <toolkit:SettingsExpander.Content>
                             <StackPanel Orientation="Horizontal" Spacing="{StaticResource SpacingM}">
                                 <TextBlock x:Name="TelegramHeaderStatusText" VerticalAlignment="Center" Style="{StaticResource DescriptionTextBlockStyle}" />

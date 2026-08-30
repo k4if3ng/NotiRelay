@@ -1,17 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Page
     x:Class="NotiRelay.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:NotiRelay.Controls">
-    <controls:PageLayout MaxContentWidth="900">
+    <controls:PageLayout MaxContentWidth="{StaticResource MaxContentWidth}">
         <controls:PageLayout.PageContent>
             <StackPanel Style="{StaticResource PageContentStackStyle}">
                 <controls:PageHeader x:Uid="SettingsHeader" />
-                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20"><StackPanel Spacing="10"><TextBlock x:Uid="SettingsSystem" FontSize="20" FontWeight="SemiBold" /><TextBlock x:Name="AccessStatusText" /><StackPanel Orientation="Horizontal" Spacing="8"><Button x:Uid="RequestNotificationAccess" Click="RequestAccessButton_Click" /><Button x:Uid="Refresh" Click="RefreshButton_Click" /></StackPanel><ToggleSwitch x:Uid="StartupAtSignIn" x:Name="StartupToggle" Toggled="StartupToggle_Toggled" /></StackPanel></Border>
-                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20"><StackPanel Spacing="10"><TextBlock x:Uid="SettingsLanguage" FontSize="20" FontWeight="SemiBold" /><ComboBox x:Name="LanguageComboBox" SelectionChanged="LanguageComboBox_SelectionChanged"><ComboBoxItem x:Uid="LanguageSystem" Tag="" /><ComboBoxItem x:Uid="LanguageEnglish" Tag="en-US" /><ComboBoxItem x:Uid="LanguageChinese" Tag="zh-CN" /></ComboBox></StackPanel></Border>
-                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20"><StackPanel Spacing="10"><TextBlock x:Uid="SettingsPrivacy" FontSize="20" FontWeight="SemiBold" /><TextBlock x:Uid="SettingsPrivacyDescription" TextWrapping="Wrap" /><Button x:Uid="ClearDeliveryMetadata" HorizontalAlignment="Left" Click="ClearMetadataButton_Click" /></StackPanel></Border>
-                <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8" Padding="20"><StackPanel><TextBlock x:Uid="SettingsAbout" FontSize="20" FontWeight="SemiBold" /><TextBlock Text="NotiRelay 1.1.0" /><TextBlock x:Uid="SettingsPlatform" Opacity="0.7" /></StackPanel></Border>
-                <InfoBar x:Name="SettingsInfoBar" IsOpen="False" IsClosable="True" />
+
+                <StackPanel Style="{StaticResource CardStackStyle}">
+                    <StackPanel Spacing="{StaticResource SpacingM}">
+                        <TextBlock x:Uid="SettingsStartupSection" Style="{StaticResource CardTitleTextBlockStyle}" />
+                        <Border Style="{StaticResource GroupCardBorderStyle}">
+                            <StackPanel>
+                                <Grid MinHeight="{StaticResource RowHeightSetting}" Padding="{StaticResource CardRowPadding}" ColumnSpacing="{StaticResource SpacingL}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{StaticResource CardIconColumnWidth}" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <FontIcon FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE768;" />
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
+                                        <TextBlock Text="{x:Bind StartupTitle}" Style="{StaticResource RowTitleTextBlockStyle}" />
+                                        <TextBlock x:Name="StartupDescriptionText" Text="{x:Bind StartupDescription}" Style="{StaticResource DescriptionTextBlockStyle}" />
+                                    </StackPanel>
+                                    <ToggleSwitch x:Name="StartupToggle" Grid.Column="2" MinWidth="0" OffContent="" OnContent="" Toggled="StartupToggle_Toggled" />
+                                </Grid>
+                                <Border Style="{StaticResource CardDividerStyle}" />
+                                <Grid MinHeight="{StaticResource RowHeightSetting}" Padding="{StaticResource CardRowPadding}" ColumnSpacing="{StaticResource SpacingL}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{StaticResource CardIconColumnWidth}" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <FontIcon FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE708;" />
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
+                                        <TextBlock Text="{x:Bind SilentStartTitle}" Style="{StaticResource RowTitleTextBlockStyle}" />
+                                        <TextBlock Text="{x:Bind SilentStartDescription}" Style="{StaticResource DescriptionTextBlockStyle}" />
+                                    </StackPanel>
+                                    <ToggleSwitch x:Name="SilentStartToggle" Grid.Column="2" MinWidth="0" OffContent="" OnContent="" Toggled="SilentStartToggle_Toggled" />
+                                </Grid>
+                                <Border Style="{StaticResource CardDividerStyle}" />
+                                <Grid MinHeight="{StaticResource RowHeightSetting}" Padding="{StaticResource CardRowPadding}" ColumnSpacing="{StaticResource SpacingL}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{StaticResource CardIconColumnWidth}" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <FontIcon FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE8BB;" />
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
+                                        <TextBlock Text="{x:Bind CloseActionTitle}" Style="{StaticResource RowTitleTextBlockStyle}" />
+                                        <TextBlock Text="{x:Bind CloseActionDescription}" Style="{StaticResource DescriptionTextBlockStyle}" />
+                                    </StackPanel>
+                                    <ComboBox x:Name="CloseActionSelector" x:Uid="CloseActionSelector" Grid.Column="2" VerticalAlignment="Center" SelectionChanged="CloseActionSelector_SelectionChanged" Style="{StaticResource SettingsComboBoxStyle}">
+                                        <ComboBoxItem x:Uid="CloseActionMinimize" />
+                                        <ComboBoxItem x:Uid="CloseActionExit" />
+                                        <ComboBoxItem x:Uid="CloseActionAsk" />
+                                    </ComboBox>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Spacing="{StaticResource SpacingM}">
+                        <TextBlock x:Uid="SettingsSystemSection" Style="{StaticResource CardTitleTextBlockStyle}" />
+                        <Border Style="{StaticResource GroupCardBorderStyle}">
+                            <StackPanel>
+                                <Grid MinHeight="{StaticResource RowHeightSetting}" Padding="{StaticResource CardRowPadding}" ColumnSpacing="{StaticResource SpacingL}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{StaticResource CardIconColumnWidth}" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <FontIcon FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE72E;" />
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
+                                        <TextBlock Text="{x:Bind NotificationAccessTitle}" Style="{StaticResource RowTitleTextBlockStyle}" />
+                                        <TextBlock x:Name="NotificationAccessDescriptionText" Style="{StaticResource DescriptionTextBlockStyle}" />
+                                    </StackPanel>
+                                    <Button x:Name="RequestAccessButton" x:Uid="RequestNotificationAccess" Grid.Column="2" VerticalAlignment="Center" Click="RequestAccessButton_Click" Style="{StaticResource SettingsActionButtonStyle}" />
+                                </Grid>
+                                <Border Style="{StaticResource CardDividerStyle}" />
+                                <Grid MinHeight="{StaticResource RowHeightSetting}" Padding="{StaticResource CardRowPadding}" ColumnSpacing="{StaticResource SpacingL}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{StaticResource CardIconColumnWidth}" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <FontIcon FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE774;" />
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
+                                        <TextBlock Text="{x:Bind LanguageTitle}" Style="{StaticResource RowTitleTextBlockStyle}" />
+                                        <TextBlock x:Name="LanguageDescriptionText" Text="{x:Bind LanguageDescription}" Style="{StaticResource DescriptionTextBlockStyle}" />
+                                    </StackPanel>
+                                    <ComboBox x:Name="LanguageSelector" Grid.Column="2" VerticalAlignment="Center" SelectionChanged="LanguageSelector_SelectionChanged" Style="{StaticResource SettingsComboBoxStyle}">
+                                        <ComboBoxItem x:Uid="LanguageSystem" Tag="" />
+                                        <ComboBoxItem x:Uid="LanguageEnglish" Tag="en-US" />
+                                        <ComboBoxItem x:Uid="LanguageChinese" Tag="zh-CN" />
+                                    </ComboBox>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+
+                    <StackPanel Spacing="{StaticResource SpacingM}">
+                        <TextBlock x:Uid="SettingsPrivacySection" Style="{StaticResource CardTitleTextBlockStyle}" />
+                        <Border Style="{StaticResource GroupCardBorderStyle}">
+                            <Grid MinHeight="{StaticResource RowHeightSetting}" Padding="{StaticResource CardRowPadding}" ColumnSpacing="{StaticResource SpacingL}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="{StaticResource CardIconColumnWidth}" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <FontIcon FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE74D;" />
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
+                                    <TextBlock Text="{x:Bind PrivacyTitle}" Style="{StaticResource RowTitleTextBlockStyle}" />
+                                    <TextBlock x:Name="PrivacyDescriptionText" Text="{x:Bind PrivacyDescription}" Style="{StaticResource DescriptionTextBlockStyle}" />
+                                </StackPanel>
+                                <Button x:Uid="ClearDeliveryMetadata" Grid.Column="2" VerticalAlignment="Center" Click="ClearMetadataButton_Click" Style="{StaticResource SettingsActionButtonStyle}" />
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
         </controls:PageLayout.PageContent>
     </controls:PageLayout>
