@@ -26,7 +26,6 @@ namespace NotiRelay.Views
 		{
 				InitializeComponent();
 				NavigationCacheMode = NavigationCacheMode.Required;
-				RefreshFilter();
 				Loaded += SourcesPage_Loaded;
 				Unloaded += SourcesPage_Unloaded;
 			}
@@ -91,7 +90,7 @@ namespace NotiRelay.Views
 			try
 			{
 					var discovered = await Runtime.DiscoverApplicationsAsync();
-					RefreshFilter();
+					ScheduleFilterRefresh();
 					RefreshStatusText.Text = $"✓ {LocalizationService.Format("Sources_DiscoveryComplete", discovered)}";
 					StartFeedbackTimer();
 			}
