@@ -60,9 +60,9 @@
                                     <TextBlock x:Name="BarkFeedbackText" Grid.Row="1" Grid.ColumnSpan="2" Height="{StaticResource ActionStatusSlotHeight}" MaxLines="2" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" VerticalAlignment="Center" Visibility="Collapsed" Style="{StaticResource DescriptionTextBlockStyle}" />
                                     <Grid x:Name="BarkActionButtons" Grid.ColumnSpan="2" MinWidth="{StaticResource DestinationActionGroupMinWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Center" ColumnSpacing="{StaticResource SpacingS}">
                                         <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
-                                        <Button x:Name="BarkSaveButton" x:Uid="SaveProfile" MinWidth="{StaticResource DestinationActionButtonMinWidth}" Click="BarkSaveButton_Click" Style="{StaticResource PrimaryActionButtonStyle}" />
-                                        <Button x:Name="BarkTestButton" x:Uid="SendTest" Grid.Column="1" MinWidth="{StaticResource DestinationActionButtonMinWidth}" Click="BarkTestButton_Click" Style="{StaticResource ActionButtonStyle}" />
-                                        <Button x:Name="BarkClearButton" x:Uid="ClearProfile" Grid.Column="2" MinWidth="{StaticResource DestinationActionButtonMinWidth}" Click="BarkClearButton_Click" Style="{StaticResource ActionButtonStyle}" />
+                                        <Button x:Name="BarkSaveButton" x:Uid="DestinationSaveAction" Click="BarkSaveButton_Click" Style="{StaticResource DestinationPrimaryActionButtonStyle}" />
+                                        <Button x:Name="BarkTestButton" x:Uid="DestinationTestAction" Grid.Column="1" Click="BarkTestButton_Click" Style="{StaticResource DestinationActionButtonStyle}" />
+                                        <Button x:Name="BarkClearButton" x:Uid="DestinationClearAction" Grid.Column="2" Click="BarkClearButton_Click" Style="{StaticResource DestinationActionButtonStyle}" />
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -121,9 +121,9 @@
                                     <TextBlock x:Name="WebhookFeedbackText" Grid.Row="1" Grid.ColumnSpan="2" Height="{StaticResource ActionStatusSlotHeight}" MaxLines="2" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" VerticalAlignment="Center" Visibility="Collapsed" Style="{StaticResource DescriptionTextBlockStyle}" />
                                     <Grid x:Name="WebhookActionButtons" Grid.ColumnSpan="2" MinWidth="{StaticResource DestinationActionGroupMinWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Center" ColumnSpacing="{StaticResource SpacingS}">
                                         <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
-                                        <Button x:Name="WebhookSaveButton" x:Uid="SaveProfile" MinWidth="{StaticResource DestinationActionButtonMinWidth}" Click="WebhookSaveButton_Click" Style="{StaticResource PrimaryActionButtonStyle}" />
-                                        <Button x:Name="WebhookTestButton" x:Uid="SendTest" Grid.Column="1" MinWidth="{StaticResource DestinationActionButtonMinWidth}" Click="WebhookTestButton_Click" Style="{StaticResource ActionButtonStyle}" />
-                                        <Button x:Name="WebhookClearButton" x:Uid="ClearProfile" Grid.Column="2" MinWidth="{StaticResource DestinationActionButtonMinWidth}" Click="WebhookClearButton_Click" Style="{StaticResource ActionButtonStyle}" />
+                                        <Button x:Name="WebhookSaveButton" x:Uid="DestinationSaveAction" Click="WebhookSaveButton_Click" Style="{StaticResource DestinationPrimaryActionButtonStyle}" />
+                                        <Button x:Name="WebhookTestButton" x:Uid="DestinationTestAction" Grid.Column="1" Click="WebhookTestButton_Click" Style="{StaticResource DestinationActionButtonStyle}" />
+                                        <Button x:Name="WebhookClearButton" x:Uid="DestinationClearAction" Grid.Column="2" Click="WebhookClearButton_Click" Style="{StaticResource DestinationActionButtonStyle}" />
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -182,9 +182,9 @@
                                     <TextBlock x:Name="TelegramFeedbackText" Grid.Row="1" Grid.ColumnSpan="2" Height="{StaticResource ActionStatusSlotHeight}" MaxLines="2" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" VerticalAlignment="Center" Visibility="Collapsed" Style="{StaticResource DescriptionTextBlockStyle}" />
                                     <Grid x:Name="TelegramActionButtons" Grid.ColumnSpan="2" MinWidth="{StaticResource DestinationActionGroupMinWidth}" HorizontalAlignment="Stretch" VerticalAlignment="Center" ColumnSpacing="{StaticResource SpacingS}">
                                         <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
-                                        <Button x:Name="TelegramSaveButton" x:Uid="SaveProfile" MinWidth="{StaticResource DestinationActionButtonMinWidth}" Click="TelegramSaveButton_Click" Style="{StaticResource PrimaryActionButtonStyle}" />
-                                        <Button x:Name="TelegramTestButton" x:Uid="SendTest" Grid.Column="1" MinWidth="{StaticResource DestinationActionButtonMinWidth}" Click="TelegramTestButton_Click" Style="{StaticResource ActionButtonStyle}" />
-                                        <Button x:Name="TelegramClearButton" x:Uid="ClearProfile" Grid.Column="2" MinWidth="{StaticResource DestinationActionButtonMinWidth}" Click="TelegramClearButton_Click" Style="{StaticResource ActionButtonStyle}" />
+                                        <Button x:Name="TelegramSaveButton" x:Uid="DestinationSaveAction" Click="TelegramSaveButton_Click" Style="{StaticResource DestinationPrimaryActionButtonStyle}" />
+                                        <Button x:Name="TelegramTestButton" x:Uid="DestinationTestAction" Grid.Column="1" Click="TelegramTestButton_Click" Style="{StaticResource DestinationActionButtonStyle}" />
+                                        <Button x:Name="TelegramClearButton" x:Uid="DestinationClearAction" Grid.Column="2" Click="TelegramClearButton_Click" Style="{StaticResource DestinationActionButtonStyle}" />
                                     </Grid>
                                 </Grid>
                             </Grid>

@@ -72,6 +72,12 @@
   <data name="SaveProfile.Content" xml:space="preserve"><value>保存</value></data>
   <data name="SendTest.Content" xml:space="preserve"><value>发送测试</value></data>
   <data name="ClearProfile.Content" xml:space="preserve"><value>清除配置</value></data>
+  <data name="DestinationSaveAction.Content" xml:space="preserve"><value>保存</value></data>
+  <data name="DestinationSaveAction.AutomationProperties.Name" xml:space="preserve"><value>保存目标配置</value></data>
+  <data name="DestinationTestAction.Content" xml:space="preserve"><value>测试</value></data>
+  <data name="DestinationTestAction.AutomationProperties.Name" xml:space="preserve"><value>发送测试通知</value></data>
+  <data name="DestinationClearAction.Content" xml:space="preserve"><value>清除</value></data>
+  <data name="DestinationClearAction.AutomationProperties.Name" xml:space="preserve"><value>清除目标配置</value></data>
   <data name="ClearProfileCard.Header" xml:space="preserve"><value>清除配置</value></data>
   <data name="ClearProfileCard.Description" xml:space="preserve"><value>删除此目标的连接信息；操作前会要求确认。</value></data>
 

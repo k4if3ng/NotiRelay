@@ -72,6 +72,12 @@
   <data name="SaveProfile.Content" xml:space="preserve"><value>Save</value></data>
   <data name="SendTest.Content" xml:space="preserve"><value>Send test</value></data>
   <data name="ClearProfile.Content" xml:space="preserve"><value>Clear configuration</value></data>
+  <data name="DestinationSaveAction.Content" xml:space="preserve"><value>Save</value></data>
+  <data name="DestinationSaveAction.AutomationProperties.Name" xml:space="preserve"><value>Save destination configuration</value></data>
+  <data name="DestinationTestAction.Content" xml:space="preserve"><value>Test</value></data>
+  <data name="DestinationTestAction.AutomationProperties.Name" xml:space="preserve"><value>Send test notification</value></data>
+  <data name="DestinationClearAction.Content" xml:space="preserve"><value>Clear</value></data>
+  <data name="DestinationClearAction.AutomationProperties.Name" xml:space="preserve"><value>Clear destination configuration</value></data>
   <data name="ClearProfileCard.Header" xml:space="preserve"><value>Clear configuration</value></data>
   <data name="ClearProfileCard.Description" xml:space="preserve"><value>Delete this destination's connection details. You will be asked to confirm.</value></data>
 
