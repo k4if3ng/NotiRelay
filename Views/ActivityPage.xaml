@@ -24,16 +24,17 @@
                             Padding="{StaticResource CardCommandRowPadding}"
                             ColumnSpacing="{StaticResource SpacingM}"
                             RowSpacing="{StaticResource SpacingS}">
-                            <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                             <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
-                            <TextBlock
-                                x:Name="ActivitySummaryText"
-                                MinHeight="{StaticResource InlineStatusSlotHeight}"
-                                AutomationProperties.LiveSetting="Polite"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource DescriptionTextBlockStyle}" />
+                            <StackPanel MinWidth="0" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
+                                <TextBlock Text="{x:Bind ActivityCardTitle}" Style="{StaticResource CardTitleTextBlockStyle}" />
+                                <TextBlock
+                                    x:Name="ActivitySummaryText"
+                                    MinHeight="{StaticResource InlineStatusSlotHeight}"
+                                    AutomationProperties.LiveSetting="Polite"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap"
+                                    Style="{StaticResource DescriptionTextBlockStyle}" />
+                            </StackPanel>
                             <Button
                                 x:Name="RefreshActivityButton"
                                 Grid.Column="1"
@@ -49,7 +50,7 @@
 
                         <Border Grid.Row="1" Style="{StaticResource CardDividerStyle}" />
 
-                        <Grid Grid.Row="2" MaxHeight="{StaticResource ListViewportMaxHeight}">
+                        <Grid Grid.Row="2" MinHeight="{StaticResource EmptyStateViewportMinHeight}" MaxHeight="{StaticResource ListViewportMaxHeight}">
                             <ScrollViewer Margin="{StaticResource PageScrollbarSafeInset}" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
                                 <ItemsRepeater x:Name="ActivityRepeater" ItemsSource="{x:Bind FilteredActivity}">
                                     <ItemsRepeater.Layout><StackLayout /></ItemsRepeater.Layout>

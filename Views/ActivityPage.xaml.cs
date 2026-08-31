@@ -17,7 +17,8 @@ namespace NotiRelay.Views
 			private bool _refreshInProgress;
 			private bool _refreshQueued;
 			private bool _showingRefreshError;
-			public string RefreshActivityLabel => LocalizationService.Get("ActivityRefresh.Content");
+				public string ActivityCardTitle => LocalizationService.Get("ActivityCardTitle.Text");
+				public string RefreshActivityLabel => LocalizationService.Get("ActivityRefresh.Content");
 
 		public ActivityPage()
 		{

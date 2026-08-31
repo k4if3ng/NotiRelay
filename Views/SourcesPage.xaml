@@ -27,22 +27,20 @@
                             Padding="{StaticResource CardCommandRowPadding}"
                             ColumnSpacing="{StaticResource SpacingM}"
                             RowSpacing="{StaticResource SpacingS}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock
-                                x:Name="SourcesSummaryText"
-                                MinHeight="{StaticResource InlineStatusSlotHeight}"
-                                AutomationProperties.LiveSetting="Polite"
-                                TextTrimming="CharacterEllipsis"
-                                TextWrapping="NoWrap"
-                                VerticalAlignment="Center"
-                                Style="{StaticResource DescriptionTextBlockStyle}" />
+                            <StackPanel MinWidth="0" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
+                                <TextBlock Text="{x:Bind SourcesCardTitle}" Style="{StaticResource CardTitleTextBlockStyle}" />
+                                <TextBlock
+                                    x:Name="SourcesSummaryText"
+                                    MinHeight="{StaticResource InlineStatusSlotHeight}"
+                                    AutomationProperties.LiveSetting="Polite"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap"
+                                    Style="{StaticResource DescriptionTextBlockStyle}" />
+                            </StackPanel>
                             <Button
                                 x:Name="RefreshApplicationsButton"
                                 Grid.Column="1"
@@ -81,7 +79,7 @@
 
                         <Border Grid.Row="3" Style="{StaticResource CardDividerStyle}" />
 
-                        <Grid Grid.Row="4" MaxHeight="{StaticResource ListViewportMaxHeight}">
+                        <Grid Grid.Row="4" MinHeight="{StaticResource EmptyStateViewportMinHeight}" MaxHeight="{StaticResource ListViewportMaxHeight}">
                             <ScrollViewer Margin="{StaticResource PageScrollbarSafeInset}" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
                                 <ItemsRepeater x:Name="SourcesRepeater" ItemsSource="{x:Bind FilteredSources}">
                                     <ItemsRepeater.Layout><StackLayout /></ItemsRepeater.Layout>

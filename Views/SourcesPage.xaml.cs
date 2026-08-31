@@ -23,7 +23,8 @@ namespace NotiRelay.Views
 				private bool _synchronizingSources;
 				private bool _showingFeedback;
 
-			public string RefreshApplicationsLabel => LocalizationService.Get("SourcesRefresh.Content");
+				public string SourcesCardTitle => LocalizationService.Get("SourcesCardTitle.Text");
+				public string RefreshApplicationsLabel => LocalizationService.Get("SourcesRefresh.Content");
 
 		public SourcesPage()
 		{

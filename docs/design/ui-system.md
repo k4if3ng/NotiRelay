@@ -207,7 +207,7 @@ fixed status slot; field validation stays immediately below its field.
 | Exclusive choice in a setting | `ComboBox` | At every cardinality, including three. Settings rows read as a list; a segmented control in one of them is a visual exception with no meaning. |
 | Filtering a list | `Segmented` | Apps (All / Enabled). Activity filtering is deferred until its event model is designed. |
 | Free text | `TextBox` | |
-| Secret | `PasswordBox` with an icon-only trailing reveal action | The reveal glyph stays inside the field bounds; its tooltip and automation name describe Show/Hide without widening the editor. |
+| Secret | Native `PasswordBox` with `PasswordRevealMode="Peek"` | Press and hold the native trailing reveal button. The editor keeps identical outer bounds in hidden and revealed states; no persistent custom toggle is added. |
 | Multi-value set | `TextBox` + add button, values as chips in `ItemsRepeater` + `WrapLayout` | `ItemsWrapGrid` is not valid outside `ListViewBase` |
 | Primary action in a card | `Button` with `AccentButtonStyle` | One per card |
 | Page-level or card-level secondary action | Borderless button, 16 px `FontIcon` + text, `TitleBarIconButtonStyle` grammar | A bordered `Button` floating on a card reads as a stray box; text alone has no affordance |
@@ -217,8 +217,9 @@ fixed status slot; field validation stays immediately below its field.
 
 - Toggles, filters, and dropdown choices apply immediately.
 - Text and secret fields require explicit Save. Save is disabled until the card
-  validates. Unsaved, progress, success, and operation-error states use a fixed status
-  slot in the owning footer so feedback never changes layout height.
+  validates. Unsaved, progress, success, and operation-error states use a fixed left
+  slot in the owning one-line footer; equal-width short action buttons occupy a stable
+  right slot so feedback never changes layout height or alignment.
 - Leaving the page with unsaved edits still prompts.
 
 Windows Settings uses the same split — toggles are immediate, proxy and Wi-Fi
@@ -359,24 +360,20 @@ card. A second card lists the three most recent sends with a secondary action to
 Activity. The four shortcut rows that duplicated the navigation pane stay deleted.
 
 **Apps** — a plain page title followed by one card. The card begins with a compact
-68 px command row: its stable left slot shows the total/enabled summary when idle and
-discovery progress/result when active; a borderless icon-and-text Discover apps action
-sits at the right. Search plus an All/Enabled `Segmented` occupy the next row, followed
-by the list at list density. The card grows with a short list and gives only the list a
-bounded nested scroll surface when the collection is long.
+68 px functional header: a vertically centred title `Application list` / `应用列表`
+and total/enabled or discovery-status description at the left, plus a borderless
+icon-and-text Discover apps action at the right. Search plus an All/Enabled `Segmented`
+occupy the next row, followed by the list at list density. The list/empty viewport has
+a stable 180 px minimum and a bounded nested scroll surface when the collection is long.
 
 **Destinations** — one page, three `SettingsExpander` cards. Header is icon, name,
 status, enable toggle, chevron. **Configured and healthy destinations collapse;
-unconfigured or failing ones expand.** Body fields use a bounded shared label column
-and a stretching editor column so wide cards do not turn the label column into empty
-space. Below the card threshold the label column contracts while labels and inputs stay
-on one row. Secret editors keep the same outer bounds as ordinary inputs and provide a
-persistent icon-only Show/Hide action as an internal trailing adornment. Each secret resets to hidden when its card collapses,
-the page is left, the window deactivates, or the value is saved, cleared, or reloaded.
-The footer keeps equal-sized Save, Send test, and Clear configuration buttons on one
-right-aligned row. Its bounded action group can widen within the available compact
-surface; transient status appears in a separate reserved row below it. Clear remains
-secondary and confirmed.
+unconfigured or failing ones expand.** Body fields use a 220 px shared label column,
+16 px gap, and a stretching editor column; the label column contracts to 140 px in the
+compact tier while labels and 32 px-high inputs stay on one row. Native `PasswordBox`
+Peek provides press-and-hold reveal without changing editor width. The footer is one
+line: a fixed-status slot at the left and a fixed right-aligned group of equal-sized
+Save, Test, and Clear buttons. Clear remains secondary and confirmed.
 
 **Rules** — two always-visible, non-collapsible group cards, Include and Exclude, each
 with an independently persisted group-level enable toggle. Body is a full-width input
@@ -386,16 +383,21 @@ removable chip. Disabling a group preserves its chips but ignores them at runtim
 Exclude wins when both groups match. The precedence explanation belongs to the Exclude
 card's description.
 
-**Activity** — Slice 5A keeps the existing event list. Its event model, grouping, and
-filtering belong to Slice 5B; do not add a provisional All/Failed split.
+**Activity** — the card begins with a vertically centred functional header: `Send
+history` / `发送记录`, its live summary, and the Refresh command. Its list/empty viewport
+has the same 180 px minimum as Apps. Slice 5A keeps the existing event list. Its event
+model, grouping, and filtering belong to Slice 5B; do not add a provisional All/Failed split.
 
 **Settings** — three always-visible, non-collapsible group cards whose section title is
 inside the card: Startup and close (Start at sign-in, Silent start, Close action),
 System (notification access and a language `ComboBox`), and Privacy and data. The
 privacy row is named for its concrete clear-records action rather than repeating the
-card title. Accessory controls share an aligned outer slot and remain on the same row at
-every supported width; native internal alignment is preserved (`ComboBox` values left
-aligned, button labels centred). Close action offers Minimize to system
+card title. Accessory controls remain on the same row at every supported width, but
+alignment is type-specific: ComboBoxes are 220 px (160 compact), action buttons are
+160 px (128 compact), and native internal alignment is preserved (`ComboBox` values
+left aligned, button labels centred). Decorative row icons use a restrained 16 px
+secondary colour; startup and close behaviour use semantic system/window glyphs rather
+than a Play triangle or prominent X. Close action offers Minimize to system
 tray, Exit, and Ask every time. The ask dialog has Minimize to system tray as primary,
 Exit as secondary, Cancel, and an optional Remember my choice check box. Silent Start
 is independent from Start at sign-in and also applies to manual launch. About, GitHub,

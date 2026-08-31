@@ -26,6 +26,7 @@
 
   <data name="HomeHeader.Title" xml:space="preserve"><value>主页</value></data>
     <data name="SourcesHeader.Title" xml:space="preserve"><value>应用</value></data>
+  <data name="SourcesCardTitle.Text" xml:space="preserve"><value>应用列表</value></data>
     <data name="SourcesRefresh.Content" xml:space="preserve"><value>发现应用</value></data>
   <data name="Sources_Summary" xml:space="preserve"><value>共 {0} 个应用 · 已启用 {1} 个</value></data>
   <data name="Sources_DiscoveryComplete" xml:space="preserve"><value>应用发现完成，新发现 {0} 个应用。</value></data>
@@ -49,6 +50,7 @@
   <data name="AddKeyword.Content" xml:space="preserve"><value>添加</value></data>
   <data name="RemoveKeyword.AutomationProperties.Name" xml:space="preserve"><value>删除关键词</value></data>
   <data name="ActivityHeader.Title" xml:space="preserve"><value>活动</value></data>
+  <data name="ActivityCardTitle.Text" xml:space="preserve"><value>发送记录</value></data>
     <data name="ActivityRecentTitle.Text" xml:space="preserve"><value>最近发送</value></data>
   <data name="ActivityRefresh.Content" xml:space="preserve"><value>刷新</value></data>
   <data name="ActivityEmptyTitle.Text" xml:space="preserve"><value>还没有发送活动</value></data>
@@ -74,10 +76,13 @@
   <data name="ClearProfile.Content" xml:space="preserve"><value>清除配置</value></data>
   <data name="DestinationSaveAction.Content" xml:space="preserve"><value>保存</value></data>
   <data name="DestinationSaveAction.AutomationProperties.Name" xml:space="preserve"><value>保存目标配置</value></data>
+  <data name="DestinationSaveAction.ToolTipService.ToolTip" xml:space="preserve"><value>保存目标配置</value></data>
   <data name="DestinationTestAction.Content" xml:space="preserve"><value>测试</value></data>
   <data name="DestinationTestAction.AutomationProperties.Name" xml:space="preserve"><value>发送测试通知</value></data>
+  <data name="DestinationTestAction.ToolTipService.ToolTip" xml:space="preserve"><value>发送测试通知</value></data>
   <data name="DestinationClearAction.Content" xml:space="preserve"><value>清除</value></data>
   <data name="DestinationClearAction.AutomationProperties.Name" xml:space="preserve"><value>清除目标配置</value></data>
+  <data name="DestinationClearAction.ToolTipService.ToolTip" xml:space="preserve"><value>清除目标配置</value></data>
   <data name="ClearProfileCard.Header" xml:space="preserve"><value>清除配置</value></data>
   <data name="ClearProfileCard.Description" xml:space="preserve"><value>删除此目标的连接信息；操作前会要求确认。</value></data>
 

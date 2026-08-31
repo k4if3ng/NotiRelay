@@ -17,7 +17,7 @@
                             <Grid MinHeight="{StaticResource RowHeightSetting}" Padding="{StaticResource CardRowPadding}" ColumnSpacing="{StaticResource SpacingL}" RowSpacing="{StaticResource SpacingS}" SizeChanged="SettingRow_SizeChanged">
                                 <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="{StaticResource CardIconColumnWidth}" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
-                                <FontIcon AutomationProperties.AccessibilityView="Raw" FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE768;" />
+                                <FontIcon AutomationProperties.AccessibilityView="Raw" Glyph="&#xE7E8;" Style="{StaticResource SettingsRowIconStyle}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
                                     <TextBlock Text="{x:Bind StartupTitle}" Style="{StaticResource RowTitleTextBlockStyle}" />
                                     <TextBlock x:Name="StartupDescriptionText" Text="{x:Bind StartupDescription}" Style="{StaticResource DescriptionTextBlockStyle}" />
@@ -28,7 +28,7 @@
                             <Grid MinHeight="{StaticResource RowHeightSetting}" Padding="{StaticResource CardRowPadding}" ColumnSpacing="{StaticResource SpacingL}" RowSpacing="{StaticResource SpacingS}" SizeChanged="SettingRow_SizeChanged">
                                 <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="{StaticResource CardIconColumnWidth}" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
-                                <FontIcon AutomationProperties.AccessibilityView="Raw" FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE708;" />
+                                <FontIcon AutomationProperties.AccessibilityView="Raw" Glyph="&#xE708;" Style="{StaticResource SettingsRowIconStyle}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
                                     <TextBlock Text="{x:Bind SilentStartTitle}" Style="{StaticResource RowTitleTextBlockStyle}" />
                                     <TextBlock Text="{x:Bind SilentStartDescription}" Style="{StaticResource DescriptionTextBlockStyle}" />
@@ -39,7 +39,7 @@
                             <Grid MinHeight="{StaticResource RowHeightSetting}" Padding="{StaticResource CardRowPadding}" ColumnSpacing="{StaticResource SpacingL}" RowSpacing="{StaticResource SpacingS}" SizeChanged="SettingRow_SizeChanged">
                                 <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="{StaticResource CardIconColumnWidth}" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
-                                <FontIcon AutomationProperties.AccessibilityView="Raw" FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE8BB;" />
+                                <FontIcon AutomationProperties.AccessibilityView="Raw" Glyph="&#xE770;" Style="{StaticResource SettingsRowIconStyle}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
                                     <TextBlock Text="{x:Bind CloseActionTitle}" Style="{StaticResource RowTitleTextBlockStyle}" />
                                     <TextBlock Text="{x:Bind CloseActionDescription}" Style="{StaticResource DescriptionTextBlockStyle}" />
@@ -60,7 +60,7 @@
                             <Grid MinHeight="{StaticResource RowHeightSetting}" Padding="{StaticResource CardRowPadding}" ColumnSpacing="{StaticResource SpacingL}" RowSpacing="{StaticResource SpacingS}" SizeChanged="SettingRow_SizeChanged">
                                 <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="{StaticResource CardIconColumnWidth}" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
-                                <FontIcon AutomationProperties.AccessibilityView="Raw" FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE72E;" />
+                                <FontIcon AutomationProperties.AccessibilityView="Raw" Glyph="&#xE72E;" Style="{StaticResource SettingsRowIconStyle}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
                                     <TextBlock Text="{x:Bind NotificationAccessTitle}" Style="{StaticResource RowTitleTextBlockStyle}" />
                                     <TextBlock x:Name="NotificationAccessDescriptionText" Style="{StaticResource DescriptionTextBlockStyle}" />
@@ -71,7 +71,7 @@
                             <Grid MinHeight="{StaticResource RowHeightSetting}" Padding="{StaticResource CardRowPadding}" ColumnSpacing="{StaticResource SpacingL}" RowSpacing="{StaticResource SpacingS}" SizeChanged="SettingRow_SizeChanged">
                                 <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="{StaticResource CardIconColumnWidth}" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
-                                <FontIcon AutomationProperties.AccessibilityView="Raw" FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE774;" />
+                                <FontIcon AutomationProperties.AccessibilityView="Raw" Glyph="&#xE774;" Style="{StaticResource SettingsRowIconStyle}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
                                     <TextBlock Text="{x:Bind LanguageTitle}" Style="{StaticResource RowTitleTextBlockStyle}" />
                                     <TextBlock x:Name="LanguageDescriptionText" Text="{x:Bind LanguageDescription}" Style="{StaticResource DescriptionTextBlockStyle}" />
@@ -92,7 +92,7 @@
                             <Grid MinHeight="{StaticResource RowHeightSetting}" Padding="{StaticResource CardRowPadding}" ColumnSpacing="{StaticResource SpacingL}" RowSpacing="{StaticResource SpacingS}" SizeChanged="SettingRow_SizeChanged">
                                 <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions><ColumnDefinition Width="{StaticResource CardIconColumnWidth}" /><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
-                                <FontIcon AutomationProperties.AccessibilityView="Raw" FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE74D;" />
+                                <FontIcon AutomationProperties.AccessibilityView="Raw" Glyph="&#xE74D;" Style="{StaticResource SettingsRowIconStyle}" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
                                     <TextBlock x:Uid="SettingsPrivacyActionTitle" Style="{StaticResource RowTitleTextBlockStyle}" />
                                     <TextBlock x:Name="PrivacyDescriptionText" Text="{x:Bind PrivacyDescription}" Style="{StaticResource DescriptionTextBlockStyle}" />

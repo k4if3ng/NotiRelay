@@ -253,13 +253,21 @@ public sealed partial class SettingsPage : Page
         if (accessory is ToggleSwitch)
         {
             accessory.MinWidth = 0;
+            accessory.Width = double.NaN;
             accessory.HorizontalAlignment = HorizontalAlignment.Right;
         }
-        else
+        else if (accessory is ComboBox)
         {
-            accessory.MinWidth = narrow
-                ? (double)Application.Current.Resources["SettingsAccessoryCompactMinWidth"]
-                : (double)Application.Current.Resources["SettingsAccessoryMinWidth"];
+            accessory.Width = narrow
+                ? (double)Application.Current.Resources["SettingsComboBoxCompactWidth"]
+                : (double)Application.Current.Resources["SettingsComboBoxWidth"];
+            accessory.HorizontalAlignment = HorizontalAlignment.Right;
+        }
+        else if (accessory is Button)
+        {
+            accessory.Width = narrow
+                ? (double)Application.Current.Resources["SettingsButtonCompactWidth"]
+                : (double)Application.Current.Resources["SettingsButtonWidth"];
             accessory.HorizontalAlignment = HorizontalAlignment.Right;
         }
     }
