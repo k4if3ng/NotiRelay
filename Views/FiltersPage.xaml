@@ -12,13 +12,14 @@
                 <StackPanel Style="{StaticResource CardStackStyle}">
                     <Border Style="{StaticResource GroupCardBorderStyle}">
                         <StackPanel>
-                            <Grid Padding="{StaticResource CardHeaderPadding}" ColumnSpacing="{StaticResource SpacingL}">
+                            <Grid Padding="{StaticResource CardHeaderPadding}" ColumnSpacing="{StaticResource SpacingL}" RowSpacing="{StaticResource SpacingS}">
+                                <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="{StaticResource CardIconColumnWidth}" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <FontIcon FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE73E;" />
+                                <FontIcon AutomationProperties.AccessibilityView="Raw" FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE73E;" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
                                     <TextBlock x:Uid="FiltersIncludeTitle" Style="{StaticResource CardTitleTextBlockStyle}" />
                                     <TextBlock x:Uid="FiltersIncludeDescription" Style="{StaticResource DescriptionTextBlockStyle}" />
@@ -35,15 +36,16 @@
                             </Grid>
                             <Border Style="{StaticResource CardDividerStyle}" />
                             <StackPanel Padding="{StaticResource CardContentPadding}" Style="{StaticResource CardContentStackStyle}">
-                                <Grid ColumnSpacing="{StaticResource SpacingS}">
+                                <Grid x:Name="IncludeInputRow" ColumnSpacing="{StaticResource SpacingS}" RowSpacing="{StaticResource SpacingS}">
+                                    <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBox x:Name="IncludeKeywordTextBox" x:Uid="FiltersIncludeInput" KeyDown="IncludeKeywordTextBox_KeyDown" />
-                                    <Button x:Uid="AddKeyword" Grid.Column="1" Height="{StaticResource ActionButtonHeight}" Click="AddIncludeKeywordButton_Click" />
+                                    <Button x:Uid="AddKeyword" Grid.Column="1" Click="AddIncludeKeywordButton_Click" Style="{StaticResource ActionButtonStyle}" />
                                 </Grid>
-                                <TextBlock x:Name="IncludeFeedbackText" Height="{StaticResource ActionStatusSlotHeight}" MaxLines="2" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource DescriptionTextBlockStyle}" />
+                                <TextBlock x:Name="IncludeFeedbackText" Height="{StaticResource ActionStatusSlotHeight}" AutomationProperties.LiveSetting="Assertive" MaxLines="2" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource DescriptionTextBlockStyle}" />
                                 <TextBlock x:Name="IncludeEmptyState" x:Uid="FiltersIncludeEmpty" Style="{StaticResource DescriptionTextBlockStyle}" />
                                 <ItemsRepeater ItemsSource="{x:Bind IncludeKeywords}">
                                     <ItemsRepeater.Layout>
@@ -51,9 +53,9 @@
                                     </ItemsRepeater.Layout>
                                     <ItemsRepeater.ItemTemplate>
                                         <DataTemplate>
-                                            <Border MinHeight="{StaticResource KeywordChipMinHeight}" Padding="{StaticResource KeywordChipPadding}" Background="{ThemeResource SubtleFillColorSecondaryBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="{StaticResource ThinBorderThickness}" CornerRadius="{StaticResource ChipCornerRadius}">
+                                            <Border MinHeight="{StaticResource KeywordChipMinHeight}" MaxWidth="{StaticResource KeywordChipMaxWidth}" Padding="{StaticResource KeywordChipPadding}" Background="{ThemeResource ControlFillColorSecondaryBrush}" BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}" BorderThickness="{StaticResource ThinBorderThickness}" CornerRadius="{StaticResource ChipCornerRadius}">
                                                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource SpacingXS}">
-                                                    <TextBlock VerticalAlignment="Center" Text="{Binding}" />
+                                                    <TextBlock MaxWidth="{StaticResource KeywordChipTextMaxWidth}" VerticalAlignment="Center" Text="{Binding}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
                                                     <Button x:Uid="RemoveKeyword" Width="{StaticResource KeywordRemoveButtonSize}" Height="{StaticResource KeywordRemoveButtonSize}" Click="RemoveIncludeKeywordButton_Click" Style="{StaticResource ChipRemoveButtonStyle}" Tag="{Binding}">
                                                         <FontIcon FontSize="{StaticResource KeywordRemoveIconSize}" Glyph="&#xE711;" />
                                                     </Button>
@@ -67,13 +69,14 @@
                     </Border>
                     <Border Style="{StaticResource GroupCardBorderStyle}">
                         <StackPanel>
-                            <Grid Padding="{StaticResource CardHeaderPadding}" ColumnSpacing="{StaticResource SpacingL}">
+                            <Grid Padding="{StaticResource CardHeaderPadding}" ColumnSpacing="{StaticResource SpacingL}" RowSpacing="{StaticResource SpacingS}">
+                                <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="{StaticResource CardIconColumnWidth}" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <FontIcon FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE711;" />
+                                <FontIcon AutomationProperties.AccessibilityView="Raw" FontSize="{StaticResource StandardIconSize}" VerticalAlignment="Center" Glyph="&#xE711;" />
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
                                     <TextBlock x:Uid="FiltersExcludeTitle" Style="{StaticResource CardTitleTextBlockStyle}" />
                                     <TextBlock x:Uid="FiltersExcludeDescription" Style="{StaticResource DescriptionTextBlockStyle}" />
@@ -90,15 +93,16 @@
                             </Grid>
                             <Border Style="{StaticResource CardDividerStyle}" />
                             <StackPanel Padding="{StaticResource CardContentPadding}" Style="{StaticResource CardContentStackStyle}">
-                                <Grid ColumnSpacing="{StaticResource SpacingS}">
+                                <Grid x:Name="ExcludeInputRow" ColumnSpacing="{StaticResource SpacingS}" RowSpacing="{StaticResource SpacingS}">
+                                    <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBox x:Name="ExcludeKeywordTextBox" x:Uid="FiltersExcludeInput" KeyDown="ExcludeKeywordTextBox_KeyDown" />
-                                    <Button x:Uid="AddKeyword" Grid.Column="1" Height="{StaticResource ActionButtonHeight}" Click="AddExcludeKeywordButton_Click" />
+                                    <Button x:Uid="AddKeyword" Grid.Column="1" Click="AddExcludeKeywordButton_Click" Style="{StaticResource ActionButtonStyle}" />
                                 </Grid>
-                                <TextBlock x:Name="ExcludeFeedbackText" Height="{StaticResource ActionStatusSlotHeight}" MaxLines="2" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource DescriptionTextBlockStyle}" />
+                                <TextBlock x:Name="ExcludeFeedbackText" Height="{StaticResource ActionStatusSlotHeight}" AutomationProperties.LiveSetting="Assertive" MaxLines="2" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource DescriptionTextBlockStyle}" />
                                 <TextBlock x:Name="ExcludeEmptyState" x:Uid="FiltersExcludeEmpty" Style="{StaticResource DescriptionTextBlockStyle}" />
                                 <ItemsRepeater ItemsSource="{x:Bind ExcludeKeywords}">
                                     <ItemsRepeater.Layout>
@@ -106,9 +110,9 @@
                                     </ItemsRepeater.Layout>
                                     <ItemsRepeater.ItemTemplate>
                                         <DataTemplate>
-                                            <Border MinHeight="{StaticResource KeywordChipMinHeight}" Padding="{StaticResource KeywordChipPadding}" Background="{ThemeResource SubtleFillColorSecondaryBrush}" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" BorderThickness="{StaticResource ThinBorderThickness}" CornerRadius="{StaticResource ChipCornerRadius}">
+                                            <Border MinHeight="{StaticResource KeywordChipMinHeight}" MaxWidth="{StaticResource KeywordChipMaxWidth}" Padding="{StaticResource KeywordChipPadding}" Background="{ThemeResource ControlFillColorSecondaryBrush}" BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}" BorderThickness="{StaticResource ThinBorderThickness}" CornerRadius="{StaticResource ChipCornerRadius}">
                                                 <StackPanel Orientation="Horizontal" Spacing="{StaticResource SpacingXS}">
-                                                    <TextBlock VerticalAlignment="Center" Text="{Binding}" />
+                                                    <TextBlock MaxWidth="{StaticResource KeywordChipTextMaxWidth}" VerticalAlignment="Center" Text="{Binding}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" />
                                                     <Button x:Uid="RemoveKeyword" Width="{StaticResource KeywordRemoveButtonSize}" Height="{StaticResource KeywordRemoveButtonSize}" Click="RemoveExcludeKeywordButton_Click" Style="{StaticResource ChipRemoveButtonStyle}" Tag="{Binding}">
                                                         <FontIcon FontSize="{StaticResource KeywordRemoveIconSize}" Glyph="&#xE711;" />
                                                     </Button>

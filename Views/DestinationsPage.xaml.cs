@@ -1,5 +1,6 @@
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Automation;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using NotiRelay.Models;
@@ -13,6 +14,9 @@ namespace NotiRelay.Views;
 
 public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
 {
+    private const string ShowSecretGlyph = "\uE890";
+    private const string HideSecretGlyph = "\uED1A";
+
     private static readonly DestinationType[] DestinationTypes =
     [
         DestinationType.Bark,
@@ -29,6 +33,7 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
     private bool _isLoaded;
     private bool _loading;
     private bool _isObservingRuntime;
+    private bool _isObservingWindow;
     private bool _initializationQueued;
 
     public RelayRuntime Runtime => ((App)Application.Current).Runtime;
@@ -45,6 +50,9 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
     public string TelegramTokenDescription => LocalizationService.Get("TelegramBotTokenCard.Description");
     public string TelegramChatIdTitle => LocalizationService.Get("TelegramChatIdCard.Header");
     public string TelegramChatIdDescription => LocalizationService.Get("TelegramChatIdCard.Description");
+    public string BarkEnabledAutomationName => LocalizationService.Format("Destination_EnableToggle", DestinationName(DestinationType.Bark));
+    public string WebhookEnabledAutomationName => LocalizationService.Format("Destination_EnableToggle", DestinationName(DestinationType.GenericWebhook));
+    public string TelegramEnabledAutomationName => LocalizationService.Format("Destination_EnableToggle", DestinationName(DestinationType.Telegram));
 
     public DestinationsPage()
     {
@@ -52,6 +60,9 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
         NavigationCacheMode = NavigationCacheMode.Required;
         Loaded += DestinationsPage_Loaded;
         Unloaded += DestinationsPage_Unloaded;
+        BarkGroup.RegisterPropertyChangedCallback(CommunityToolkit.WinUI.Controls.SettingsExpander.IsExpandedProperty, DestinationGroupExpandedChanged);
+        WebhookGroup.RegisterPropertyChangedCallback(CommunityToolkit.WinUI.Controls.SettingsExpander.IsExpandedProperty, DestinationGroupExpandedChanged);
+        TelegramGroup.RegisterPropertyChangedCallback(CommunityToolkit.WinUI.Controls.SettingsExpander.IsExpandedProperty, DestinationGroupExpandedChanged);
     }
 
     private void DestinationsPage_Loaded(object sender, RoutedEventArgs e)
@@ -61,6 +72,12 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
         {
             Runtime.PropertyChanged += Runtime_PropertyChanged;
             _isObservingRuntime = true;
+        }
+
+        if (!_isObservingWindow && ((App)Application.Current).MainWindow is { } window)
+        {
+            window.Activated += MainWindow_Activated;
+            _isObservingWindow = true;
         }
 
         if (!_fieldsLoaded && !_initializationQueued)
@@ -89,7 +106,13 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
         StopFeedbackTimer();
         _feedbackDestination = null;
         _activeFeedback.Clear();
+        ResetSecretRevealStates();
         UpdateDirtyStates();
+        if (_isObservingWindow && ((App)Application.Current).MainWindow is { } window)
+        {
+            window.Activated -= MainWindow_Activated;
+            _isObservingWindow = false;
+        }
         if (!_isObservingRuntime) return;
         Runtime.PropertyChanged -= Runtime_PropertyChanged;
         _isObservingRuntime = false;
@@ -114,6 +137,7 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
             _savedSnapshots[type] = ReadEditorSnapshot(type);
         }
         _loading = false;
+        ResetSecretRevealStates();
         UpdateDirtyStates();
     }
 
@@ -211,6 +235,7 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
             if (succeeded)
             {
                 _savedSnapshots[type] = ReadEditorSnapshot(type);
+                ResetSecretRevealState(type);
                 if (_isLoaded) DestinationGroup(type).IsExpanded = true;
             }
             else
@@ -287,6 +312,7 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
             {
                 LoadDestinationFromRuntime(type);
                 _savedSnapshots[type] = ReadEditorSnapshot(type);
+                ResetSecretRevealState(type);
                 DestinationGroup(type).IsExpanded = true;
                 ShowFeedback(type, message, false, 4);
             }
@@ -325,6 +351,7 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
                 break;
         }
         _loading = false;
+        ResetSecretRevealState(type);
     }
 
     public async Task<bool> ConfirmLeaveAsync()
@@ -379,6 +406,7 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
             }
         }
         _loading = false;
+        ResetSecretRevealStates();
         UpdateDirtyStates();
     }
 
@@ -466,6 +494,20 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
         _ => BarkFeedbackText
     };
 
+    private Grid ActionFooter(DestinationType type) => type switch
+    {
+        DestinationType.GenericWebhook => WebhookActionFooter,
+        DestinationType.Telegram => TelegramActionFooter,
+        _ => BarkActionFooter
+    };
+
+    private Grid ActionButtons(DestinationType type) => type switch
+    {
+        DestinationType.GenericWebhook => WebhookActionButtons,
+        DestinationType.Telegram => TelegramActionButtons,
+        _ => BarkActionButtons
+    };
+
     private void Editor_TextChanged(object sender, TextChangedEventArgs e)
     {
         ClearFeedbackForEditor(sender);
@@ -476,6 +518,145 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
     {
         ClearFeedbackForEditor(sender);
         UpdateDirtyStates();
+    }
+
+    private void SecretRevealButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button { Tag: string tag }) return;
+        var type = tag switch
+        {
+            "Webhook" => DestinationType.GenericWebhook,
+            "Telegram" => DestinationType.Telegram,
+            _ => DestinationType.Bark
+        };
+        var passwordBox = SecretPasswordBox(type);
+        var reveal = passwordBox.PasswordRevealMode != PasswordRevealMode.Visible;
+        passwordBox.PasswordRevealMode = reveal ? PasswordRevealMode.Visible : PasswordRevealMode.Hidden;
+        UpdateSecretRevealButton(type, reveal);
+    }
+
+    private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
+    {
+        if (args.WindowActivationState == WindowActivationState.Deactivated) ResetSecretRevealStates();
+    }
+
+    private void DestinationGroupExpandedChanged(DependencyObject sender, DependencyProperty property)
+    {
+        if (sender is not CommunityToolkit.WinUI.Controls.SettingsExpander { IsExpanded: false } group) return;
+        ResetSecretRevealState(ReferenceEquals(group, WebhookGroup)
+            ? DestinationType.GenericWebhook
+            : ReferenceEquals(group, TelegramGroup)
+                ? DestinationType.Telegram
+                : DestinationType.Bark);
+    }
+
+    private PasswordBox SecretPasswordBox(DestinationType type) => type switch
+    {
+        DestinationType.GenericWebhook => WebhookTokenPasswordBox,
+        DestinationType.Telegram => TelegramTokenPasswordBox,
+        _ => BarkDeviceKeyPasswordBox
+    };
+
+    private Button SecretRevealButton(DestinationType type) => type switch
+    {
+        DestinationType.GenericWebhook => WebhookRevealButton,
+        DestinationType.Telegram => TelegramRevealButton,
+        _ => BarkRevealButton
+    };
+
+    private FontIcon SecretRevealIcon(DestinationType type) => type switch
+    {
+        DestinationType.GenericWebhook => WebhookRevealIcon,
+        DestinationType.Telegram => TelegramRevealIcon,
+        _ => BarkRevealIcon
+    };
+
+    private string SecretTitle(DestinationType type) => type switch
+    {
+        DestinationType.GenericWebhook => WebhookTokenTitle,
+        DestinationType.Telegram => TelegramTokenTitle,
+        _ => BarkDeviceKeyTitle
+    };
+
+    private void ResetSecretRevealStates()
+    {
+        foreach (var type in DestinationTypes) ResetSecretRevealState(type);
+    }
+
+    private void ResetSecretRevealState(DestinationType type)
+    {
+        if (BarkDeviceKeyPasswordBox is null) return;
+        SecretPasswordBox(type).PasswordRevealMode = PasswordRevealMode.Hidden;
+        UpdateSecretRevealButton(type, reveal: false);
+    }
+
+    private void UpdateSecretRevealButton(DestinationType type, bool reveal)
+    {
+        var button = SecretRevealButton(type);
+        SecretRevealIcon(type).Glyph = reveal ? HideSecretGlyph : ShowSecretGlyph;
+        var automationName = LocalizationService.Format(
+            reveal ? "Destination_HideSecretAutomation" : "Destination_ShowSecretAutomation",
+            SecretTitle(type));
+        AutomationProperties.SetName(button, automationName);
+        ToolTipService.SetToolTip(button, automationName);
+    }
+
+    private void DestinationFieldRow_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (sender is not Grid grid || grid.ColumnDefinitions.Count < 2 || grid.Children.Count < 2 || grid.Children[0] is not FrameworkElement label || grid.Children[1] is not FrameworkElement editor)
+        {
+            return;
+        }
+
+        var threshold = (double)Application.Current.Resources["DestinationCompactBreakpoint"];
+        var compact = ActualWidth < threshold;
+        grid.ColumnDefinitions[0].Width = (GridLength)Application.Current.Resources[
+            compact ? "DestinationLabelColumnCompactWidth" : "DestinationLabelColumnWidth"];
+        Grid.SetRow(label, 0);
+        Grid.SetColumn(label, 0);
+        Grid.SetColumnSpan(label, 1);
+        Grid.SetRow(editor, 0);
+        Grid.SetColumn(editor, 1);
+        Grid.SetColumnSpan(editor, 1);
+        editor.MinWidth = (double)Application.Current.Resources["DestinationInputMinWidth"];
+        editor.HorizontalAlignment = HorizontalAlignment.Stretch;
+    }
+
+    private void DestinationFooter_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (sender is not Grid grid)
+        {
+            return;
+        }
+
+        var type = grid.Name switch
+        {
+            nameof(WebhookActionFooter) => DestinationType.GenericWebhook,
+            nameof(TelegramActionFooter) => DestinationType.Telegram,
+            _ => DestinationType.Bark
+        };
+        UpdateDestinationFooterLayout(type);
+    }
+
+    private void UpdateDestinationFooterLayout(DestinationType type)
+    {
+        var status = FeedbackText(type);
+        var actions = ActionButtons(type);
+
+        Grid.SetRow(status, 1);
+        Grid.SetColumn(status, 0);
+        Grid.SetColumnSpan(status, 2);
+        status.Visibility = string.IsNullOrWhiteSpace(status.Text) ? Visibility.Collapsed : Visibility.Visible;
+        Grid.SetRow(actions, 0);
+        Grid.SetColumn(actions, 0);
+        Grid.SetColumnSpan(actions, 2);
+        actions.HorizontalAlignment = HorizontalAlignment.Right;
+        actions.Width = double.NaN;
+    }
+
+    private void RefreshDestinationFooterLayout(DestinationType type)
+    {
+        UpdateDestinationFooterLayout(type);
     }
 
     private void UpdateDirtyStates()
@@ -492,6 +673,7 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
                     ? $"● {LocalizationService.Get("Destination_UnsavedIndicator")}"
                     : string.Empty;
             }
+            RefreshDestinationFooterLayout(type);
             SaveButton(type).IsEnabled = !busy && dirty && valid;
             TestButton(type).IsEnabled = !busy && !dirty && valid && IsConfigured(type);
             ClearButton(type).IsEnabled = !busy && IsConfigured(type);
@@ -507,11 +689,13 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
             FeedbackText(previous).Text = IsDirty(previous)
                 ? $"● {LocalizationService.Get("Destination_UnsavedIndicator")}"
                 : string.Empty;
+            RefreshDestinationFooterLayout(previous);
         }
         StopFeedbackTimer();
         _feedbackDestination = type;
         _activeFeedback.Add(type);
         FeedbackText(type).Text = $"{(error ? "⚠" : "✓")} {message}";
+        RefreshDestinationFooterLayout(type);
         if (seconds <= 0) return;
         _feedbackTimer = DispatcherQueue.CreateTimer();
         _feedbackTimer.Interval = TimeSpan.FromSeconds(seconds);

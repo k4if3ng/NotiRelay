@@ -17,6 +17,7 @@ namespace NotiRelay
 		private AppInstance? _mainInstance;
 		private MainWindow? _window;
 		public RelayRuntime Runtime { get; private set; } = null!;
+		internal MainWindow? MainWindow => _window;
 
 		public App()
 		{

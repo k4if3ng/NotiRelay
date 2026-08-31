@@ -14,8 +14,10 @@ namespace NotiRelay.Views
 	{
 			public RelayRuntime Runtime => ((App)Application.Current).Runtime;
 		public ObservableCollection<NotiRelay.Models.DeliveryActivityItem> FilteredActivity { get; } = [];
-		private bool _refreshInProgress;
-		private bool _refreshQueued;
+			private bool _refreshInProgress;
+			private bool _refreshQueued;
+			private bool _showingRefreshError;
+			public string RefreshActivityLabel => LocalizationService.Get("ActivityRefresh.Content");
 
 		public ActivityPage()
 		{
@@ -57,12 +59,19 @@ namespace NotiRelay.Views
 		private async Task RefreshActivityAsync()
 		{
 			if (_refreshInProgress) return;
-			_refreshInProgress = true;
-			RefreshActivityButton.IsEnabled = false;
-			try { await Runtime.RefreshActivityAsync(); }
-			catch (Exception exception)
-			{
-				System.Diagnostics.Debug.WriteLine($"Activity refresh failed: {exception}");
+				_refreshInProgress = true;
+				RefreshActivityButton.IsEnabled = false;
+				_showingRefreshError = false;
+				ActivitySummaryText.Text = LocalizationService.Get("Activity_Refreshing");
+				try
+				{
+					await Runtime.RefreshActivityAsync();
+					UpdateActivitySummary();
+				}
+				catch (Exception exception)
+				{
+					_showingRefreshError = true;
+					ActivitySummaryText.Text = $"⚠ {LocalizationService.Format("Activity_RefreshFailed", exception.Message)}";
 			}
 			finally
 			{
@@ -88,16 +97,23 @@ namespace NotiRelay.Views
 				ActivityRepeater.Visibility = isEmpty ? Visibility.Collapsed : Visibility.Visible;
 				ActivityEmptyState.Visibility = isEmpty ? Visibility.Visible : Visibility.Collapsed;
 					ActivityEmptyDescription.Text = LocalizationService.Get("Activity_EmptyDefaultDescription");
+					if (!_refreshInProgress && !_showingRefreshError) UpdateActivitySummary();
 			}
 
 		private void ActivityItemGrid_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
 			if (sender is not Grid grid) return;
-			var threshold = (double)Application.Current.Resources["ActivityRowReflowBreakpoint"];
+				var threshold = (double)Application.Current.Resources["RowReflowBreakpoint"];
 			var narrow = e.NewSize.Width < threshold;
 			if (grid.FindName("WideStatus") is TextBlock wideStatus) wideStatus.Visibility = narrow ? Visibility.Collapsed : Visibility.Visible;
 			if (grid.FindName("WideMetadata") is TextBlock wideMetadata) wideMetadata.Visibility = narrow ? Visibility.Collapsed : Visibility.Visible;
-			if (grid.FindName("NarrowMetadata") is TextBlock narrowMetadata) narrowMetadata.Visibility = narrow ? Visibility.Visible : Visibility.Collapsed;
-		}
-	}
+				if (grid.FindName("NarrowMetadata") is TextBlock narrowMetadata) narrowMetadata.Visibility = narrow ? Visibility.Visible : Visibility.Collapsed;
+			}
+
+			private void UpdateActivitySummary()
+			{
+				if (ActivitySummaryText is not null) ActivitySummaryText.Text = Runtime.ActivitySummaryText;
+			}
+
+			}
 }

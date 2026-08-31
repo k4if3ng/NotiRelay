@@ -19,8 +19,8 @@ namespace NotiRelay
 	public sealed partial class MainWindow : Window
 	{
 		private const string NavigationPaneOpenKey = "NavigationPaneOpen";
-		private static readonly SizeInt32 DefaultLogicalSize = new(1180, 760);
-		private static readonly SizeInt32 MinimumLogicalSize = new(1040, 680);
+			private static readonly SizeInt32 DefaultLogicalSize = new(1040, 720);
+			private static readonly SizeInt32 MinimumLogicalSize = new(820, 600);
 
 		private readonly WindowMinimumSizeService _minimumSize;
 		private readonly WindowPlacementService _windowPlacement;

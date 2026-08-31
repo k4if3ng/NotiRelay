@@ -19,6 +19,7 @@ public sealed partial class HomePage : Page
 
     public RelayRuntime Runtime => ((App)Application.Current).Runtime;
     public string ForwardingTitle => LocalizationService.Get("HomeForwardingCard.Header");
+    public string ViewActivityLabel => LocalizationService.Get("HomeViewActivity.Content");
     public ObservableCollection<DeliveryActivityItem> RecentActivity { get; } = [];
 
     public HomePage()
@@ -120,4 +121,5 @@ public sealed partial class HomePage : Page
     }
 
     private void ViewActivityButton_Click(object sender, RoutedEventArgs e) => Frame.Navigate(typeof(ActivityPage));
+
 }

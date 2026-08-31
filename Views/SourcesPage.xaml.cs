@@ -18,9 +18,12 @@ namespace NotiRelay.Views
 				public ObservableCollection<SourceApplication> FilteredSources { get; } = new();
 				private readonly Dictionary<string, bool> _persistedSourceStates = [];
 				private readonly HashSet<string> _sourceUpdatesInProgress = [];
-			private DispatcherQueueTimer? _feedbackTimer;
-			private DispatcherQueueTimer? _filterTimer;
-			private bool _synchronizingSources;
+				private DispatcherQueueTimer? _feedbackTimer;
+				private DispatcherQueueTimer? _filterTimer;
+				private bool _synchronizingSources;
+				private bool _showingFeedback;
+
+			public string RefreshApplicationsLabel => LocalizationService.Get("SourcesRefresh.Content");
 
 		public SourcesPage()
 		{
@@ -85,20 +88,20 @@ namespace NotiRelay.Views
 		{
 			RefreshApplicationsButton.IsEnabled = false;
 			EmptyStateDiscoverButton.IsEnabled = false;
-				RefreshStatusText.Text = string.Empty;
+					ShowSummaryStatus(LocalizationService.Get("Sources_Discovering"));
 
 			try
 			{
 					var discovered = await Runtime.DiscoverApplicationsAsync();
 					ScheduleFilterRefresh();
-					RefreshStatusText.Text = $"✓ {LocalizationService.Format("Sources_DiscoveryComplete", discovered)}";
-					StartFeedbackTimer();
+						ShowSummaryStatus($"✓ {LocalizationService.Format("Sources_DiscoveryComplete", discovered)}");
+						StartFeedbackTimer();
 			}
 				catch (Exception exception)
 				{
-						RefreshStatusText.Text = $"⚠ {LocalizationService.Format(
-							"Sources_RefreshFailed",
-							exception.Message)}";
+							ShowSummaryStatus($"⚠ {LocalizationService.Format(
+								"Sources_RefreshFailed",
+								exception.Message)}");
 						StartFeedbackTimer();
 			}
 			finally
@@ -136,10 +139,7 @@ namespace NotiRelay.Views
 
 			SynchronizeFilteredSources(filtered);
 
-			SourcesSummaryText.Text = LocalizationService.Format(
-				"Sources_Summary",
-					Runtime.SourceApplications.Count,
-					Runtime.EnabledSourceCount);
+				UpdateSummaryIfIdle();
 
 			var hasItems = FilteredSources.Count > 0;
 				SourcesRepeater.Visibility = hasItems ? Visibility.Visible : Visibility.Collapsed;
@@ -205,11 +205,12 @@ namespace NotiRelay.Views
 			_feedbackTimer.Start();
 		}
 
-		private void FeedbackTimer_Tick(DispatcherQueueTimer sender, object args)
-		{
-				RefreshStatusText.Text = string.Empty;
-			StopFeedbackTimer();
-		}
+			private void FeedbackTimer_Tick(DispatcherQueueTimer sender, object args)
+			{
+				_showingFeedback = false;
+				UpdateSummary();
+				StopFeedbackTimer();
+			}
 
 		private void StopFeedbackTimer()
 		{
@@ -246,32 +247,50 @@ namespace NotiRelay.Views
 			catch (Exception exception)
 			{
 				RestoreSourceState(source, previousState);
-				RefreshStatusText.Text = $"⚠ {LocalizationService.Format("Sources_UpdateFailed", exception.Message)}";
-				StartFeedbackTimer();
+					ShowSummaryStatus($"⚠ {LocalizationService.Format("Sources_UpdateFailed", exception.Message)}");
+					StartFeedbackTimer();
 			}
 			finally
 			{
 				toggle.IsEnabled = true;
 				_sourceUpdatesInProgress.Remove(sourceId);
-				SourcesSummaryText.Text = LocalizationService.Format(
-					"Sources_Summary",
-					Runtime.SourceApplications.Count,
-					Runtime.EnabledSourceCount);
-				DispatcherQueue.TryEnqueue(RefreshFilter);
+					UpdateSummaryIfIdle();
+					DispatcherQueue.TryEnqueue(RefreshFilter);
 			}
 		}
 
-		private void RestoreSourceState(SourceApplication source, bool isEnabled)
+			private void RestoreSourceState(SourceApplication source, bool isEnabled)
 		{
 			_synchronizingSources = true;
 			try
 			{
 				source.IsEnabled = isEnabled;
 			}
-			finally
-			{
-				_synchronizingSources = false;
+				finally
+				{
+					_synchronizingSources = false;
+				}
 			}
-		}
+
+			private void ShowSummaryStatus(string text)
+			{
+				_showingFeedback = true;
+				SourcesSummaryText.Text = text;
+			}
+
+			private void UpdateSummaryIfIdle()
+			{
+				if (!_showingFeedback) UpdateSummary();
+			}
+
+			private void UpdateSummary()
+			{
+				if (SourcesSummaryText is null) return;
+				SourcesSummaryText.Text = LocalizationService.Format(
+					"Sources_Summary",
+					Runtime.SourceApplications.Count,
+					Runtime.EnabledSourceCount);
+			}
+
+			}
 	}
-}

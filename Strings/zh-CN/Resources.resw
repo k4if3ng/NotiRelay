@@ -21,109 +21,81 @@
   <data name="NavFilters.ToolTipService.ToolTip" xml:space="preserve"><value>规则</value></data>
   <data name="NavActivity.Content" xml:space="preserve"><value>活动</value></data>
   <data name="NavActivity.ToolTipService.ToolTip" xml:space="preserve"><value>活动</value></data>
-  <data name="NavForwardingStatus.Content" xml:space="preserve"><value>转发状态</value></data>
-  <data name="NavForwardingStatus.ToolTipService.ToolTip" xml:space="preserve"><value>转发状态</value></data>
-  <data name="NavForwardingEnabled" xml:space="preserve"><value>转发已开启</value></data>
+      <data name="NavForwardingEnabled" xml:space="preserve"><value>转发已开启</value></data>
   <data name="NavForwardingDisabled" xml:space="preserve"><value>转发已关闭</value></data>
 
   <data name="HomeHeader.Title" xml:space="preserve"><value>主页</value></data>
-  <data name="HomeHeader.Subtitle" xml:space="preserve"><value>通知转发状态与设置</value></data>
-  <data name="SourcesHeader.Title" xml:space="preserve"><value>应用通知</value></data>
-  <data name="SourcesHeader.Subtitle" xml:space="preserve"><value>选择需要转发通知的应用。新发现的应用默认关闭。</value></data>
-  <data name="DestinationsHeader.Title" xml:space="preserve"><value>转发目标</value></data>
-  <data name="DestinationsHeader.Subtitle" xml:space="preserve"><value>设置接收转发通知的服务。</value></data>
-  <data name="FiltersHeader.Title" xml:space="preserve"><value>筛选规则</value></data>
-  <data name="FiltersHeader.Subtitle" xml:space="preserve"><value>使用包含和排除关键词决定哪些通知可以转发。</value></data>
-  <data name="ActivityHeader.Title" xml:space="preserve"><value>转发活动</value></data>
-  <data name="ActivityHeader.Subtitle" xml:space="preserve"><value>查看近期发送状态和需要处理的问题。</value></data>
+    <data name="SourcesHeader.Title" xml:space="preserve"><value>应用</value></data>
+    <data name="SourcesRefresh.Content" xml:space="preserve"><value>发现应用</value></data>
+  <data name="Sources_Summary" xml:space="preserve"><value>共 {0} 个应用 · 已启用 {1} 个</value></data>
+  <data name="Sources_DiscoveryComplete" xml:space="preserve"><value>应用发现完成，新发现 {0} 个应用。</value></data>
+  <data name="Sources_RefreshFailed" xml:space="preserve"><value>刷新应用列表失败：{0}</value></data>
+  <data name="Sources_UpdateFailed" xml:space="preserve"><value>保存应用设置失败：{0}</value></data>
+  <data name="Sources_EmptyUndiscovered" xml:space="preserve"><value>尚未发现应用</value></data>
+  <data name="Sources_EmptySearch" xml:space="preserve"><value>没有匹配的应用</value></data>
+  <data name="DestinationsHeader.Title" xml:space="preserve"><value>目标</value></data>
+    <data name="Destination_StatusNotConfigured" xml:space="preserve"><value>尚未配置。打开以填写连接信息。</value></data>
+  <data name="Destination_StatusEnabled" xml:space="preserve"><value>已开启。新通知会发送到此目标。</value></data>
+  <data name="Destination_StatusDisabled" xml:space="preserve"><value>已关闭。配置和排队发送会保留。</value></data>
+    <data name="FiltersHeader.Title" xml:space="preserve"><value>规则</value></data>
+    <data name="FiltersIncludeTitle.Text" xml:space="preserve"><value>包含关键词</value></data>
+  <data name="FiltersIncludeDescription.Text" xml:space="preserve"><value>通知至少包含一个关键词时才会转发。留空则允许所有未被排除的通知。</value></data>
+  <data name="FiltersIncludeEnabled.AutomationProperties.Name" xml:space="preserve"><value>启用包含关键词规则</value></data>
+  <data name="FiltersIncludeInput.PlaceholderText" xml:space="preserve"><value>输入关键词</value></data>
+  <data name="FiltersExcludeTitle.Text" xml:space="preserve"><value>排除关键词</value></data>
+  <data name="FiltersExcludeDescription.Text" xml:space="preserve"><value>包含任一排除关键词的通知不会转发；排除规则优先。</value></data>
+  <data name="FiltersExcludeEnabled.AutomationProperties.Name" xml:space="preserve"><value>启用排除关键词规则</value></data>
+  <data name="FiltersExcludeInput.PlaceholderText" xml:space="preserve"><value>输入关键词</value></data>
+  <data name="AddKeyword.Content" xml:space="preserve"><value>添加</value></data>
+  <data name="RemoveKeyword.AutomationProperties.Name" xml:space="preserve"><value>删除关键词</value></data>
+  <data name="ActivityHeader.Title" xml:space="preserve"><value>活动</value></data>
+    <data name="ActivityRecentTitle.Text" xml:space="preserve"><value>最近发送</value></data>
+  <data name="ActivityRefresh.Content" xml:space="preserve"><value>刷新</value></data>
+  <data name="ActivityEmptyTitle.Text" xml:space="preserve"><value>还没有发送活动</value></data>
+  <data name="ActivityEmptyDescription.Text" xml:space="preserve"><value>启用应用并配置目标后，通知发送状态会显示在这里。</value></data>
+  <data name="Activity_DestinationBark" xml:space="preserve"><value>Bark</value></data>
+  <data name="Activity_DestinationWebhook" xml:space="preserve"><value>自定义 Webhook</value></data>
+  <data name="Activity_DestinationTelegram" xml:space="preserve"><value>Telegram</value></data>
+  <data name="Activity_StatusPending" xml:space="preserve"><value>等待发送</value></data>
+  <data name="Activity_StatusSending" xml:space="preserve"><value>正在发送</value></data>
+  <data name="Activity_StatusRetryScheduled" xml:space="preserve"><value>等待重试</value></data>
+  <data name="Activity_StatusSucceeded" xml:space="preserve"><value>发送成功</value></data>
+  <data name="Activity_StatusFailed" xml:space="preserve"><value>发送失败</value></data>
+  <data name="Activity_AttemptCount" xml:space="preserve"><value>已尝试 {0} 次</value></data>
   <data name="SettingsHeader.Title" xml:space="preserve"><value>设置</value></data>
-  <data name="SettingsHeader.Subtitle" xml:space="preserve"><value>管理系统集成和 NotiRelay 偏好。</value></data>
 
-  <data name="HomeTitle.Text" xml:space="preserve"><value>主页</value></data>
-  <data name="HomeSubtitle.Text" xml:space="preserve"><value>中继状态与快捷操作</value></data>
-  <data name="HomeStatusTitle.Text" xml:space="preserve"><value>NotiRelay 状态</value></data>
-  <data name="HomePauseRelay.Header" xml:space="preserve"><value>暂停中继</value></data>
-  <data name="HomeEnabledSources.Text" xml:space="preserve"><value>已启用来源</value></data>
-  <data name="HomeDestinations.Text" xml:space="preserve"><value>目标</value></data>
-  <data name="HomePending.Text" xml:space="preserve"><value>待处理</value></data>
-  <data name="HomeFailed.Text" xml:space="preserve"><value>失败</value></data>
-  <data name="HomeQuickActions.Text" xml:space="preserve"><value>快捷操作</value></data>
   <data name="RequestNotificationAccess.Content" xml:space="preserve"><value>请求通知访问权限</value></data>
-  <data name="RefreshNow.Content" xml:space="preserve"><value>立即刷新</value></data>
-  <data name="GenerateTestNotification.Content" xml:space="preserve"><value>生成测试通知</value></data>
 
-  <data name="SourcesTitle.Text" xml:space="preserve"><value>来源</value></data>
-  <data name="SourcesSubtitle.Text" xml:space="preserve"><value>新发现的来源应用默认处于禁用状态。</value></data>
   <data name="SourcesSearch.PlaceholderText" xml:space="preserve"><value>搜索应用</value></data>
   <data name="SourceEnabled.AutomationProperties.Name" xml:space="preserve"><value>启用来源应用</value></data>
 
-  <data name="DestinationsTitle.Text" xml:space="preserve"><value>目标</value></data>
-  <data name="DestinationsSubtitle.Text" xml:space="preserve"><value>为每个支持的目标配置一个档案。</value></data>
-  <data name="GenericWebhookCard.Content" xml:space="preserve"><value>通用 Webhook</value></data>
-  <data name="BarkProfileTitle.Text" xml:space="preserve"><value>Bark 档案</value></data>
-  <data name="BarkServerUrl.Header" xml:space="preserve"><value>服务器 URL</value></data>
-  <data name="BarkDeviceKey.Header" xml:space="preserve"><value>设备密钥</value></data>
-  <data name="WebhookProfileTitle.Text" xml:space="preserve"><value>通用 Webhook 档案</value></data>
-  <data name="WebhookEndpoint.Header" xml:space="preserve"><value>端点 URL</value></data>
-  <data name="WebhookToken.Header" xml:space="preserve"><value>Bearer 令牌（可选）</value></data>
-  <data name="TelegramProfileTitle.Text" xml:space="preserve"><value>Telegram 档案</value></data>
-  <data name="TelegramBotToken.Header" xml:space="preserve"><value>机器人令牌</value></data>
-  <data name="TelegramChatId.Header" xml:space="preserve"><value>聊天 ID</value></data>
   <data name="SaveProfile.Content" xml:space="preserve"><value>保存</value></data>
   <data name="SendTest.Content" xml:space="preserve"><value>发送测试</value></data>
-  <data name="ClearProfile.Content" xml:space="preserve"><value>清除</value></data>
+  <data name="ClearProfile.Content" xml:space="preserve"><value>清除配置</value></data>
+  <data name="ClearProfileCard.Header" xml:space="preserve"><value>清除配置</value></data>
+  <data name="ClearProfileCard.Description" xml:space="preserve"><value>删除此目标的连接信息；操作前会要求确认。</value></data>
 
-  <data name="FiltersTitle.Text" xml:space="preserve"><value>全局过滤器</value></data>
-  <data name="FiltersSubtitle.Text" xml:space="preserve"><value>排除规则优先于包含规则。关键词不区分大小写，并使用分号分隔。</value></data>
-  <data name="FiltersInclude.Header" xml:space="preserve"><value>包含任意关键词（留空则全部允许）</value></data>
-  <data name="FiltersExclude.Header" xml:space="preserve"><value>排除任意关键词</value></data>
-  <data name="SaveFilters.Content" xml:space="preserve"><value>保存过滤器</value></data>
-  <data name="ResetFilters.Content" xml:space="preserve"><value>重置编辑器</value></data>
 
-  <data name="ActivityTitle.Text" xml:space="preserve"><value>活动</value></data>
-  <data name="ActivitySubtitle.Text" xml:space="preserve"><value>本次会话的投递摘要和已捕获通知。</value></data>
-  <data name="ActivityPending.Text" xml:space="preserve"><value>待处理</value></data>
-  <data name="ActivitySucceeded.Text" xml:space="preserve"><value>已成功</value></data>
-  <data name="ActivityFailed.Text" xml:space="preserve"><value>失败</value></data>
-  <data name="ActivityQueueState.Title" xml:space="preserve"><value>最新队列状态</value></data>
 
-  <data name="SettingsTitle.Text" xml:space="preserve"><value>设置</value></data>
-  <data name="SettingsSystem.Text" xml:space="preserve"><value>系统</value></data>
-  <data name="Refresh.Content" xml:space="preserve"><value>刷新</value></data>
-  <data name="StartupAtSignIn.Header" xml:space="preserve"><value>登录时启动 NotiRelay</value></data>
-  <data name="SettingsLanguage.Text" xml:space="preserve"><value>语言</value></data>
-  <data name="LanguageSystem.Content" xml:space="preserve"><value>跟随系统</value></data>
+      <data name="LanguageSystem.Content" xml:space="preserve"><value>跟随系统</value></data>
   <data name="LanguageEnglish.Content" xml:space="preserve"><value>English</value></data>
   <data name="LanguageChinese.Content" xml:space="preserve"><value>简体中文</value></data>
-  <data name="SettingsPrivacy.Text" xml:space="preserve"><value>隐私与数据</value></data>
-  <data name="SettingsPrivacyDescription.Text" xml:space="preserve"><value>机密信息存储在 Windows 凭据管理器中。已结束的投递记录不会保留通知内容。</value></data>
-  <data name="ClearDeliveryMetadata.Content" xml:space="preserve"><value>清除已完成的投递元数据</value></data>
-  <data name="SettingsAbout.Text" xml:space="preserve"><value>关于</value></data>
-  <data name="SettingsPlatform.Text" xml:space="preserve"><value>Windows 11 内部版本 22621 或更高版本 · 支持 x64</value></data>
+    <data name="ClearDeliveryMetadata.Content" xml:space="preserve"><value>清除已完成记录</value></data>
 
   <data name="Runtime_TruncatedSuffix" xml:space="preserve"><value>… [已由 NotiRelay 截断]</value></data>
   <data name="Runtime_Starting" xml:space="preserve"><value>正在启动 NotiRelay...</value></data>
   <data name="Runtime_QueueStarting" xml:space="preserve"><value>正在启动投递队列...</value></data>
-  <data name="Runtime_Paused" xml:space="preserve"><value>中继已暂停。仍会捕获通知，但不会创建新的投递；队列中的投递会继续处理。</value></data>
-  <data name="Runtime_Resumed" xml:space="preserve"><value>中继已恢复。</value></data>
   <data name="Runtime_AccessRequired" xml:space="preserve"><value>需要通知访问权限。</value></data>
   <data name="Runtime_AccessNotGranted" xml:space="preserve"><value>未授予通知访问权限。</value></data>
   <data name="Runtime_AccessRequestFailed" xml:space="preserve"><value>请求通知访问权限时出错：{0}</value></data>
-  <data name="Runtime_TestNotificationTitle" xml:space="preserve"><value>NotiRelay 捕获测试</value></data>
-  <data name="Runtime_TestNotificationBody" xml:space="preserve"><value>生成时间：{0:T}。</value></data>
-  <data name="Runtime_TestNotificationSubmitted" xml:space="preserve"><value>测试通知已提交到 Windows。</value></data>
   <data name="Runtime_BarkSaved" xml:space="preserve"><value>已保存 Bark 档案。</value></data>
   <data name="Runtime_BarkCleared" xml:space="preserve"><value>已清除 Bark 档案。</value></data>
-  <data name="Runtime_WebhookSaved" xml:space="preserve"><value>已保存通用 Webhook 档案。</value></data>
-  <data name="Runtime_WebhookCleared" xml:space="preserve"><value>已清除通用 Webhook 档案。</value></data>
+  <data name="Runtime_WebhookSaved" xml:space="preserve"><value>已保存自定义 Webhook 档案。</value></data>
+  <data name="Runtime_WebhookCleared" xml:space="preserve"><value>已清除自定义 Webhook 档案。</value></data>
   <data name="Runtime_TelegramSaved" xml:space="preserve"><value>已保存 Telegram 档案。</value></data>
   <data name="Runtime_TelegramCleared" xml:space="preserve"><value>已清除 Telegram 档案。</value></data>
   <data name="Runtime_EstablishingBaseline" xml:space="preserve"><value>正在建立通知基线...</value></data>
-  <data name="Runtime_MonitoringPaused" xml:space="preserve"><value>正在监视；中继已暂停。</value></data>
-  <data name="Runtime_MonitoringBaseline" xml:space="preserve"><value>正在监视。当前基线中有 {0} 条通知。</value></data>
   <data name="Runtime_MonitoringStartFailed" xml:space="preserve"><value>启动监视时出错：{0}</value></data>
-  <data name="Runtime_MonitoringSessionPaused" xml:space="preserve"><value>正在监视；中继已暂停。本次会话已捕获 {0} 条。</value></data>
-  <data name="Runtime_MonitoringSession" xml:space="preserve"><value>正在监视。本次会话已捕获 {0} 条；本次新增 {1} 条。</value></data>
   <data name="Runtime_SynchronizeFailed" xml:space="preserve"><value>同步通知时出错：{0}</value></data>
   <data name="Runtime_ProfileUnavailable" xml:space="preserve"><value>{0} 档案当前不可用。</value></data>
   <data name="Runtime_NewNotification" xml:space="preserve"><value>新的 Windows 通知。</value></data>
@@ -132,7 +104,6 @@
   <data name="Runtime_InvalidBark" xml:space="preserve"><value>请输入有效的 Bark URL 和设备密钥。</value></data>
   <data name="Runtime_InvalidWebhook" xml:space="preserve"><value>请输入有效的 Webhook URL。</value></data>
   <data name="Runtime_InvalidTelegram" xml:space="preserve"><value>请输入 Telegram 机器人令牌和聊天 ID。</value></data>
-  <data name="Filters_Preview" xml:space="preserve"><value>预览：本次会话中 {0} 条会通过，{1} 条会被过滤。</value></data>
 
   <data name="Queue_Status" xml:space="preserve"><value>投递队列：{0} 条待处理，{1} 条成功，{2} 条失败。</value></data>
   <data name="Queue_Error" xml:space="preserve"><value>投递队列错误：{0}</value></data>
@@ -152,28 +123,124 @@
   <data name="Telegram_Timeout" xml:space="preserve"><value>Telegram 投递超时。</value></data>
   <data name="Telegram_Unreachable" xml:space="preserve"><value>无法连接 Telegram。</value></data>
 
-  <data name="Settings_AccessStatus" xml:space="preserve"><value>通知访问权限：{0}</value></data>
+  <data name="Settings_AccessDescriptionWithStatus" xml:space="preserve"><value>允许 NotiRelay 读取 Windows 通知。当前状态：{0}。</value></data>
   <data name="Access_Allowed" xml:space="preserve"><value>已允许</value></data>
   <data name="Access_Denied" xml:space="preserve"><value>已拒绝</value></data>
   <data name="Access_Unknown" xml:space="preserve"><value>未知</value></data>
-  <data name="Settings_ClearTitle" xml:space="preserve"><value>清除已完成的元数据？</value></data>
-  <data name="Settings_ClearContent" xml:space="preserve"><value>待处理和计划重试的投递不会被删除。</value></data>
+  <data name="Settings_ClearTitle" xml:space="preserve"><value>清除已完成的发送记录？</value></data>
+  <data name="Settings_ClearContent" xml:space="preserve"><value>等待发送和等待重试的记录会保留。</value></data>
   <data name="Common_Clear" xml:space="preserve"><value>清除</value></data>
   <data name="Common_Cancel" xml:space="preserve"><value>取消</value></data>
-  <data name="Common_OK" xml:space="preserve"><value>确定</value></data>
-  <data name="Settings_ClearSuccess" xml:space="preserve"><value>已清除完成的投递元数据。</value></data>
+  <data name="Settings_ClearSuccess" xml:space="preserve"><value>已清除完成的发送记录。</value></data>
   <data name="Settings_StartupUnavailable" xml:space="preserve"><value>此安装方式不支持管理登录启动项。</value></data>
+  <data name="CloseAction_DialogTitle" xml:space="preserve"><value>关闭 NotiRelay？</value></data>
+  <data name="CloseAction_DialogContent" xml:space="preserve"><value>你可以将主窗口最小化到系统托盘并继续转发通知，也可以完全退出应用。</value></data>
+  <data name="CloseAction_MinimizeToTray" xml:space="preserve"><value>最小化到系统托盘</value></data>
+  <data name="CloseAction_Exit" xml:space="preserve"><value>退出</value></data>
+  <data name="CloseAction_RememberChoice" xml:space="preserve"><value>记住我的选择</value></data>
   <data name="Settings_LanguageRestartTitle" xml:space="preserve"><value>重新启动 NotiRelay？</value></data>
   <data name="Settings_LanguageRestartContent" xml:space="preserve"><value>NotiRelay 必须重新启动才能应用所选语言。</value></data>
   <data name="Settings_Restart" xml:space="preserve"><value>重新启动</value></data>
   <data name="Settings_RestartFailed" xml:space="preserve"><value>Windows 未能重新启动 NotiRelay：{0}</value></data>
 
-  <data name="Startup_Title" xml:space="preserve"><value>登录时启动 NotiRelay？</value></data>
-  <data name="Startup_Content" xml:space="preserve"><value>NotiRelay 可以隐藏到通知区域并随系统启动，以便监视新的 Windows 通知。稍后可在设置中更改。</value></data>
-  <data name="Startup_Enable" xml:space="preserve"><value>登录时启动</value></data>
-  <data name="Startup_NotNow" xml:space="preserve"><value>暂不</value></data>
-  <data name="Startup_DisabledByUser" xml:space="preserve"><value>Windows“启动应用”设置已禁用此启动项。如需登录时启动 NotiRelay，请在那里启用。</value></data>
-  <data name="Startup_DisabledByPolicy" xml:space="preserve"><value>此设备上的 Windows 策略禁用了启动项。</value></data>
-  <data name="Startup_NotEnabled" xml:space="preserve"><value>Windows 未启用 NotiRelay 启动任务。</value></data>
-  <data name="Startup_UnavailableTitle" xml:space="preserve"><value>未启用启动项</value></data>
+
+
+          <data name="Destination_BarkName" xml:space="preserve"><value>Bark</value></data>
+  <data name="Destination_WebhookName" xml:space="preserve"><value>自定义 Webhook</value></data>
+  <data name="Destination_TelegramName" xml:space="preserve"><value>Telegram</value></data>
+  <data name="Destination_ClearConfirmationTitle" xml:space="preserve"><value>清除 {0}？</value></data>
+  <data name="Destination_ClearConfirmationContent" xml:space="preserve"><value>将删除该目标的连接信息和未完成发送；已完成的活动记录会保留。</value></data>
+  <data name="Destination_ShowSecret" xml:space="preserve"><value>显示</value></data>
+  <data name="Destination_HideSecret" xml:space="preserve"><value>隐藏</value></data>
+  <data name="Destination_ShowSecretAutomation" xml:space="preserve"><value>显示{0}</value></data>
+  <data name="Destination_HideSecretAutomation" xml:space="preserve"><value>隐藏{0}</value></data>
+  <data name="Destination_EnableToggle" xml:space="preserve"><value>启用{0}</value></data>
+
+  <data name="Filters_DuplicateKeyword" xml:space="preserve"><value>该关键词已经存在；关键词匹配不区分大小写。</value></data>
+  <data name="Activity_SummaryEmpty" xml:space="preserve"><value>没有近期发送记录。</value></data>
+  <data name="Activity_Summary" xml:space="preserve"><value>显示最近 {0} 个发送：{1} 个正在等待或重试，{2} 个失败。</value></data>
+  <data name="Activity_Refreshing" xml:space="preserve"><value>正在刷新活动……</value></data>
+  <data name="Activity_RefreshFailed" xml:space="preserve"><value>刷新活动失败：{0}</value></data>
+  <data name="Sources_Discovering" xml:space="preserve"><value>正在发现应用……</value></data>
+
+
+  <data name="Common_On" xml:space="preserve"><value>开</value></data>
+  <data name="Common_Off" xml:space="preserve"><value>关</value></data>
+    <data name="Sources_EmptyUndiscoveredDescription" xml:space="preserve"><value>从通知中心发现当前已有通知的应用，然后选择要转发通知的应用。</value></data>
+  <data name="Sources_EmptySearchDescription" xml:space="preserve"><value>请尝试其他应用名称或标识符。</value></data>
+                          <data name="Destination_UnsavedIndicator" xml:space="preserve"><value>有未保存的更改</value></data>
+  <data name="Destination_UnsavedTitle" xml:space="preserve"><value>保存对 {0} 的更改？</value></data>
+  <data name="Destination_UnsavedContent" xml:space="preserve"><value>连接信息已更改。离开前是否保存？</value></data>
+  <data name="Destination_SaveAndLeave" xml:space="preserve"><value>保存并离开</value></data>
+  <data name="Destination_DiscardChanges" xml:space="preserve"><value>放弃修改</value></data>
+
+  <data name="Runtime_ForwardingNeedsAccess" xml:space="preserve"><value>开启转发前，请先授予通知访问权限。</value></data>
+  <data name="Runtime_ForwardingNeedsSource" xml:space="preserve"><value>开启转发前，请至少启用一个应用。</value></data>
+  <data name="Runtime_ForwardingNeedsDestination" xml:space="preserve"><value>开启转发前，请至少配置并启用一个目标。</value></data>
+  <data name="Runtime_ForwardingReady" xml:space="preserve"><value>已准备好转发通知。</value></data>
+  <data name="Runtime_ForwardingEnabledDescription" xml:space="preserve"><value>来自已启用应用的新通知会转发到已启用目标。</value></data>
+  <data name="Runtime_ForwardingDisabledDescription" xml:space="preserve"><value>转发已关闭；排队发送会保留到再次开启转发。</value></data>
+  <data name="Runtime_ForwardingDisabled" xml:space="preserve"><value>转发已关闭。</value></data>
+  <data name="Runtime_ForwardingEnabled" xml:space="preserve"><value>转发已开启。</value></data>
+  <data name="Runtime_ForwardingStoppedAccess" xml:space="preserve"><value>通知访问权限不可用，转发已自动关闭。</value></data>
+  <data name="Runtime_ForwardingStoppedNoSources" xml:space="preserve"><value>没有已启用应用，转发已自动关闭。</value></data>
+  <data name="Runtime_ForwardingStoppedNoDestinations" xml:space="preserve"><value>没有已启用且配置完成的目标，转发已自动关闭。</value></data>
+  <data name="Runtime_ForwardingCaptured" xml:space="preserve"><value>转发已开启。本次会话已捕获 {0} 条通知，新增 {1} 条。</value></data>
+  <data name="SettingsStartupSection.Text" xml:space="preserve"><value>启动与关闭</value></data>
+  <data name="SettingsSystemSection.Text" xml:space="preserve"><value>系统</value></data>
+  <data name="SettingsPrivacySection.Text" xml:space="preserve"><value>隐私和数据</value></data>
+  <data name="SettingsPrivacyActionTitle.Text" xml:space="preserve"><value>清除已完成发送记录</value></data>
+  <data name="SettingsNotificationAccessCard.Header" xml:space="preserve"><value>通知访问权限</value></data>
+  <data name="SettingsNotificationAccessCard.Description" xml:space="preserve"><value>允许 NotiRelay 从 Windows 通知中心读取通知。</value></data>
+  <data name="SettingsStartupCard.Header" xml:space="preserve"><value>登录时启动 NotiRelay</value></data>
+  <data name="SettingsStartupCard.Description" xml:space="preserve"><value>登录 Windows 后自动启动 NotiRelay。</value></data>
+  <data name="SettingsSilentStartCard.Header" xml:space="preserve"><value>静默启动</value></data>
+  <data name="SettingsSilentStartCard.Description" xml:space="preserve"><value>启动时不显示主窗口，而是最小化到系统托盘。</value></data>
+  <data name="SettingsCloseActionCard.Header" xml:space="preserve"><value>关闭主窗口时</value></data>
+  <data name="SettingsCloseActionCard.Description" xml:space="preserve"><value>选择点击关闭按钮后的行为。</value></data>
+  <data name="CloseActionSelector.AutomationProperties.Name" xml:space="preserve"><value>关闭主窗口时的行为</value></data>
+  <data name="CloseActionMinimize.Content" xml:space="preserve"><value>最小化到系统托盘</value></data>
+  <data name="CloseActionExit.Content" xml:space="preserve"><value>退出应用</value></data>
+  <data name="CloseActionAsk.Content" xml:space="preserve"><value>每次询问</value></data>
+  <data name="SettingsLanguageCard.Header" xml:space="preserve"><value>显示语言</value></data>
+  <data name="SettingsLanguageCard.Description" xml:space="preserve"><value>更改界面使用的语言。应用需要重新启动。</value></data>
+  <data name="SettingsPrivacyCard.Header" xml:space="preserve"><value>隐私和数据</value></data>
+  <data name="SettingsPrivacyCard.Description" xml:space="preserve"><value>清除已完成发送的元数据。通知内容和未完成发送不会受到影响。</value></data>
+  <data name="FiltersIncludeEmpty.Text" xml:space="preserve"><value>没有包含关键词。所有未被排除的通知都允许转发。</value></data>
+  <data name="FiltersExcludeEmpty.Text" xml:space="preserve"><value>没有排除关键词。</value></data>
+  <data name="DestinationBarkGroup.Header" xml:space="preserve"><value>Bark</value></data>
+  <data name="DestinationBarkGroup.Description" xml:space="preserve"><value>将转发通知发送到 Bark 设备。</value></data>
+  <data name="DestinationWebhookGroup.Header" xml:space="preserve"><value>自定义 Webhook</value></data>
+  <data name="DestinationWebhookGroup.Description" xml:space="preserve"><value>将 NotiRelay 的标准 JSON 数据发送到 HTTP 端点。</value></data>
+  <data name="DestinationTelegramGroup.Header" xml:space="preserve"><value>Telegram</value></data>
+  <data name="DestinationTelegramGroup.Description" xml:space="preserve"><value>通过 Telegram 机器人发送转发通知。</value></data>
+  <data name="BarkServerUrlCard.Header" xml:space="preserve"><value>服务器 URL</value></data>
+  <data name="BarkServerUrlCard.Description" xml:space="preserve"><value>Bark 服务的基础地址，例如 https://api.day.app/。</value></data>
+  <data name="BarkDeviceKeyCard.Header" xml:space="preserve"><value>设备密钥</value></data>
+  <data name="BarkDeviceKeyCard.Description" xml:space="preserve"><value>用于向 Bark 设备发送通知。</value></data>
+  <data name="WebhookEndpointCard.Header" xml:space="preserve"><value>端点 URL</value></data>
+  <data name="WebhookEndpointCard.Description" xml:space="preserve"><value>接收 NotiRelay 标准 JSON 请求的 HTTP 地址。</value></data>
+  <data name="WebhookTokenCard.Header" xml:space="preserve"><value>Bearer 令牌（可选）</value></data>
+  <data name="WebhookTokenCard.Description" xml:space="preserve"><value>填写后会通过 Authorization 请求标头发送。</value></data>
+  <data name="TelegramBotTokenCard.Header" xml:space="preserve"><value>机器人令牌</value></data>
+  <data name="TelegramBotTokenCard.Description" xml:space="preserve"><value>Telegram BotFather 提供的机器人令牌。</value></data>
+  <data name="TelegramChatIdCard.Header" xml:space="preserve"><value>聊天 ID</value></data>
+  <data name="TelegramChatIdCard.Description" xml:space="preserve"><value>接收转发通知的用户、群组或频道标识符。</value></data>
+  <data name="Destination_UnsavedAllTitle" xml:space="preserve"><value>保存目标更改？</value></data>
+  <data name="Destination_UnsavedAllContent" xml:space="preserve"><value>一个或多个目标的连接信息已更改。是否在离开前保存？</value></data>
+  <data name="SourcesFilterAll.Content" xml:space="preserve"><value>全部</value></data>
+  <data name="SourcesFilterEnabled.Content" xml:space="preserve"><value>已启用</value></data>
+  <data name="Activity_EmptyDefaultDescription" xml:space="preserve"><value>启用应用并配置目标后，通知发送状态会显示在这里。</value></data>
+  <data name="Activity_EmptyFilteredDescription" xml:space="preserve"><value>最近活动中没有失败的发送。</value></data>
+  <data name="HomeForwardingCard.Header" xml:space="preserve"><value>通知转发</value></data>
+  <data name="HomeForwardingCard.Description" xml:space="preserve"><value>将已启用应用的通知转发到已启用目标。</value></data>
+  <data name="HomeCountsTitle.Text" xml:space="preserve"><value>当前数量</value></data>
+  <data name="HomeAppsCount.Text" xml:space="preserve"><value>已启用应用</value></data>
+  <data name="HomeDestinationsCount.Text" xml:space="preserve"><value>已启用目标</value></data>
+  <data name="HomePendingCount.Text" xml:space="preserve"><value>待发送</value></data>
+  <data name="HomeFailedCount.Text" xml:space="preserve"><value>失败</value></data>
+  <data name="HomeRecentTitle.Text" xml:space="preserve"><value>最近发送</value></data>
+  <data name="HomeRecentDescription.Text" xml:space="preserve"><value>最近三个发送任务。</value></data>
+  <data name="HomeViewActivity.Content" xml:space="preserve"><value>查看活动</value></data>
+  <data name="HomeRecentEmpty.Text" xml:space="preserve"><value>还没有发送活动。</value></data>
 </root>
