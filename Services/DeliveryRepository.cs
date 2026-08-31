@@ -58,9 +58,12 @@ namespace NotiRelay.Services
 			finally { _databaseLock.Release(); }
 		}
 
-		public async Task<IReadOnlyList<DeliveryQueueItem>> ClaimDueAsync(int limit,
+		public async Task<IReadOnlyList<DeliveryQueueItem>> ClaimDueAsync(
+			int limit,
+			IReadOnlyCollection<DestinationType> destinations,
 			CancellationToken cancellationToken = default)
 		{
+			if (destinations.Count == 0) return [];
 			await _databaseLock.WaitAsync(cancellationToken);
 			try
 			{
@@ -69,13 +72,15 @@ namespace NotiRelay.Services
 				var now = DateTimeOffset.UtcNow;
 				var select = connection.CreateCommand();
 				select.Transaction = transaction;
-				select.CommandText = """
-					SELECT Id, DestinationType, Title, Body, SourceApplicationName, CreatedAt, AttemptCount, EnqueuedAt
-					FROM Deliveries
-					WHERE ((Status IN ('Pending','RetryScheduled') AND NextAttemptAt <= $now)
-					   OR (Status = 'Active' AND LeaseExpiresAt <= $now))
-					ORDER BY NextAttemptAt LIMIT $limit;
-					""";
+					var destinationParameters = AddDestinationParameters(select, destinations);
+					select.CommandText = $"""
+						SELECT Id, DestinationType, Title, Body, SourceApplicationName, CreatedAt, AttemptCount, EnqueuedAt
+						FROM Deliveries
+						WHERE DestinationType IN ({destinationParameters})
+						  AND ((Status IN ('Pending','RetryScheduled') AND NextAttemptAt <= $now)
+						   OR (Status = 'Active' AND LeaseExpiresAt <= $now))
+						ORDER BY NextAttemptAt LIMIT $limit;
+						""";
 				select.Parameters.AddWithValue("$now", Format(now));
 				select.Parameters.AddWithValue("$limit", limit);
 				var items = new List<DeliveryQueueItem>();
@@ -100,6 +105,83 @@ namespace NotiRelay.Services
 				}
 				transaction.Commit();
 				return items;
+			}
+				finally { _databaseLock.Release(); }
+		}
+
+		public async Task<DateTimeOffset?> GetNextDueAtAsync(
+			IReadOnlyCollection<DestinationType> destinations,
+			CancellationToken cancellationToken = default)
+		{
+			if (destinations.Count == 0) return null;
+			await _databaseLock.WaitAsync(cancellationToken);
+			try
+			{
+				await using var connection = await OpenAsync(cancellationToken);
+				var command = connection.CreateCommand();
+				var destinationParameters = AddDestinationParameters(command, destinations);
+				command.CommandText = $"""
+					SELECT MIN(CASE
+						WHEN Status = 'Active' THEN LeaseExpiresAt
+						ELSE NextAttemptAt
+					END)
+					FROM Deliveries
+					WHERE DestinationType IN ({destinationParameters})
+					  AND Status IN ('Pending','RetryScheduled','Active');
+					""";
+				var value = await command.ExecuteScalarAsync(cancellationToken) as string;
+				return string.IsNullOrWhiteSpace(value) ? null : Parse(value);
+			}
+			finally { _databaseLock.Release(); }
+		}
+
+		public async Task ReleaseClaimAsync(string deliveryId, CancellationToken cancellationToken = default)
+		{
+			await _databaseLock.WaitAsync(cancellationToken);
+			try
+			{
+				await using var connection = await OpenAsync(cancellationToken);
+				var command = connection.CreateCommand();
+				command.CommandText = """
+					UPDATE Deliveries
+					SET Status='Pending', NextAttemptAt=$next, LeaseExpiresAt=NULL
+					WHERE Id=$id AND Status='Active';
+					""";
+				command.Parameters.AddWithValue("$next", Format(DateTimeOffset.UtcNow));
+				command.Parameters.AddWithValue("$id", deliveryId);
+				await command.ExecuteNonQueryAsync(cancellationToken);
+			}
+			finally { _databaseLock.Release(); }
+		}
+
+		public async Task DeleteUnfinishedForDestinationAsync(
+			DestinationType destinationType,
+			CancellationToken cancellationToken = default)
+		{
+			await _databaseLock.WaitAsync(cancellationToken);
+			try
+			{
+				await using var connection = await OpenAsync(cancellationToken);
+				using var transaction = connection.BeginTransaction();
+				var attempts = connection.CreateCommand();
+				attempts.Transaction = transaction;
+				attempts.CommandText = """
+					DELETE FROM DeliveryAttempts
+					WHERE DeliveryId IN (
+						SELECT Id FROM Deliveries
+							WHERE DestinationType=$type AND Status IN ('Pending','RetryScheduled','Active'));
+					""";
+				attempts.Parameters.AddWithValue("$type", destinationType.ToString());
+				await attempts.ExecuteNonQueryAsync(cancellationToken);
+				var deliveries = connection.CreateCommand();
+				deliveries.Transaction = transaction;
+				deliveries.CommandText = """
+					DELETE FROM Deliveries
+						WHERE DestinationType=$type AND Status IN ('Pending','RetryScheduled','Active');
+					""";
+				deliveries.Parameters.AddWithValue("$type", destinationType.ToString());
+				await deliveries.ExecuteNonQueryAsync(cancellationToken);
+				transaction.Commit();
 			}
 			finally { _databaseLock.Release(); }
 		}
@@ -179,6 +261,40 @@ namespace NotiRelay.Services
 			finally { _databaseLock.Release(); }
 		}
 
+		public async Task<IReadOnlyList<DeliveryActivityRecord>> GetRecentActivityAsync(
+			int limit,
+			CancellationToken cancellationToken = default)
+		{
+			await _databaseLock.WaitAsync(cancellationToken);
+			try
+			{
+				await using var connection = await OpenAsync(cancellationToken);
+				var command = connection.CreateCommand();
+				command.CommandText = """
+					SELECT DestinationType, SourceApplicationName, Status, AttemptCount, EnqueuedAt, LastError
+					FROM Deliveries
+					ORDER BY rowid DESC
+					LIMIT $limit;
+					""";
+				command.Parameters.AddWithValue("$limit", Math.Clamp(limit, 1, 500));
+				var items = new List<DeliveryActivityRecord>();
+				await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+				while (await reader.ReadAsync(cancellationToken))
+				{
+					items.Add(new DeliveryActivityRecord(
+						Enum.Parse<DestinationType>(reader.GetString(0)),
+						reader.GetString(1),
+						reader.GetString(2),
+						reader.GetInt32(3),
+						Parse(reader.GetString(4)),
+						reader.IsDBNull(5) ? string.Empty : reader.GetString(5)));
+				}
+
+				return items;
+			}
+			finally { _databaseLock.Release(); }
+		}
+
 		public Task ClearCompletedAsync(CancellationToken cancellationToken = default) =>
 			DeleteTerminalAsync(null, cancellationToken);
 
@@ -228,6 +344,22 @@ namespace NotiRelay.Services
 				""";
 			await command.ExecuteNonQueryAsync(cancellationToken);
 			return connection;
+		}
+
+		private static string AddDestinationParameters(
+			SqliteCommand command,
+			IReadOnlyCollection<DestinationType> destinations)
+		{
+			var parameterNames = new List<string>(destinations.Count);
+			var index = 0;
+			foreach (var destination in destinations)
+			{
+				var name = $"$destination{index++}";
+				parameterNames.Add(name);
+				command.Parameters.AddWithValue(name, destination.ToString());
+			}
+
+			return string.Join(',', parameterNames);
 		}
 
 		private static string Format(DateTimeOffset value) => value.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture);

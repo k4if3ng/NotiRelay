@@ -1,5 +1,6 @@
 using H.NotifyIcon;
 using Microsoft.UI.Xaml;
+using NotiRelay.Views;
 using System.Windows.Input;
 
 namespace NotiRelay
@@ -33,13 +34,25 @@ namespace NotiRelay
 			this.Hide(enableEfficiencyMode: true);
 		}
 
-		private void ExitApplication()
+		private async void ExitApplication()
 		{
 			if (_isExiting)
 			{
 				return;
 			}
 
+			if (ContentFrame.Content is IUnsavedChangesGuard { HasUnsavedChanges: true })
+			{
+				ShowAndActivate();
+			}
+			if (!await CanLeaveCurrentPageAsync()) return;
+
+			ExitApplicationCore();
+		}
+
+		private void ExitApplicationCore()
+		{
+			if (_isExiting) return;
 			_isExiting = true;
 			Shutdown();
 			Application.Current.Exit();

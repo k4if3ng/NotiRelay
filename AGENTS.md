@@ -8,6 +8,11 @@ notifications to external destinations.
 - Use `CONTEXT.md` for canonical domain language.
 - Follow the active scope in `ROADMAP.md` and its linked milestone document.
 - Follow `docs/development-workflow.md` for validation, commit, and release flow.
+- Follow `docs/design/ui-system.md` for every interface value. Read it before editing
+  any `.xaml` file. Reference its named resources; never write literal spacing, font
+  size, or corner radius in page XAML.
+- Use the real Home, Apps, Destinations, Rules, Activity, and Settings pages as the
+  verification matrix for layout, density, copy, themes, focus states, and text scaling.
 - Use `docs/adr/` for accepted architectural decisions; do not implement a
   future ADR before the active milestone requires it.
 

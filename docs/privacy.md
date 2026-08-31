@@ -15,7 +15,7 @@ device keys, and bearer credentials are stored in Windows Credential Locker.
 
 ## Network disclosure
 
-Selected notification content is sent only to the Bark, Generic Webhook, or
+Selected notification content is sent only to the Bark, Custom Webhook, or
 Telegram endpoint configured by the user. Those services apply their own privacy
 terms. NotiRelay has no analytics, advertising, crash-reporting, or cloud account.
 

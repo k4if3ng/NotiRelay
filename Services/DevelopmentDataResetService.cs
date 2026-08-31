@@ -26,7 +26,7 @@ namespace NotiRelay.Services
 			DeleteKnownCredentials();
 			localSettings.Values.Clear();
 			localSettings.Values[DataModelVersionKey] = CurrentDataModelVersion;
-			localSettings.Values["RelayPaused"] = true;
+				localSettings.Values["ForwardingEnabled"] = false;
 		}
 
 		private static void DeleteDatabaseFiles(string localFolderPath)

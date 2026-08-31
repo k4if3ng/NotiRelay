@@ -17,7 +17,7 @@ The MVP focuses on:
 - enabling Source Applications through an explicit allowlist;
 - forwarding allowed notifications through durable at-least-once delivery;
 - filtering title/body text with include and exclude keywords;
-- using Bark, Generic Webhook, and Telegram destinations;
+- using Bark, Custom Webhook, and Telegram destinations;
 - storing ordinary configuration locally and credentials securely; and
 - running as a notification-area application with explicit exit behavior;
 - providing an English and Simplified Chinese Fluent interface; and
@@ -33,22 +33,22 @@ boundary can produce a duplicate.
    asks.
 2. Enable only the Source Applications whose new notifications should be
    delivered.
-3. Configure one or more Bark, Generic Webhook, or Telegram destinations.
+3. Configure one or more Bark, Custom Webhook, or Telegram destinations.
 4. Optionally save semicolon-separated include/exclude keyword filters.
 5. Use **Send test** to verify each destination.
 6. Close the main window to keep NotiRelay monitoring in the notification area;
    use the notification-area menu to show the window or exit explicitly.
 
 Secrets are stored in Windows Credential Locker. Retryable content is stored in
-local app data and erased from terminal Delivery records. The visible in-memory
-list is limited to the 100 most recent Captured Notifications.
+local app data and erased from terminal Delivery records. Activity shows a bounded
+list of recent send metadata rather than retaining a notification-content history.
 
 ## Technology
 
 - C# and .NET 10
 - WinUI 3 and Windows App SDK
 - Packaged MSIX application
-- Windows 11 x64 as the first supported target
+- x86, x64, and ARM64 Windows 11 build targets
 
 ## Build
 
@@ -58,9 +58,10 @@ From the repository root:
 dotnet build NotiRelay.slnx
 ```
 
-Visual Studio is recommended for packaged debugging. The first supported and
-runtime-validated target is Windows 11 x64; ARM64 compilation is checked but has
-not yet been validated on a physical ARM64 device.
+Visual Studio is recommended for packaged debugging. x64 is the fully
+runtime-validated target; x86 receives a basic compatibility smoke test on x64
+Windows, while ARM64 compilation is checked without claiming physical-device
+validation.
 
 ## Documentation
 
