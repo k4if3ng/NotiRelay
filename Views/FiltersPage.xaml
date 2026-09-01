@@ -36,7 +36,7 @@
                             </Grid>
                             <Border Style="{StaticResource CardDividerStyle}" />
                             <StackPanel Padding="{StaticResource CardContentPadding}" Style="{StaticResource CardContentStackStyle}">
-                                <Grid x:Name="IncludeInputRow" ColumnSpacing="{StaticResource SpacingS}" RowSpacing="{StaticResource SpacingS}">
+                                <Grid x:Name="IncludeInputRow" MaxWidth="{StaticResource RuleInputRowMaxWidth}" HorizontalAlignment="Left" ColumnSpacing="{StaticResource SpacingS}" RowSpacing="{StaticResource SpacingS}">
                                     <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -93,7 +93,7 @@
                             </Grid>
                             <Border Style="{StaticResource CardDividerStyle}" />
                             <StackPanel Padding="{StaticResource CardContentPadding}" Style="{StaticResource CardContentStackStyle}">
-                                <Grid x:Name="ExcludeInputRow" ColumnSpacing="{StaticResource SpacingS}" RowSpacing="{StaticResource SpacingS}">
+                                <Grid x:Name="ExcludeInputRow" MaxWidth="{StaticResource RuleInputRowMaxWidth}" HorizontalAlignment="Left" ColumnSpacing="{StaticResource SpacingS}" RowSpacing="{StaticResource SpacingS}">
                                     <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />

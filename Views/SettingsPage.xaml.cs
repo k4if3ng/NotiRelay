@@ -256,8 +256,6 @@ public sealed partial class SettingsPage : Page
             return;
         }
 
-        var threshold = (double)Application.Current.Resources["RowReflowBreakpoint"];
-        var narrow = e.NewSize.Width < threshold;
         Grid.SetRow(accessory, 0);
         Grid.SetColumn(accessory, 2);
         Grid.SetColumnSpan(accessory, 1);
@@ -268,18 +266,9 @@ public sealed partial class SettingsPage : Page
             accessory.Width = double.NaN;
             accessory.HorizontalAlignment = HorizontalAlignment.Right;
         }
-        else if (accessory is ComboBox)
+        else if (accessory is ComboBox or Button)
         {
-            accessory.Width = narrow
-                ? (double)Application.Current.Resources["SettingsComboBoxCompactWidth"]
-                : (double)Application.Current.Resources["SettingsComboBoxWidth"];
-            accessory.HorizontalAlignment = HorizontalAlignment.Right;
-        }
-        else if (accessory is Button)
-        {
-            accessory.Width = narrow
-                ? (double)Application.Current.Resources["SettingsButtonCompactWidth"]
-                : (double)Application.Current.Resources["SettingsButtonWidth"];
+            accessory.Width = (double)Application.Current.Resources["SettingsAccessoryWidth"];
             accessory.HorizontalAlignment = HorizontalAlignment.Right;
         }
     }

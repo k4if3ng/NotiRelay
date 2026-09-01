@@ -372,10 +372,11 @@ a stable 180 px minimum and a bounded nested scroll surface when the collection 
 
 **Destinations** — one page, three `SettingsExpander` cards. Header is icon, name,
 status, enable toggle, chevron. **Configured and healthy destinations collapse;
-unconfigured or failing ones expand.** Body fields use a 220 px shared label column,
-16 px gap, and a fluid editor column inside a centred 840 px maximum form workspace;
-the label column contracts to 140 px in the compact tier while labels and 32 px-high
-inputs stay on one row. Secret editors reserve a fixed 32 px trailing reveal slot, so
+unconfigured or failing ones expand.** Body fields use a 280 px shared label column,
+16 px gap, and a fluid editor column inside a centred 760 px maximum form workspace;
+below the 640 px form-content breakpoint, the label column contracts to 180 px while
+labels and 32 px-high inputs stay on one row. Secret editors reserve a fixed 32 px
+trailing reveal slot, so
 showing or hiding a secret never changes the editor width. The footer shares the form
 workspace and stays on one line: a fixed-status slot at the left and a fixed
 right-aligned group of equal-sized Save, Cancel, Test, and Clear buttons. Cancel
@@ -383,9 +384,12 @@ restores the last saved values for that destination; Clear remains secondary and
 confirmed.
 
 **Rules** — two always-visible, non-collapsible group cards, Include and Exclude, each
-with an independently persisted group-level enable toggle. Body is a full-width input
-row, the chip flow, and an empty state. Enter or Add trims the value, rejects empty and
-case-insensitive duplicates, persists immediately, and renders an individually
+with an independently persisted group-level enable toggle. Body begins with a fluid
+keyword editor plus its Add button in a left-aligned 524 px maximum row; the editor
+shrinks with the card instead of forcing a fixed input width. The following chip flow
+remains content-sized, with each removable chip capped independently. Enter or Add trims
+the value, rejects empty and case-insensitive duplicates, persists immediately, and
+renders an individually
 removable chip. Disabling a group preserves its chips but ignores them at runtime.
 Exclude wins when both groups match. The precedence explanation belongs to the Exclude
 card's description.
@@ -403,8 +407,8 @@ inside the card: Startup and close (Start at sign-in, Silent start, Close action
 System (notification access and a language `ComboBox`), and Privacy and data. The
 privacy row is named for its concrete clear-records action rather than repeating the
 card title. Accessory controls remain on the same row at every supported width, but
-alignment is type-specific: ComboBoxes are 200 px (176 compact), action buttons are
-160 px at both tiers, and native internal alignment is preserved (`ComboBox` values
+alignment is type-specific: ComboBoxes and action buttons are 160 px at both tiers,
+and native internal alignment is preserved (`ComboBox` values
 left aligned, button labels centred). Decorative row icons use a restrained 16 px
 secondary colour; startup and close behaviour use semantic system/window glyphs rather
 than a Play triangle or prominent X. Close action offers Minimize to system
