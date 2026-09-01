@@ -691,7 +691,10 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
     private async Task SetDestinationEnabledAsync(DestinationType type, bool isEnabled)
     {
         if (_loading || !_operationsInProgress.Add(type)) return;
-        UpdateDestinationState();
+        // Keep the user's requested state visible while persistence is in flight.
+        // Re-reading the old runtime value here made the switch appear to ignore
+        // the click until the asynchronous save completed.
+        SetDestinationToggleEnabled(type, false);
         try
         {
             await Runtime.SetDestinationEnabledAsync(type, isEnabled);
@@ -705,6 +708,22 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
         {
             _operationsInProgress.Remove(type);
             UpdateDestinationState();
+        }
+    }
+
+    private void SetDestinationToggleEnabled(DestinationType type, bool isEnabled)
+    {
+        switch (type)
+        {
+            case DestinationType.Bark:
+                BarkEnabledToggle.IsEnabled = isEnabled;
+                break;
+            case DestinationType.GenericWebhook:
+                WebhookEnabledToggle.IsEnabled = isEnabled;
+                break;
+            case DestinationType.Telegram:
+                TelegramEnabledToggle.IsEnabled = isEnabled;
+                break;
         }
     }
 

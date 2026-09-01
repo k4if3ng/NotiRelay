@@ -134,9 +134,7 @@ namespace NotiRelay.Views
 						(query.Length == 0 ||
 						 source.DisplayName.Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
 						 source.ApplicationUserModelId.Contains(query, StringComparison.OrdinalIgnoreCase)))
-				.OrderByDescending(source => source.IsEnabled)
-				.ThenBy(source => source.DisplayName, StringComparer.CurrentCultureIgnoreCase)
-				.ToList();
+					.ToList();
 
 			SynchronizeFilteredSources(filtered);
 

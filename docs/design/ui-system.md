@@ -134,6 +134,10 @@ Apps                                                            ← page title r
 └───────────────────────────────────────────────────────────────┘
 ```
 
+The Apps list preserves discovery order when an app is toggled. Enabling an app
+must not reorder rows underneath the pointer; this keeps the interaction stable and
+prevents an in-flight click from landing on a different row.
+
 **Multi-card pages** give each card its own header. Use `SettingsExpander` only when
 collapsing details removes optional or already-configured information. Always-visible
 groups, such as Rules and Settings sections, use `GroupCardBorderStyle` and have no
@@ -396,7 +400,7 @@ inside the card: Startup and close (Start at sign-in, Silent start, Close action
 System (notification access and a language `ComboBox`), and Privacy and data. The
 privacy row is named for its concrete clear-records action rather than repeating the
 card title. Accessory controls remain on the same row at every supported width, but
-alignment is type-specific: ComboBoxes are 220 px (192 compact), action buttons are
+alignment is type-specific: ComboBoxes are 200 px (176 compact), action buttons are
 160 px at both tiers, and native internal alignment is preserved (`ComboBox` values
 left aligned, button labels centred). Decorative row icons use a restrained 16 px
 secondary colour; startup and close behaviour use semantic system/window glyphs rather
