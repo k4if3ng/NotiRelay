@@ -7,9 +7,12 @@ Notification Center and relays them to user-configured external destinations.
 
 ## Status
 
-NotiRelay v1.1.0 is the current stable repository release. It redesigns the forwarding
+NotiRelay v1.1.0 is the current stable source milestone. It redesigns the forwarding
 experience around a Windows Settings-style interface and an explicit Notification
-forwarding state.
+forwarding state. GitHub currently hosts source code and project collaboration only;
+official installable binaries will be distributed through Microsoft Store.
+
+The next planned milestone is [v1.2.0 product readiness and supportability](docs/milestones/v1.2.0.md).
 
 The MVP focuses on:
 
@@ -29,8 +32,8 @@ boundary can produce a duplicate.
 
 ## Use
 
-1. Launch the packaged application and grant notification access when Windows
-   asks.
+1. Install the official packaged application from Microsoft Store when the listing
+   becomes available, then grant notification access when Windows asks.
 2. Enable only the Source Applications whose new notifications should be
    delivered.
 3. Configure one or more Bark, Custom Webhook, or Telegram destinations.
@@ -68,9 +71,11 @@ validation.
 
 - [Domain language](CONTEXT.md)
 - [Roadmap](ROADMAP.md)
+- [Planned v1.2.0 milestone](docs/milestones/v1.2.0.md)
 - [Stable v1.1.0 milestone](docs/milestones/v1.1.0.md)
 - [Stable v1.0.0 milestone](docs/milestones/v1.0.0.md)
 - [Privacy](docs/privacy.md)
+- [MIT License](LICENSE)
 - [Publishing](docs/publishing.md)
 - [Development workflow](docs/development-workflow.md)
 - [Architecture decisions](docs/adr/)

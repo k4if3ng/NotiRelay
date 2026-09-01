@@ -50,6 +50,32 @@ _Avoid_: Retry
 A durable record of Delivery work that has not yet reached a terminal state.
 _Avoid_: Queue message
 
+**Activity Record**:
+A bounded local summary of a Delivery and its attempts for status review and
+troubleshooting. It is operational history, not a diagnostic log or a retained
+copy of the Captured Notification.
+_Avoid_: Notification history, log entry
+
+**Activity Preview**:
+A planned v1.2 short, separately retained excerpt that helps distinguish Activity
+Records. It uses the notification title when available and otherwise a bounded
+body excerpt. It is not full-content history, is never used for Delivery, follows
+Activity retention, and can be disabled by the user.
+_Avoid_: Notification body, message archive
+
+**Diagnostic Log**:
+A local engineering record of application events and exceptions, separate from
+Activity Records. v1.2 plans bounded structured retention and explicit support
+export that exclude notification content, Activity Previews, credentials, and
+complete destination endpoints by default.
+_Avoid_: Activity, telemetry
+
+**Telemetry**:
+Operational or usage data that an application automatically transmits to a remote
+service. NotiRelay does not collect application telemetry; Store-provided aggregate
+analytics and a user-initiated diagnostic export are separate mechanisms.
+_Avoid_: Log, diagnostics
+
 **Notification Envelope**:
 The provider-neutral content prepared from a Captured Notification for delivery to Destination Profiles.
 _Avoid_: Provider payload
@@ -99,6 +125,8 @@ language for the same concepts.
 | Delivery | Send task | 发送任务 |
 | Delivery Attempt | Send attempt | 发送尝试 |
 | Outbox Item | Pending task | 待发送任务 |
+| Activity Record | Send record | 发送记录 |
+| Activity Preview | Message preview | 消息预览 |
 | Generic Webhook | Custom Webhook | 自定义 Webhook |
 | Silent Start | Start silently | 静默启动 |
 | Close Action | When closing the window | 关闭窗口时 |

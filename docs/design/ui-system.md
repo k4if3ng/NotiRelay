@@ -200,7 +200,7 @@ Applied to current copy:
 | 静默启动 / 启动时不显示窗口，停留在通知区域 | keep | not obvious |
 | 设备密钥 / Bark 应用首页显示的那串字符 | keep | source the user cannot guess |
 | 存储的数据 / 清除…不影响配置 | keep | consequence |
-| 关于 / 版本 · 通知内容只在本机处理 | deferred | About is outside Slice 5A |
+| 关于 / 版本 · 项目与支持信息 | keep | selected for v1.2; identifies the installed product and support paths |
 
 Two legal description positions, and only two: under the row title (default), or under
 the control when it explains a value the user just produced. A description never sits
@@ -256,8 +256,10 @@ breakpoint.
 The page scroll host spans the entire NavigationView content pane so its vertical
 scrollbar sits at the pane's trailing edge. The centred, width-bounded content column
 is the scroll host's child, not its parent. The page reserves a safe inset between its
-content and an overlaid vertical scrollbar. Nested list scroll surfaces stay inside
-their owning card and preserve the same inset.
+content and an overlaid vertical scrollbar. A page has one vertical scroll owner.
+A nested list scroll surface is legal only when the page scroll host is disabled and
+the page gives that list a bounded `*` viewport; two independently scrollable
+vertical regions must never compete in the same narrow-window interaction path.
 
 Interactive rows do not move controls to a second line. Inputs, buttons, combo boxes,
 and toggles remain in their owning row at every supported window size. When a component
@@ -360,10 +362,19 @@ footers remain owned by this system. This preserves the no-template-rewrite boun
 
 ## 15. Page specifications
 
-**Home** — the visible page name is `主页` / `Home` everywhere. A forwarding card whose single row carries state, the
-precondition description, and the toggle, then a flush counts strip inside the same
-card. A second card lists the three most recent sends with a secondary action to
-Activity. The four shortcut rows that duplicated the navigation pane stay deleted.
+Specifications marked as v1.2 targets are accepted milestone designs rather than
+claims about the completed v1.1 implementation. Their code and validation land in
+the corresponding v1.2 Development Slice.
+
+**Home (v1.2 target)** — the visible page name is `主页` / `Home` everywhere. A forwarding card
+whose single row carries state, the precondition description, and the toggle. Its
+summary separates configuration from delivery health: enabled Apps and Destinations
+are configuration counts; In queue is the live non-terminal count; Sent (24h) and
+Failed (24h) use an explicit rolling window based on terminal time. Active and
+Retry Scheduled remain
+Activity-level details rather than separate Home metrics. A second card lists the
+three most recent sends with a secondary action to Activity. The four shortcut rows
+that duplicated the navigation pane stay deleted.
 
 **Apps** — a plain page title followed by one card. The card begins with a compact
 68 px functional header: a vertically centred title `Application list` / `应用列表`
@@ -398,28 +409,36 @@ removable chip. Disabling a group preserves its chips but ignores them at runtim
 Exclude wins when both groups match. The precedence explanation belongs to the Exclude
 card's description.
 
-**Activity** — the card begins with a vertically centred functional header: `Send
-history` / `发送记录`, its live summary, and the Refresh command. The empty state keeps a
-180 px minimum; a populated list grows from its natural row height to the bounded scroll
-maximum so one send does not reserve empty viewport space. A row's trailing status spans
-its title and metadata lines and is centred against the complete record. Slice 5A keeps
-the existing event list. Its event model, grouping, and filtering belong to Slice 5B; do
-not add a provisional All/Failed split.
+**Activity (v1.2 target)** — the card begins with a vertically centred functional header: `Send
+history` / `发送记录`, its live summary, and the Refresh command. The page-level
+scroll host owns vertical scrolling at every supported window size; the Activity card
+does not add a competing vertical scrollbar. The empty state keeps a 180 px minimum,
+and a populated list grows at natural row height. A row shows Source Application to
+Destination, a bounded two-line Activity Preview when enabled, enqueue time, attempt
+count, and trailing status. The status is centred against the complete record; an error
+uses the final bounded line and a tooltip. Preview text trims rather than widening the
+row, is excluded from diagnostics, and has an accessible name that does not disclose
+more content than is visibly retained. Grouping and filtering remain deferred; do not
+add a provisional All/Failed split.
 
-**Settings** — three always-visible, non-collapsible group cards whose section title is
+**Settings (v1.2 target)** — four always-visible, non-collapsible group cards whose section title is
 inside the card: Startup and close (Start at sign-in, Silent start, Close action),
-System (notification access and a language `ComboBox`), and Privacy and data. The
-privacy row is named for its concrete clear-records action rather than repeating the
-card title. Accessory controls remain on the same row at every supported width, but
-alignment is type-specific: ComboBoxes and action buttons are 160 px at both tiers,
-and native internal alignment is preserved (`ComboBox` values
-left aligned, button labels centred). Decorative row icons use a restrained 16 px
-secondary colour; startup and close behaviour use semantic system/window glyphs rather
-than a Play triangle or prominent X. Close action offers Minimize to tray, Exit,
-and Ask every time. The ask dialog has Minimize to tray as primary,
-Exit as secondary, Cancel, and an optional Remember my choice check box. Silent Start
-is independent from Start at sign-in and also applies to manual launch. About, GitHub,
-and License are deliberately deferred beyond Slice 5A.
+System (notification access and a language `ComboBox`), Privacy and data, and About.
+Privacy provides the concrete clear-records action, the Activity Preview preference,
+and sanitized diagnostic export; it explains local retention without repeating the
+card title. About uses Settings-style rows for the installed version, author
+`凯风（Kaifeng）`, GitHub account `@k4if3ng`, repository, Issues, Star, and MIT
+License. External rows expose normal link semantics and an external-link affordance.
+The version is read from installed package or assembly metadata, never hard-coded in
+XAML or resources. Accessory controls remain on the same row at every supported width,
+but alignment is type-specific: ComboBoxes and action buttons are 160 px at both tiers,
+and native internal alignment is preserved (`ComboBox` values left aligned, button
+labels centred). Decorative row icons use a restrained 16 px secondary colour; startup
+and close behaviour use semantic system/window glyphs rather than a Play triangle or
+prominent X. Close action offers Minimize to tray, Exit, and Ask every time. The ask
+dialog has Minimize to tray as primary, Exit as secondary, Cancel, and an optional
+Remember my choice check box. Silent Start is independent from Start at sign-in and
+also applies to manual launch.
 
 ## 16. Verification surface
 
