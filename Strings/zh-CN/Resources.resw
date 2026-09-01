@@ -153,7 +153,6 @@
   <data name="Settings_StartupUnavailable" xml:space="preserve"><value>此安装方式不支持管理登录启动项。</value></data>
   <data name="CloseAction_DialogTitle" xml:space="preserve"><value>关闭 NotiRelay？</value></data>
   <data name="CloseAction_DialogContent" xml:space="preserve"><value>你可以将主窗口最小化到系统托盘并继续转发通知，也可以完全退出应用。</value></data>
-  <data name="CloseAction_MinimizeToTray" xml:space="preserve"><value>最小化到系统托盘</value></data>
   <data name="CloseAction_Exit" xml:space="preserve"><value>退出</value></data>
   <data name="CloseAction_RememberChoice" xml:space="preserve"><value>记住我的选择</value></data>
   <data name="Settings_LanguageRestartTitle" xml:space="preserve"><value>重新启动 NotiRelay？</value></data>

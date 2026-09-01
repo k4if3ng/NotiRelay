@@ -25,13 +25,18 @@ density before markup is written, but theme resources, adaptive reflow, text sca
 focus visuals, and content density are verified on the pages that actually ship.
 
 The first attempt at this system was reviewed and rejected, which sharpened the
-decision in two places. Adopting the toolkit is not enough on its own: the toolkit's
-own metric resources must be overridden in `Styles/AppStyles.xaml` so that toolkit
-cards and hand-written list rows resolve their padding, row height, and corner radius
-from one set of tokens. Leaving toolkit defaults in place reproduces the competing
-card grammars this decision exists to remove, and building first-party replacements
-instead was rejected a second time for the same maintenance reason as above. Second,
-"the shell stays native" is literal — the NavigationView's own selection treatment is
-kept, and code that assigns `Foreground` to a `NavigationViewItem` is removed rather
-than replaced, because the control's visual states overwrite it and the attempt never
-rendered.
+decision in two places. Adopting the toolkit is not enough on its own: every public
+Toolkit metric key used by the shipping controls is audited against the owned token
+dictionary. Metrics that describe the same concept — border thickness, setting-row
+height, header-icon size, wrapping threshold, and chevron target size — are linked in
+`Styles/AppStyles.xaml`. Toolkit-internal padding and corner geometry remain at their
+reviewed defaults because version 8.2.251219 exposes no dedicated SettingsCard corner
+resource, and overriding the global `ControlCornerRadius` would restyle unrelated native
+controls. The application owns outer card spacing and its hand-written list geometry;
+no Toolkit template is copied or rewritten. This verified mapping, together with the
+shipping-page user review, replaces the earlier assumption that every Toolkit internal
+metric had to be forced onto the same numeric values. Building first-party replacements
+remains rejected for the maintenance reason above. Second, "the shell stays native" is
+literal — the NavigationView's own selection treatment is kept, and code that assigns
+`Foreground` to a `NavigationViewItem` is removed rather than replaced, because the
+control's visual states overwrite it and the attempt never rendered.

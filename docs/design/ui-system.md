@@ -1,7 +1,9 @@
 # NotiRelay UI System
 
-The authoritative specification for NotiRelay's interface. Every value here exists
-as a named XAML resource; pages reference the resource, never the literal.
+The authoritative specification for NotiRelay's interface. Numeric values used by the
+shipping XAML exist as named resources; pages reference the resource, never the literal.
+Section 14 records the audited third-party control metrics and their relationship to the
+owned token dictionary.
 
 Governed by [ADR 0011](../adr/0011-own-the-content-design-system-and-keep-the-shell-native.md):
 the shell is native Windows 11 Fluent, the content area follows this system, and no
@@ -66,12 +68,14 @@ steps.
 
 ## 3. Corner radius
 
-Container 8 and control 4 follow native Fluent geometry. Keyword chips are compact
-28 px pills so a removable value reads as one object rather than a miniature card.
+Application-owned containers use 8 while native controls retain their theme-provided
+control radius. Keyword chips are compact 28 px pills so a removable value reads as one
+object rather than a miniature card.
 
 | Element | Radius | Resource |
 | --- | --- | --- |
-| Group card | 8 | `CardCornerRadius` |
+| Application-owned group card | 8 | `CardCornerRadius` |
+| Toolkit `SettingsCard` / `SettingsExpander` | Native control radius | `ControlCornerRadius` |
 | Content area top-left | 8 | `CardCornerRadius` |
 | Control inside a card | 4 | `ControlCornerRadius` |
 | Keyword chip | 14 | `ChipCornerRadius` |
@@ -129,7 +133,7 @@ Apps                                                            ← page title r
 ├───────────────────────────────────────────────────────────────┤
 │  [search]                                  [ All | Enabled ]  │
 ├───────────────────────────────────────────────────────────────┤
-│  [icon]  Row title                                   [toggle] │  ← 52
+│  [icon]  Row title                                   [toggle] │  ← 60
 │          Row description                                      │
 └───────────────────────────────────────────────────────────────┘
 ```
@@ -314,7 +318,7 @@ a pixel on focus.
 - Rewriting any `ControlTemplate`
 - Literal spacing, font size, or corner radius values in page XAML
 - Assigning `Foreground` or `FontWeight` to a `NavigationViewItem`
-- Leaving toolkit metric resources at their defaults (see §14)
+- Using unaudited Toolkit metric resources (see §14)
 - Page subtitles
 - A description that restates its title
 - Window width as an adaptive trigger
@@ -325,36 +329,34 @@ a pixel on focus.
 
 ## 14. Toolkit metric overrides
 
-The Windows Community Toolkit controls read their metrics from **named application
-resources**. `Styles/AppStyles.xaml` overrides them so that toolkit cards and
-hand-written list rows resolve padding, row height, and corner radius from one set of
-tokens. This is the mechanism that keeps Apps and Destinations looking like one
-product; adopting the toolkit without it is what produced two competing card grammars.
+The keys below were audited against the Windows Community Toolkit 8.2.251219 source at
+tag `v8.2.251219` (`a6b4dc451c0e54dd29f58743894a956100e7f713`). The NuGet package ships compiled XBF,
+so the tagged source is the readable source of truth.
 
-Precedent already in the file: `SettingsCardWrapThreshold` is set to 720 and the
-toolkit honours it.
-
-**The full key list is not yet verified.** Before writing markup that depends on it,
-read the toolkit's own resource dictionaries and record the keys and their defaults in
-this section:
-
-- `components/SettingsControls/src/SettingsCard/SettingsCard.xaml`
-- `components/SettingsControls/src/SettingsExpander/SettingsExpander.xaml`
-- `components/Segmented/src/Segmented/Segmented.xaml`
-
-in `https://github.com/CommunityToolkit/Windows`. The installed package
-(`8.2.251219`) ships compiled XBF inside `.pri` only, so the values cannot be read
-from the NuGet cache.
-
-Targets to map onto, once the keys are known:
-
-| Concept | Value | Existing token |
+| Toolkit resource | Toolkit default | NotiRelay mapping |
 | --- | --- | --- |
-| Card corner radius | 8 | `CardCornerRadius` |
-| Card horizontal content inset | 24 | `SpacingXL` |
-| Configuration row height | 68 | `RowHeightSetting` |
-| Header icon column / glyph | 32 / 20–24 | `CardIconColumnWidth` / `StandardIconSize` |
-| Wrap threshold | 720 | `SettingsCardWrapThreshold` |
+| `SettingsCardBorderThickness` | `1` | `ThinBorderThickness` (`1`) |
+| `SettingsCardPadding` | `16,16,16,16` | Reviewed Toolkit internal default; page-owned rows use their own named padding tokens |
+| `SettingsCardMinHeight` | `68` | `RowHeightSetting` (`68`) |
+| `SettingsCardDescriptionFontSize` | `12` | Reviewed default; matches the 12 px description ramp |
+| `SettingsCardHeaderIconMaxSize` | `20` | `StandardIconSize` (`20`) |
+| `SettingsCardHeaderIconMargin` | `2,0,20,0` | Reviewed Toolkit internal default |
+| `SettingsCardWrapThreshold` | `476` | `RowReflowBreakpoint` (`720`) |
+| `SettingsCardWrapNoIconThreshold` | `286` | Reviewed Toolkit internal default |
+| `SettingsExpanderHeaderPadding` | `16,16,4,16` | Reviewed Toolkit internal default |
+| `SettingsExpanderItemPadding` | `58,8,44,8` | Reviewed Toolkit internal default; destination body supplies its own zero-padded card and named form-row insets |
+| `SettingsExpanderContentMinHeight` | `16` | Reviewed Toolkit internal default |
+| `SettingsExpanderChevronButtonWidth` / `Height` | `32` / `32` | `TitleBarInteractiveSize` (`32`) for both dimensions |
+| `SegmentedItemSpacing` | `1` | Reviewed Toolkit internal default |
+| `ButtonItemSpacing` | `2` | Reviewed Toolkit internal default |
+
+Toolkit 8.2.251219 uses the global `ControlCornerRadius` directly for `SettingsCard` and
+`SettingsExpander`; it exposes no dedicated card-corner resource. NotiRelay therefore
+does not override `ControlCornerRadius`, because that would restyle unrelated native
+controls. Application-owned `GroupCardBorderStyle` surfaces continue to use
+`CardCornerRadius` (`8`). The Toolkit controls retain their native reviewed corner and
+internal padding while outer spacing, destination form rows, list rows, and action
+footers remain owned by this system. This preserves the no-template-rewrite boundary.
 
 ## 15. Page specifications
 
@@ -367,8 +369,9 @@ Activity. The four shortcut rows that duplicated the navigation pane stay delete
 68 px functional header: a vertically centred title `Application list` / `应用列表`
 and total/enabled or discovery-status description at the left, plus a borderless
 icon-and-text Discover apps action at the right. Search plus an All/Enabled `Segmented`
-occupy the next row, followed by the list at list density. The list/empty viewport has
-a stable 180 px minimum and a bounded nested scroll surface when the collection is long.
+occupy the next row, followed by the list at list density. The empty state alone keeps
+a 180 px minimum; a populated list grows from its natural row height to a bounded nested
+scroll surface when the collection is long.
 
 **Destinations** — one page, three `SettingsExpander` cards. Header is icon, name,
 status, enable toggle, chevron. **Configured and healthy destinations collapse;
@@ -384,10 +387,11 @@ restores the last saved values for that destination; Clear remains secondary and
 confirmed.
 
 **Rules** — two always-visible, non-collapsible group cards, Include and Exclude, each
-with an independently persisted group-level enable toggle. Body begins with a fluid
-keyword editor plus its Add button in a left-aligned 524 px maximum row; the editor
-shrinks with the card instead of forcing a fixed input width. The following chip flow
-remains content-sized, with each removable chip capped independently. Enter or Add trims
+with an independently persisted group-level enable toggle. The body uses a centred
+524 px maximum content block. Its fluid keyword editor and Add button share one row;
+feedback, empty-state copy, and the content-sized wrapping chip flow align to the
+editor's left edge inside that block. The block shrinks with the card instead of forcing
+a fixed input width, and each removable chip is capped independently. Enter or Add trims
 the value, rejects empty and case-insensitive duplicates, persists immediately, and
 renders an individually
 removable chip. Disabling a group preserves its chips but ignores them at runtime.
@@ -411,8 +415,8 @@ alignment is type-specific: ComboBoxes and action buttons are 160 px at both tie
 and native internal alignment is preserved (`ComboBox` values
 left aligned, button labels centred). Decorative row icons use a restrained 16 px
 secondary colour; startup and close behaviour use semantic system/window glyphs rather
-than a Play triangle or prominent X. Close action offers Minimize to system
-tray, Exit, and Ask every time. The ask dialog has Minimize to system tray as primary,
+than a Play triangle or prominent X. Close action offers Minimize to tray, Exit,
+and Ask every time. The ask dialog has Minimize to tray as primary,
 Exit as secondary, Cancel, and an optional Remember my choice check box. Silent Start
 is independent from Start at sign-in and also applies to manual launch. About, GitHub,
 and License are deliberately deferred beyond Slice 5A.

@@ -153,7 +153,6 @@
   <data name="Settings_StartupUnavailable" xml:space="preserve"><value>Startup management is unavailable for this installation.</value></data>
   <data name="CloseAction_DialogTitle" xml:space="preserve"><value>Close NotiRelay?</value></data>
   <data name="CloseAction_DialogContent" xml:space="preserve"><value>You can minimize the main window to the system tray and keep forwarding notifications, or exit the app completely.</value></data>
-  <data name="CloseAction_MinimizeToTray" xml:space="preserve"><value>Minimize to system tray</value></data>
   <data name="CloseAction_Exit" xml:space="preserve"><value>Exit</value></data>
   <data name="CloseAction_RememberChoice" xml:space="preserve"><value>Remember my choice</value></data>
   <data name="Settings_LanguageRestartTitle" xml:space="preserve"><value>Restart NotiRelay?</value></data>
@@ -219,7 +218,7 @@
   <data name="SettingsCloseActionCard.Description" xml:space="preserve"><value>Choose what the Close button does.</value></data>
   <data name="CloseActionSelector.AutomationProperties.Name" xml:space="preserve"><value>Action when closing the main window</value></data>
   <data name="CloseActionMinimize.Content" xml:space="preserve"><value>Minimize to tray</value></data>
-  <data name="CloseActionMinimize.ToolTipService.ToolTip" xml:space="preserve"><value>Minimize to system tray</value></data>
+  <data name="CloseActionMinimize.ToolTipService.ToolTip" xml:space="preserve"><value>Minimize to tray</value></data>
   <data name="CloseActionExit.Content" xml:space="preserve"><value>Exit</value></data>
   <data name="CloseActionAsk.Content" xml:space="preserve"><value>Always ask</value></data>
   <data name="SettingsLanguageCard.Header" xml:space="preserve"><value>Display language</value></data>

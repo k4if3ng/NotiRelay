@@ -2,9 +2,10 @@
 
 ## Current Target
 
-The [v1.1.0 forwarding experience](docs/milestones/v1.1.0.md) is the active target.
-It redesigns the WinUI Shell and all user-facing pages around simple Windows
-Settings-style language and an explicit Notification forwarding state.
+The [v1.1.0 forwarding experience](docs/milestones/v1.1.0.md) is complete. It
+redesigned the WinUI Shell and all user-facing pages around simple Windows
+Settings-style language and an explicit Notification forwarding state. The next
+milestone has not been selected yet.
 
 | Slice | Status |
 | --- | --- |
@@ -12,10 +13,17 @@ Settings-style language and an explicit Notification forwarding state.
 | v1.0.0 first stable repository release | Complete |
 | v1.1 Slice 1 — Shell, title bar, shared layout, and design foundation | Complete |
 | v1.1 Slice 2 — Settings-style experience and forwarding foundation | Review failed; carried by Slice 4 |
-| v1.1 Slice 3 — Tray lifecycle and destination edit protection | Awaiting validation |
+| v1.1 Slice 3 — Tray lifecycle and destination edit protection | Complete |
 | v1.1 Slice 4 — Interface system rebuild | Review failed; carried by Slice 5 |
-| v1.1 Slice 5 — Interface system correction | Slice 5A in progress |
-| v1.1 centralized UI and release validation | Pending |
+| v1.1 Slice 5 — Interface system correction | Complete |
+| v1.1 centralized UI and release validation | Complete |
+
+The corrected interface and notification-area forwarding status passed user validation.
+Computer Use also confirmed that unsaved Destination edits block navigation and present
+Save, Discard, and Cancel outcomes. Current x86, x64, and ARM64 Release builds, resource
+parity, XAML localization coverage, and the unsigned x64 MSIX container pass. Final
+User validation also confirmed the real Bark title format. The final release commit and
+the `v1.1.0` tag close the milestone.
 
 ## v1.1.0 Target Scope
 

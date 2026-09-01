@@ -92,10 +92,19 @@
     <x:Double x:Key="NavPaneCompactWidth">48</x:Double>
     <x:Double x:Key="NavigationViewItemOnLeftMinHeight">44</x:Double>
 
-    <!-- Toolkit controls consume these well-known resource names. -->
-    <x:Double x:Key="SettingsCardWrapThreshold">720</x:Double>
+    <!--
+        Toolkit 8.2.251219 consumes these well-known application resources. Keep the
+        values that overlap the owned system linked to the same tokens without
+        rewriting the Toolkit control templates.
+    -->
+    <StaticResource x:Key="SettingsCardBorderThickness" ResourceKey="ThinBorderThickness" />
+    <StaticResource x:Key="SettingsCardMinHeight" ResourceKey="RowHeightSetting" />
+    <StaticResource x:Key="SettingsCardHeaderIconMaxSize" ResourceKey="StandardIconSize" />
+    <StaticResource x:Key="SettingsCardWrapThreshold" ResourceKey="RowReflowBreakpoint" />
+    <StaticResource x:Key="SettingsExpanderChevronButtonWidth" ResourceKey="TitleBarInteractiveSize" />
+    <StaticResource x:Key="SettingsExpanderChevronButtonHeight" ResourceKey="TitleBarInteractiveSize" />
 
-    <!-- 1. Type ramp — six levels, all on the WinUI ramp. -->
+    <!-- 1. Type ramp — five levels, all on the WinUI ramp. -->
     <Style x:Key="PageTitleTextBlockStyle" TargetType="TextBlock" BasedOn="{StaticResource TitleTextBlockStyle}">
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>

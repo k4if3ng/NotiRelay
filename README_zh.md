@@ -6,7 +6,7 @@ NotiRelay 是一个 Windows 11 通知转发工具。它读取 Windows 通知中�
 
 ## 当前状态
 
-NotiRelay v1.0.0 是当前稳定的仓库版本。v1.1.0 正在开发中，将以 Windows 设置风格重新设计界面，并加入明确的“通知转发”状态。
+NotiRelay v1.1.0 是当前稳定的仓库版本。它以 Windows 设置风格重新设计了转发体验，并加入明确的“通知转发”状态。
 
 MVP 重点包括：
 
@@ -56,7 +56,7 @@ dotnet build NotiRelay.slnx
 
 - [领域语言](CONTEXT.md)
 - [路线图](ROADMAP.md)
-- [当前 v1.1.0 里程碑](docs/milestones/v1.1.0.md)
+- [稳定版 v1.1.0 里程碑](docs/milestones/v1.1.0.md)
 - [稳定版 v1.0.0 里程碑](docs/milestones/v1.0.0.md)
 - [隐私说明](docs/privacy.md)
 - [发布清单](docs/publishing.md)

@@ -79,7 +79,7 @@
 
                         <Border Grid.Row="3" Style="{StaticResource CardDividerStyle}" />
 
-                        <Grid Grid.Row="4" MinHeight="{StaticResource EmptyStateViewportMinHeight}" MaxHeight="{StaticResource ListViewportMaxHeight}">
+                        <Grid Grid.Row="4" MaxHeight="{StaticResource ListViewportMaxHeight}">
                             <ScrollViewer Margin="{StaticResource PageScrollbarSafeInset}" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
                                 <ItemsRepeater x:Name="SourcesRepeater" ItemsSource="{x:Bind FilteredSources}">
                                     <ItemsRepeater.Layout><StackLayout /></ItemsRepeater.Layout>
@@ -105,7 +105,7 @@
                                 </ItemsRepeater>
                             </ScrollViewer>
 
-                            <Border x:Name="EmptyState" Padding="{StaticResource CardContentPadding}" Visibility="Collapsed">
+                            <Border x:Name="EmptyState" MinHeight="{StaticResource EmptyStateViewportMinHeight}" Padding="{StaticResource CardContentPadding}" Visibility="Collapsed">
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="{StaticResource SpacingS}">
                                     <FontIcon AutomationProperties.AccessibilityView="Raw" HorizontalAlignment="Center" Glyph="&#xECAA;" />
                                     <TextBlock x:Name="EmptyStateTitle" HorizontalAlignment="Center" TextAlignment="Center" Style="{StaticResource RowTitleTextBlockStyle}" />

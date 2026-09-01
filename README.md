@@ -7,9 +7,9 @@ Notification Center and relays them to user-configured external destinations.
 
 ## Status
 
-NotiRelay v1.0.0 is the current stable repository release. v1.1.0 is in active
-development and redesigns the forwarding experience around a Windows
-Settings-style interface and an explicit Notification forwarding state.
+NotiRelay v1.1.0 is the current stable repository release. It redesigns the forwarding
+experience around a Windows Settings-style interface and an explicit Notification
+forwarding state.
 
 The MVP focuses on:
 
@@ -68,7 +68,7 @@ validation.
 
 - [Domain language](CONTEXT.md)
 - [Roadmap](ROADMAP.md)
-- [Active v1.1.0 milestone](docs/milestones/v1.1.0.md)
+- [Stable v1.1.0 milestone](docs/milestones/v1.1.0.md)
 - [Stable v1.0.0 milestone](docs/milestones/v1.0.0.md)
 - [Privacy](docs/privacy.md)
 - [Publishing](docs/publishing.md)

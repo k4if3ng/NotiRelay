@@ -376,7 +376,7 @@ namespace NotiRelay
 				XamlRoot = ShellRoot.XamlRoot,
 				Title = LocalizationService.Get("CloseAction_DialogTitle"),
 				Content = content,
-				PrimaryButtonText = LocalizationService.Get("CloseAction_MinimizeToTray"),
+				PrimaryButtonText = LocalizationService.Get("CloseActionMinimize.Content"),
 				SecondaryButtonText = LocalizationService.Get("CloseAction_Exit"),
 				CloseButtonText = LocalizationService.Get("Common_Cancel"),
 				DefaultButton = ContentDialogButton.Primary
