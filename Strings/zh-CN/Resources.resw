@@ -67,6 +67,8 @@
   <data name="SettingsHeader.Title" xml:space="preserve"><value>设置</value></data>
 
   <data name="RequestNotificationAccess.Content" xml:space="preserve"><value>请求通知访问权限</value></data>
+  <data name="RequestNotificationAccess.AutomationProperties.Name" xml:space="preserve"><value>请求通知访问权限</value></data>
+  <data name="RequestNotificationAccess.ToolTipService.ToolTip" xml:space="preserve"><value>请求通知访问权限</value></data>
 
   <data name="SourcesSearch.PlaceholderText" xml:space="preserve"><value>搜索应用</value></data>
   <data name="SourceEnabled.AutomationProperties.Name" xml:space="preserve"><value>启用来源应用</value></data>
@@ -77,6 +79,9 @@
   <data name="DestinationSaveAction.Content" xml:space="preserve"><value>保存</value></data>
   <data name="DestinationSaveAction.AutomationProperties.Name" xml:space="preserve"><value>保存目标配置</value></data>
   <data name="DestinationSaveAction.ToolTipService.ToolTip" xml:space="preserve"><value>保存目标配置</value></data>
+  <data name="DestinationCancelAction.Content" xml:space="preserve"><value>取消</value></data>
+  <data name="DestinationCancelAction.AutomationProperties.Name" xml:space="preserve"><value>放弃未保存的目标修改</value></data>
+  <data name="DestinationCancelAction.ToolTipService.ToolTip" xml:space="preserve"><value>放弃未保存的目标修改</value></data>
   <data name="DestinationTestAction.Content" xml:space="preserve"><value>测试</value></data>
   <data name="DestinationTestAction.AutomationProperties.Name" xml:space="preserve"><value>发送测试通知</value></data>
   <data name="DestinationTestAction.ToolTipService.ToolTip" xml:space="preserve"><value>发送测试通知</value></data>
@@ -91,7 +96,9 @@
       <data name="LanguageSystem.Content" xml:space="preserve"><value>跟随系统</value></data>
   <data name="LanguageEnglish.Content" xml:space="preserve"><value>English</value></data>
   <data name="LanguageChinese.Content" xml:space="preserve"><value>简体中文</value></data>
-    <data name="ClearDeliveryMetadata.Content" xml:space="preserve"><value>清除已完成记录</value></data>
+    <data name="ClearDeliveryMetadata.Content" xml:space="preserve"><value>清除发送记录</value></data>
+  <data name="ClearDeliveryMetadata.AutomationProperties.Name" xml:space="preserve"><value>清除已完成发送记录</value></data>
+  <data name="ClearDeliveryMetadata.ToolTipService.ToolTip" xml:space="preserve"><value>清除已完成发送记录</value></data>
 
   <data name="Runtime_TruncatedSuffix" xml:space="preserve"><value>… [已由 NotiRelay 截断]</value></data>
   <data name="Runtime_Starting" xml:space="preserve"><value>正在启动 NotiRelay...</value></data>
@@ -106,7 +113,7 @@
   <data name="Runtime_TelegramSaved" xml:space="preserve"><value>已保存 Telegram 档案。</value></data>
   <data name="Runtime_TelegramCleared" xml:space="preserve"><value>已清除 Telegram 档案。</value></data>
   <data name="Runtime_EstablishingBaseline" xml:space="preserve"><value>正在建立通知基线...</value></data>
-  <data name="Runtime_MonitoringStartFailed" xml:space="preserve"><value>启动监视时出错：{0}</value></data>
+  <data name="Runtime_ForwardingStartFailed" xml:space="preserve"><value>启动转发时出错：{0}</value></data>
   <data name="Runtime_SynchronizeFailed" xml:space="preserve"><value>同步通知时出错：{0}</value></data>
   <data name="Runtime_ProfileUnavailable" xml:space="preserve"><value>{0} 档案当前不可用。</value></data>
   <data name="Runtime_NewNotification" xml:space="preserve"><value>新的 Windows 通知。</value></data>
@@ -153,6 +160,7 @@
   <data name="Settings_LanguageRestartContent" xml:space="preserve"><value>NotiRelay 必须重新启动才能应用所选语言。</value></data>
   <data name="Settings_Restart" xml:space="preserve"><value>重新启动</value></data>
   <data name="Settings_RestartFailed" xml:space="preserve"><value>Windows 未能重新启动 NotiRelay：{0}</value></data>
+  <data name="Settings_RestartStateSaveFailed" xml:space="preserve"><value>重新启动前未能保存当前状态：{0}</value></data>
 
 
 
@@ -211,6 +219,7 @@
   <data name="SettingsCloseActionCard.Description" xml:space="preserve"><value>选择点击关闭按钮后的行为。</value></data>
   <data name="CloseActionSelector.AutomationProperties.Name" xml:space="preserve"><value>关闭主窗口时的行为</value></data>
   <data name="CloseActionMinimize.Content" xml:space="preserve"><value>最小化到系统托盘</value></data>
+  <data name="CloseActionMinimize.ToolTipService.ToolTip" xml:space="preserve"><value>最小化到系统托盘</value></data>
   <data name="CloseActionExit.Content" xml:space="preserve"><value>退出应用</value></data>
   <data name="CloseActionAsk.Content" xml:space="preserve"><value>每次询问</value></data>
   <data name="SettingsLanguageCard.Header" xml:space="preserve"><value>显示语言</value></data>

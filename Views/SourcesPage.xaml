@@ -97,7 +97,7 @@
                                                         <TextBlock Text="{x:Bind DisplayName}" Style="{StaticResource RowTitleTextBlockStyle}" />
                                                         <TextBlock Text="{x:Bind ApplicationUserModelId}" Style="{StaticResource DescriptionTextBlockStyle}" />
                                                     </StackPanel>
-                                                    <ToggleSwitch x:Uid="SourceEnabled" Grid.Column="2" MinWidth="0" VerticalAlignment="Center" IsOn="{x:Bind IsEnabled, Mode=TwoWay}" OffContent="" OnContent="" Toggled="SourceToggleSwitch_Toggled" />
+                                                    <ToggleSwitch x:Uid="SourceEnabled" Grid.Column="2" MinWidth="0" VerticalAlignment="Center" IsOn="{x:Bind IsEnabled, Mode=TwoWay}" OffContent="" OnContent="" Tag="{x:Bind ApplicationUserModelId}" Toggled="SourceToggleSwitch_Toggled" />
                                                 </Grid>
                                             </Border>
                                         </DataTemplate>

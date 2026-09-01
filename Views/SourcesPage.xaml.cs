@@ -224,13 +224,14 @@ namespace NotiRelay.Views
 		private async void SourceToggleSwitch_Toggled(object sender, RoutedEventArgs e)
 		{
 				if (_synchronizingSources ||
-					sender is not ToggleSwitch { DataContext: SourceApplication source } toggle)
-			{
-				return;
-			}
+					sender is not ToggleSwitch { Tag: string sourceId } toggle ||
+					Runtime.SourceApplications.FirstOrDefault(candidate =>
+						string.Equals(candidate.ApplicationUserModelId, sourceId, StringComparison.OrdinalIgnoreCase)) is not { } source)
+				{
+					return;
+				}
 
-			var sourceId = source.ApplicationUserModelId;
-			var requestedState = toggle.IsOn;
+				var requestedState = toggle.IsOn;
 			var previousState = _persistedSourceStates.GetValueOrDefault(sourceId, !requestedState);
 			if (!_sourceUpdatesInProgress.Add(sourceId))
 			{

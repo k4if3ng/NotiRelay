@@ -170,10 +170,9 @@ namespace NotiRelay.Services
 			IncludeKeywords = values["IncludeKeywords"] as string ?? string.Empty;
 			ExcludeKeywords = values["ExcludeKeywords"] as string ?? string.Empty;
 			IncludeRulesEnabled = values[IncludeRulesEnabledKey] is not false;
-			ExcludeRulesEnabled = values[ExcludeRulesEnabledKey] is not false;
-			var restoreForwarding = values[ForwardingEnabledKey] is true;
-			_isForwardingEnabled = false;
-			values[ForwardingEnabledKey] = false;
+				ExcludeRulesEnabled = values[ExcludeRulesEnabledKey] is not false;
+				var restoreForwarding = values[ForwardingEnabledKey] is true;
+				_isForwardingEnabled = false;
 
 			await _deliveryRepository.RunMaintenanceAsync();
 			await RefreshQueueStatisticsAsync();
@@ -185,9 +184,10 @@ namespace NotiRelay.Services
 			{
 				await SetForwardingEnabledAsync(true);
 			}
-			else
-			{
-				Status = CanEnableForwarding
+				else
+				{
+					values[ForwardingEnabledKey] = false;
+					Status = CanEnableForwarding
 					? LocalizationService.Get("Runtime_ForwardingDisabled")
 					: ForwardingAvailabilityMessage;
 			}
@@ -195,6 +195,22 @@ namespace NotiRelay.Services
 
 		public async Task<bool> SetForwardingEnabledAsync(bool isEnabled) =>
 			await SetForwardingEnabledCoreAsync(isEnabled, null);
+
+		public async Task PersistStateForRestartAsync()
+		{
+			var sources = SourceApplications.ToArray();
+			var values = ApplicationData.Current.LocalSettings.Values;
+			values[ForwardingEnabledKey] = IsForwardingEnabled;
+			values["IncludeKeywords"] = IncludeKeywords;
+			values["ExcludeKeywords"] = ExcludeKeywords;
+			values[IncludeRulesEnabledKey] = IncludeRulesEnabled;
+			values[ExcludeRulesEnabledKey] = ExcludeRulesEnabled;
+
+			await _sourceRepository.UpsertAsync(sources);
+			await SaveBarkEnabledAsync();
+			await SaveWebhookSettingsAsync();
+			await SaveTelegramSettingsAsync();
+		}
 
 		public async Task RequestAccessAsync()
 		{
@@ -460,7 +476,7 @@ namespace NotiRelay.Services
 						ApplicationData.Current.LocalSettings.Values[ForwardingEnabledKey] = false;
 						_dispatcher.UpdateState(false, EnabledDestinationTypes());
 						StopMonitoring();
-						SetError(LocalizationService.Format("Runtime_MonitoringStartFailed", exception.Message));
+						SetError(LocalizationService.Format("Runtime_ForwardingStartFailed", exception.Message));
 						NotifyForwardingStateChanged();
 						return false;
 					}

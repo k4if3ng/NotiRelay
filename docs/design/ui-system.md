@@ -163,10 +163,10 @@ Rules:
   There is no gap between rows.
 - Cards are separated by `SpacingL` (16). No divider between cards.
 - A row is either clickable or contains a control. Never both.
-- A destination's Save, Send test, and Clear configuration actions share one footer.
-  Status occupies the left star column; the equal-sized action cluster is right
-  aligned. Clear remains secondary, separated from ordinary actions, and requires
-  confirmation.
+- A destination's Save, Cancel, Send test, and Clear configuration actions share one
+  footer. Status occupies the left star column; the equal-sized action cluster is
+  right aligned. Cancel restores that destination's last saved editor snapshot. Clear
+  remains secondary, separated from ordinary actions, and requires confirmation.
 
 ## 6. Descriptions
 
@@ -207,7 +207,7 @@ fixed status slot; field validation stays immediately below its field.
 | Exclusive choice in a setting | `ComboBox` | At every cardinality, including three. Settings rows read as a list; a segmented control in one of them is a visual exception with no meaning. |
 | Filtering a list | `Segmented` | Apps (All / Enabled). Activity filtering is deferred until its event model is designed. |
 | Free text | `TextBox` | |
-| Secret | Native `PasswordBox` with `PasswordRevealMode="Peek"` | Press and hold the native trailing reveal button. The editor keeps identical outer bounds in hidden and revealed states; no persistent custom toggle is added. |
+| Secret | `PasswordBox` with a fixed trailing reveal button | The button appears whenever a value exists, toggles hidden/visible state, and owns a permanently reserved 32 px slot so the editor bounds never change. Save, Cancel, Test, navigation, and restart restore the hidden state. |
 | Multi-value set | `TextBox` + add button, values as chips in `ItemsRepeater` + `WrapLayout` | `ItemsWrapGrid` is not valid outside `ListViewBase` |
 | Primary action in a card | `Button` with `AccentButtonStyle` | One per card |
 | Page-level or card-level secondary action | Borderless button, 16 px `FontIcon` + text, `TitleBarIconButtonStyle` grammar | A bordered `Button` floating on a card reads as a stray box; text alone has no affordance |
@@ -369,11 +369,14 @@ a stable 180 px minimum and a bounded nested scroll surface when the collection 
 **Destinations** — one page, three `SettingsExpander` cards. Header is icon, name,
 status, enable toggle, chevron. **Configured and healthy destinations collapse;
 unconfigured or failing ones expand.** Body fields use a 220 px shared label column,
-16 px gap, and a stretching editor column; the label column contracts to 140 px in the
-compact tier while labels and 32 px-high inputs stay on one row. Native `PasswordBox`
-Peek provides press-and-hold reveal without changing editor width. The footer is one
-line: a fixed-status slot at the left and a fixed right-aligned group of equal-sized
-Save, Test, and Clear buttons. Clear remains secondary and confirmed.
+16 px gap, and a fluid editor column inside a centred 960 px maximum form workspace;
+the label column contracts to 140 px in the compact tier while labels and 32 px-high
+inputs stay on one row. Secret editors reserve a fixed 32 px trailing reveal slot, so
+showing or hiding a secret never changes the editor width. The footer shares the form
+workspace and stays on one line: a fixed-status slot at the left and a fixed
+right-aligned group of equal-sized Save, Cancel, Test, and Clear buttons. Cancel
+restores the last saved values for that destination; Clear remains secondary and
+confirmed.
 
 **Rules** — two always-visible, non-collapsible group cards, Include and Exclude, each
 with an independently persisted group-level enable toggle. Body is a full-width input
@@ -393,8 +396,8 @@ inside the card: Startup and close (Start at sign-in, Silent start, Close action
 System (notification access and a language `ComboBox`), and Privacy and data. The
 privacy row is named for its concrete clear-records action rather than repeating the
 card title. Accessory controls remain on the same row at every supported width, but
-alignment is type-specific: ComboBoxes are 220 px (160 compact), action buttons are
-160 px (128 compact), and native internal alignment is preserved (`ComboBox` values
+alignment is type-specific: ComboBoxes are 220 px (192 compact), action buttons are
+160 px at both tiers, and native internal alignment is preserved (`ComboBox` values
 left aligned, button labels centred). Decorative row icons use a restrained 16 px
 secondary colour; startup and close behaviour use semantic system/window glyphs rather
 than a Play triangle or prominent X. Close action offers Minimize to system

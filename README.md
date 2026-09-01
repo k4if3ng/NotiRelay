@@ -34,10 +34,11 @@ boundary can produce a duplicate.
 2. Enable only the Source Applications whose new notifications should be
    delivered.
 3. Configure one or more Bark, Custom Webhook, or Telegram destinations.
-4. Optionally save semicolon-separated include/exclude keyword filters.
+4. Optionally add include and exclude keyword rules.
 5. Use **Send test** to verify each destination.
-6. Close the main window to keep NotiRelay monitoring in the notification area;
-   use the notification-area menu to show the window or exit explicitly.
+6. Choose whether closing the main window minimizes NotiRelay to the notification
+   area, exits, or asks each time. The notification-area menu can show the window,
+   control forwarding, or exit explicitly.
 
 Secrets are stored in Windows Credential Locker. Retryable content is stored in
 local app data and erased from terminal Delivery records. Activity shows a bounded

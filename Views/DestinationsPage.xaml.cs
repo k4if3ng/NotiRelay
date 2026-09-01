@@ -112,6 +112,9 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
         WebhookTokenPasswordBox.Password = Runtime.WebhookBearerToken;
         TelegramTokenPasswordBox.Password = Runtime.TelegramBotToken;
         TelegramChatIdTextBox.Text = Runtime.TelegramChatId;
+        HideSecret(DestinationType.Bark);
+        HideSecret(DestinationType.GenericWebhook);
+        HideSecret(DestinationType.Telegram);
         foreach (var type in DestinationTypes)
         {
             _savedSnapshots[type] = ReadEditorSnapshot(type);
@@ -214,6 +217,7 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
             if (succeeded)
             {
                 _savedSnapshots[type] = ReadEditorSnapshot(type);
+                HideSecret(type);
                 if (_isLoaded) DestinationGroup(type).IsExpanded = true;
             }
             else
@@ -263,6 +267,7 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
         finally
         {
             RestoreRuntimeValues(previousRuntimeValues);
+            HideSecret(type);
             _operationsInProgress.Remove(type);
             UpdateDirtyStates();
         }
@@ -382,6 +387,40 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
             }
         }
         _loading = false;
+        HideSecret(DestinationType.Bark);
+        HideSecret(DestinationType.GenericWebhook);
+        HideSecret(DestinationType.Telegram);
+        UpdateDirtyStates();
+    }
+
+    private void CancelDestinationEdits(DestinationType type)
+    {
+        if (!_savedSnapshots.TryGetValue(type, out var snapshot) || _operationsInProgress.Contains(type)) return;
+
+        _loading = true;
+        switch (type)
+        {
+            case DestinationType.GenericWebhook:
+                WebhookEndpointTextBox.Text = snapshot.Primary;
+                WebhookTokenPasswordBox.Password = snapshot.Secondary;
+                break;
+            case DestinationType.Telegram:
+                TelegramTokenPasswordBox.Password = snapshot.Primary;
+                TelegramChatIdTextBox.Text = snapshot.Secondary;
+                break;
+            default:
+                BarkServerUrlTextBox.Text = snapshot.Primary;
+                BarkDeviceKeyPasswordBox.Password = snapshot.Secondary;
+                break;
+        }
+        _loading = false;
+        _activeFeedback.Remove(type);
+        if (_feedbackDestination == type)
+        {
+            StopFeedbackTimer();
+            _feedbackDestination = null;
+        }
+        HideSecret(type);
         UpdateDirtyStates();
     }
 
@@ -448,6 +487,13 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
         _ => BarkTestButton
     };
 
+    private Button CancelButton(DestinationType type) => type switch
+    {
+        DestinationType.GenericWebhook => WebhookCancelButton,
+        DestinationType.Telegram => TelegramCancelButton,
+        _ => BarkCancelButton
+    };
+
     private Button ClearButton(DestinationType type) => type switch
     {
         DestinationType.GenericWebhook => WebhookClearButton,
@@ -471,14 +517,73 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
 
     private void Editor_TextChanged(object sender, TextChangedEventArgs e)
     {
+        if (_loading) return;
         ClearFeedbackForEditor(sender);
         UpdateDirtyStates();
     }
 
     private void Editor_PasswordChanged(object sender, RoutedEventArgs e)
     {
+        if (_loading) return;
         ClearFeedbackForEditor(sender);
         UpdateDirtyStates();
+    }
+
+    private void SecretRevealButton_Click(object sender, RoutedEventArgs e)
+    {
+        var type = sender switch
+        {
+            Button button when ReferenceEquals(button, WebhookSecretRevealButton) => DestinationType.GenericWebhook,
+            Button button when ReferenceEquals(button, TelegramSecretRevealButton) => DestinationType.Telegram,
+            _ => DestinationType.Bark
+        };
+        var editor = SecretEditor(type);
+        editor.PasswordRevealMode = editor.PasswordRevealMode == PasswordRevealMode.Visible
+            ? PasswordRevealMode.Hidden
+            : PasswordRevealMode.Visible;
+        UpdateSecretRevealButton(type);
+    }
+
+    private PasswordBox SecretEditor(DestinationType type) => type switch
+    {
+        DestinationType.GenericWebhook => WebhookTokenPasswordBox,
+        DestinationType.Telegram => TelegramTokenPasswordBox,
+        _ => BarkDeviceKeyPasswordBox
+    };
+
+    private Button SecretRevealButton(DestinationType type) => type switch
+    {
+        DestinationType.GenericWebhook => WebhookSecretRevealButton,
+        DestinationType.Telegram => TelegramSecretRevealButton,
+        _ => BarkSecretRevealButton
+    };
+
+    private string SecretTitle(DestinationType type) => type switch
+    {
+        DestinationType.GenericWebhook => WebhookTokenTitle,
+        DestinationType.Telegram => TelegramTokenTitle,
+        _ => BarkDeviceKeyTitle
+    };
+
+    private void HideSecret(DestinationType type)
+    {
+        if (SecretEditor(type) is { } editor) editor.PasswordRevealMode = PasswordRevealMode.Hidden;
+        UpdateSecretRevealButton(type);
+    }
+
+    private void UpdateSecretRevealButton(DestinationType type)
+    {
+        var editor = SecretEditor(type);
+        var button = SecretRevealButton(type);
+        var hasValue = editor.Password.Length > 0;
+        if (!hasValue) editor.PasswordRevealMode = PasswordRevealMode.Hidden;
+        button.Visibility = hasValue ? Visibility.Visible : Visibility.Collapsed;
+        var isVisible = editor.PasswordRevealMode == PasswordRevealMode.Visible;
+        var label = LocalizationService.Format(
+            isVisible ? "Destination_HideSecretAutomation" : "Destination_ShowSecretAutomation",
+            SecretTitle(type));
+        Microsoft.UI.Xaml.Automation.AutomationProperties.SetName(button, label);
+        ToolTipService.SetToolTip(button, label);
     }
 
     private void DestinationFieldRow_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -517,8 +622,10 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
                     : string.Empty;
             }
             SaveButton(type).IsEnabled = !busy && dirty && valid;
+            CancelButton(type).IsEnabled = !busy && dirty;
             TestButton(type).IsEnabled = !busy && !dirty && valid && IsConfigured(type);
             ClearButton(type).IsEnabled = !busy && IsConfigured(type);
+            UpdateSecretRevealButton(type);
         }
     }
 
@@ -611,12 +718,15 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
         await SetDestinationEnabledAsync(DestinationType.Telegram, TelegramEnabledToggle.IsOn);
 
     private async void BarkSaveButton_Click(object sender, RoutedEventArgs e) => await SaveDestinationAsync(DestinationType.Bark, true);
+    private void BarkCancelButton_Click(object sender, RoutedEventArgs e) => CancelDestinationEdits(DestinationType.Bark);
     private async void BarkTestButton_Click(object sender, RoutedEventArgs e) => await TestDestinationAsync(DestinationType.Bark);
     private async void BarkClearButton_Click(object sender, RoutedEventArgs e) => await ClearDestinationAsync(DestinationType.Bark);
     private async void WebhookSaveButton_Click(object sender, RoutedEventArgs e) => await SaveDestinationAsync(DestinationType.GenericWebhook, true);
+    private void WebhookCancelButton_Click(object sender, RoutedEventArgs e) => CancelDestinationEdits(DestinationType.GenericWebhook);
     private async void WebhookTestButton_Click(object sender, RoutedEventArgs e) => await TestDestinationAsync(DestinationType.GenericWebhook);
     private async void WebhookClearButton_Click(object sender, RoutedEventArgs e) => await ClearDestinationAsync(DestinationType.GenericWebhook);
     private async void TelegramSaveButton_Click(object sender, RoutedEventArgs e) => await SaveDestinationAsync(DestinationType.Telegram, true);
+    private void TelegramCancelButton_Click(object sender, RoutedEventArgs e) => CancelDestinationEdits(DestinationType.Telegram);
     private async void TelegramTestButton_Click(object sender, RoutedEventArgs e) => await TestDestinationAsync(DestinationType.Telegram);
     private async void TelegramClearButton_Click(object sender, RoutedEventArgs e) => await ClearDestinationAsync(DestinationType.Telegram);
 

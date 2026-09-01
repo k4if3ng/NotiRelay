@@ -168,14 +168,26 @@ public sealed partial class SettingsPage : Page
             return;
         }
 
-        settings.Values["AppLanguage"] = selectedLanguage;
-        ApplicationLanguages.PrimaryLanguageOverride = selectedLanguage;
-        var failureReason = Microsoft.Windows.AppLifecycle.AppInstance.Restart(string.Empty);
-        Show(
-            LanguageDescriptionText,
-            LocalizationService.Format("Settings_RestartFailed", failureReason),
-            true,
-            LanguageDescription);
+		try
+		{
+			await Runtime.PersistStateForRestartAsync();
+			settings.Values["AppLanguage"] = selectedLanguage;
+			ApplicationLanguages.PrimaryLanguageOverride = selectedLanguage;
+			var failureReason = Microsoft.Windows.AppLifecycle.AppInstance.Restart(string.Empty);
+			Show(
+				LanguageDescriptionText,
+				LocalizationService.Format("Settings_RestartFailed", failureReason),
+				true,
+				LanguageDescription);
+		}
+		catch (Exception exception)
+		{
+			Show(
+				LanguageDescriptionText,
+				LocalizationService.Format("Settings_RestartStateSaveFailed", exception.Message),
+				true,
+				LanguageDescription);
+		}
     }
 
     private void SelectSavedLanguage()

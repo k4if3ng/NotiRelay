@@ -147,8 +147,9 @@ namespace NotiRelay
 			if (AppTitleBar.XamlRoot is null) return;
 
 			var scale = AppTitleBar.XamlRoot.RasterizationScale;
-			LeftCaptionInsetColumn.Width = new GridLength(AppWindow.TitleBar.LeftInset / scale);
-			RightCaptionInsetColumn.Width = new GridLength(AppWindow.TitleBar.RightInset / scale);
+			if (scale <= 0 || double.IsNaN(scale) || double.IsInfinity(scale)) return;
+			LeftCaptionInsetColumn.Width = new GridLength(Math.Max(0, AppWindow.TitleBar.LeftInset / scale));
+			RightCaptionInsetColumn.Width = new GridLength(Math.Max(0, AppWindow.TitleBar.RightInset / scale));
 
 			var transform = TitleBarPaneToggleButton.TransformToVisual(null);
 			var bounds = transform.TransformBounds(new Rect(

@@ -66,7 +66,9 @@
   <data name="Activity_AttemptCount" xml:space="preserve"><value>{0} attempts</value></data>
   <data name="SettingsHeader.Title" xml:space="preserve"><value>Settings</value></data>
 
-  <data name="RequestNotificationAccess.Content" xml:space="preserve"><value>Request notification access</value></data>
+  <data name="RequestNotificationAccess.Content" xml:space="preserve"><value>Allow notifications</value></data>
+  <data name="RequestNotificationAccess.AutomationProperties.Name" xml:space="preserve"><value>Request notification access</value></data>
+  <data name="RequestNotificationAccess.ToolTipService.ToolTip" xml:space="preserve"><value>Request notification access</value></data>
 
   <data name="SourcesSearch.PlaceholderText" xml:space="preserve"><value>Search applications</value></data>
   <data name="SourceEnabled.AutomationProperties.Name" xml:space="preserve"><value>Enable source application</value></data>
@@ -77,6 +79,9 @@
   <data name="DestinationSaveAction.Content" xml:space="preserve"><value>Save</value></data>
   <data name="DestinationSaveAction.AutomationProperties.Name" xml:space="preserve"><value>Save destination configuration</value></data>
   <data name="DestinationSaveAction.ToolTipService.ToolTip" xml:space="preserve"><value>Save destination configuration</value></data>
+  <data name="DestinationCancelAction.Content" xml:space="preserve"><value>Cancel</value></data>
+  <data name="DestinationCancelAction.AutomationProperties.Name" xml:space="preserve"><value>Discard unsaved destination changes</value></data>
+  <data name="DestinationCancelAction.ToolTipService.ToolTip" xml:space="preserve"><value>Discard unsaved destination changes</value></data>
   <data name="DestinationTestAction.Content" xml:space="preserve"><value>Test</value></data>
   <data name="DestinationTestAction.AutomationProperties.Name" xml:space="preserve"><value>Send test notification</value></data>
   <data name="DestinationTestAction.ToolTipService.ToolTip" xml:space="preserve"><value>Send test notification</value></data>
@@ -91,7 +96,9 @@
       <data name="LanguageSystem.Content" xml:space="preserve"><value>System default</value></data>
   <data name="LanguageEnglish.Content" xml:space="preserve"><value>English</value></data>
   <data name="LanguageChinese.Content" xml:space="preserve"><value>简体中文</value></data>
-    <data name="ClearDeliveryMetadata.Content" xml:space="preserve"><value>Clear completed records</value></data>
+    <data name="ClearDeliveryMetadata.Content" xml:space="preserve"><value>Clear sent records</value></data>
+  <data name="ClearDeliveryMetadata.AutomationProperties.Name" xml:space="preserve"><value>Clear completed send records</value></data>
+  <data name="ClearDeliveryMetadata.ToolTipService.ToolTip" xml:space="preserve"><value>Clear completed send records</value></data>
 
   <data name="Runtime_TruncatedSuffix" xml:space="preserve"><value>… [Truncated by NotiRelay]</value></data>
   <data name="Runtime_Starting" xml:space="preserve"><value>Starting NotiRelay...</value></data>
@@ -106,7 +113,7 @@
   <data name="Runtime_TelegramSaved" xml:space="preserve"><value>Telegram profile saved.</value></data>
   <data name="Runtime_TelegramCleared" xml:space="preserve"><value>Telegram profile cleared.</value></data>
   <data name="Runtime_EstablishingBaseline" xml:space="preserve"><value>Establishing notification baseline...</value></data>
-  <data name="Runtime_MonitoringStartFailed" xml:space="preserve"><value>Unable to start monitoring: {0}</value></data>
+  <data name="Runtime_ForwardingStartFailed" xml:space="preserve"><value>Unable to start forwarding: {0}</value></data>
   <data name="Runtime_SynchronizeFailed" xml:space="preserve"><value>Unable to synchronize notifications: {0}</value></data>
   <data name="Runtime_ProfileUnavailable" xml:space="preserve"><value>The {0} profile is unavailable.</value></data>
   <data name="Runtime_NewNotification" xml:space="preserve"><value>New Windows notification.</value></data>
@@ -153,6 +160,7 @@
   <data name="Settings_LanguageRestartContent" xml:space="preserve"><value>NotiRelay must restart to apply the selected language.</value></data>
   <data name="Settings_Restart" xml:space="preserve"><value>Restart</value></data>
   <data name="Settings_RestartFailed" xml:space="preserve"><value>Windows could not restart NotiRelay: {0}</value></data>
+  <data name="Settings_RestartStateSaveFailed" xml:space="preserve"><value>NotiRelay could not save the current state before restarting: {0}</value></data>
 
 
 
@@ -210,9 +218,10 @@
   <data name="SettingsCloseActionCard.Header" xml:space="preserve"><value>When closing the main window</value></data>
   <data name="SettingsCloseActionCard.Description" xml:space="preserve"><value>Choose what the Close button does.</value></data>
   <data name="CloseActionSelector.AutomationProperties.Name" xml:space="preserve"><value>Action when closing the main window</value></data>
-  <data name="CloseActionMinimize.Content" xml:space="preserve"><value>Minimize to system tray</value></data>
-  <data name="CloseActionExit.Content" xml:space="preserve"><value>Exit the app</value></data>
-  <data name="CloseActionAsk.Content" xml:space="preserve"><value>Ask every time</value></data>
+  <data name="CloseActionMinimize.Content" xml:space="preserve"><value>Minimize to tray</value></data>
+  <data name="CloseActionMinimize.ToolTipService.ToolTip" xml:space="preserve"><value>Minimize to system tray</value></data>
+  <data name="CloseActionExit.Content" xml:space="preserve"><value>Exit</value></data>
+  <data name="CloseActionAsk.Content" xml:space="preserve"><value>Always ask</value></data>
   <data name="SettingsLanguageCard.Header" xml:space="preserve"><value>Display language</value></data>
   <data name="SettingsLanguageCard.Description" xml:space="preserve"><value>Change the language used by the interface. The app must restart.</value></data>
   <data name="SettingsPrivacyCard.Header" xml:space="preserve"><value>Privacy and data</value></data>
