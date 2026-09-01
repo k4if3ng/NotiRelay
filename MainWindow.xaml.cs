@@ -176,9 +176,15 @@ namespace NotiRelay
 			_navigationInProgress = true;
 			try
 			{
-			var tag = args.IsSettingsInvoked
-				? "settings"
-				: args.InvokedItemContainer?.Tag as string ?? "home";
+				var tag = args.IsSettingsInvoked
+					? "settings"
+					: args.InvokedItemContainer?.Tag as string
+						?? (sender.SelectedItem as NavigationViewItem)?.Tag as string;
+				if (string.IsNullOrWhiteSpace(tag))
+				{
+					SynchronizeNavigationSelection(ContentFrame.CurrentSourcePageType);
+					return;
+				}
 
 				if (tag == "forwarding-status")
 				{
@@ -186,14 +192,15 @@ namespace NotiRelay
 					return;
 				}
 
-			if (!await NavigateAsync(tag))
-			{
-				SynchronizeNavigationSelection(ContentFrame.CurrentSourcePageType);
-			}
+				if (!await NavigateAsync(tag))
+				{
+					SynchronizeNavigationSelection(ContentFrame.CurrentSourcePageType);
+				}
 			}
 			catch (Exception exception)
 			{
 				System.Diagnostics.Debug.WriteLine($"Navigation failed: {exception}");
+				LogNavigationException(exception);
 				SynchronizeNavigationSelection(ContentFrame.CurrentSourcePageType);
 			}
 			finally { _navigationInProgress = false; }
@@ -245,7 +252,7 @@ namespace NotiRelay
 			}
 		}
 
-		private void Navigate(string tag)
+		private bool Navigate(string tag)
 		{
 			var pageType = tag switch
 			{
@@ -253,21 +260,39 @@ namespace NotiRelay
 				"destinations" => typeof(DestinationsPage),
 				"filters" => typeof(FiltersPage),
 				"activity" => typeof(ActivityPage),
-					"settings" => typeof(SettingsPage),
+				"settings" => typeof(SettingsPage),
 				_ => typeof(HomePage)
 			};
 
 			if (ContentFrame.CurrentSourcePageType != pageType)
 			{
-				ContentFrame.Navigate(pageType);
+				return ContentFrame.Navigate(pageType);
 			}
+
+			return true;
 		}
 
 		private async Task<bool> NavigateAsync(string tag)
 		{
 			if (!await CanLeaveCurrentPageAsync()) return false;
-			Navigate(tag);
-			return true;
+			return Navigate(tag);
+		}
+
+		private static void LogNavigationException(Exception exception)
+		{
+			try
+			{
+				var path = System.IO.Path.Combine(
+					ApplicationData.Current.LocalFolder.Path,
+					"navigation.log");
+				System.IO.File.AppendAllText(
+					path,
+					$"{DateTimeOffset.Now:O}{Environment.NewLine}{exception}{Environment.NewLine}{Environment.NewLine}");
+			}
+			catch
+			{
+				// Navigation diagnostics must never replace the original UI failure.
+			}
 		}
 
 		private async Task<bool> CanLeaveCurrentPageAsync() =>
@@ -283,12 +308,12 @@ namespace NotiRelay
 			NavigationShell.SelectedItem = sourcePageType switch
 			{
 				var pageType when pageType == typeof(SourcesPage) => SourcesNavigationItem,
-					var pageType when pageType == typeof(DestinationsPage) => DestinationsNavigationItem,
+				var pageType when pageType == typeof(DestinationsPage) => DestinationsNavigationItem,
 				var pageType when pageType == typeof(FiltersPage) => FiltersNavigationItem,
 				var pageType when pageType == typeof(ActivityPage) => ActivityNavigationItem,
-					var pageType when pageType == typeof(SettingsPage) => NavigationShell.SettingsItem,
-					_ => HomeNavigationItem
-				};
+				var pageType when pageType == typeof(SettingsPage) => NavigationShell.SettingsItem,
+				_ => HomeNavigationItem
+			};
 		}
 
 		private async void MainWindow_Closed(object sender, WindowEventArgs args)

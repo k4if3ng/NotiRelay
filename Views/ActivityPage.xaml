@@ -50,20 +50,20 @@
 
                         <Border Grid.Row="1" Style="{StaticResource CardDividerStyle}" />
 
-                        <Grid Grid.Row="2" MinHeight="{StaticResource EmptyStateViewportMinHeight}" MaxHeight="{StaticResource ListViewportMaxHeight}">
-                            <ScrollViewer Margin="{StaticResource PageScrollbarSafeInset}" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
+                        <Grid x:Name="ActivityListHost" Grid.Row="2">
+                            <ScrollViewer MaxHeight="{StaticResource ListViewportMaxHeight}" Margin="{StaticResource PageScrollbarSafeInset}" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
                                 <ItemsRepeater x:Name="ActivityRepeater" ItemsSource="{x:Bind FilteredActivity}">
                                     <ItemsRepeater.Layout><StackLayout /></ItemsRepeater.Layout>
                                     <ItemsRepeater.ItemTemplate>
                                         <DataTemplate x:DataType="models:DeliveryActivityItem">
                                             <Border MinHeight="{StaticResource RowHeightList}" BorderBrush="{ThemeResource DividerStrokeColorDefaultBrush}" BorderThickness="{StaticResource RowDividerThickness}" Padding="{StaticResource CardListRowPadding}">
-                                                <Grid x:Name="ActivityItemGrid" ColumnSpacing="{StaticResource SpacingL}" RowSpacing="{StaticResource SpacingXS}" SizeChanged="ActivityItemGrid_SizeChanged">
+                                                <Grid x:Name="ActivityItemGrid" VerticalAlignment="Center" ColumnSpacing="{StaticResource SpacingL}" RowSpacing="{StaticResource SpacingXS}" SizeChanged="ActivityItemGrid_SizeChanged">
                                                     <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                                     <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
                                                     <TextBlock Style="{StaticResource RowTitleTextBlockStyle}">
                                                         <Run Text="{x:Bind SourceApplicationName}" /><Run Text=" → " /><Run Text="{x:Bind DestinationName}" />
                                                     </TextBlock>
-                                                    <TextBlock x:Name="WideStatus" Grid.Column="1" HorizontalAlignment="Right" Text="{x:Bind StatusText}" Style="{StaticResource BodyTextBlockStyle}" />
+                                                    <TextBlock x:Name="WideStatus" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{x:Bind StatusText}" Style="{StaticResource BodyTextBlockStyle}" />
                                                     <TextBlock x:Name="WideMetadata" Grid.Row="1" Style="{StaticResource DescriptionTextBlockStyle}">
                                                         <Run Text="{x:Bind EnqueuedAtText}" /><Run Text=" · " /><Run Text="{x:Bind AttemptText}" />
                                                     </TextBlock>
@@ -71,6 +71,7 @@
                                                         <Run Text="{x:Bind StatusText}" /><Run Text=" · " /><Run Text="{x:Bind EnqueuedAtText}" /><Run Text=" · " /><Run Text="{x:Bind AttemptText}" />
                                                     </TextBlock>
                                                     <TextBlock
+                                                        x:Name="ActivityErrorTextBlock"
                                                         Grid.Row="2"
                                                         Grid.ColumnSpan="2"
                                                         AutomationProperties.HelpText="{x:Bind ErrorText}"

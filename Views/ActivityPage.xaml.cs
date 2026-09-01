@@ -86,6 +86,7 @@ namespace NotiRelay.Views
 			{
 					if (ActivityRepeater is null ||
 							ActivityEmptyState is null ||
+							ActivityListHost is null ||
 						ActivityEmptyDescription is null)
 					{
 						return;
@@ -95,6 +96,9 @@ namespace NotiRelay.Views
 				foreach (var item in items) FilteredActivity.Add(item);
 
 				var isEmpty = FilteredActivity.Count == 0;
+				ActivityListHost.MinHeight = isEmpty
+					? (double)Application.Current.Resources["EmptyStateViewportMinHeight"]
+					: 0;
 				ActivityRepeater.Visibility = isEmpty ? Visibility.Collapsed : Visibility.Visible;
 				ActivityEmptyState.Visibility = isEmpty ? Visibility.Visible : Visibility.Collapsed;
 					ActivityEmptyDescription.Text = LocalizationService.Get("Activity_EmptyDefaultDescription");
@@ -104,12 +108,18 @@ namespace NotiRelay.Views
 		private void ActivityItemGrid_SizeChanged(object sender, SizeChangedEventArgs e)
 		{
 			if (sender is not Grid grid) return;
-				var threshold = (double)Application.Current.Resources["RowReflowBreakpoint"];
+			var threshold = (double)Application.Current.Resources["RowReflowBreakpoint"];
 			var narrow = e.NewSize.Width < threshold;
 			if (grid.FindName("WideStatus") is TextBlock wideStatus) wideStatus.Visibility = narrow ? Visibility.Collapsed : Visibility.Visible;
 			if (grid.FindName("WideMetadata") is TextBlock wideMetadata) wideMetadata.Visibility = narrow ? Visibility.Collapsed : Visibility.Visible;
-				if (grid.FindName("NarrowMetadata") is TextBlock narrowMetadata) narrowMetadata.Visibility = narrow ? Visibility.Visible : Visibility.Collapsed;
+			if (grid.FindName("NarrowMetadata") is TextBlock narrowMetadata) narrowMetadata.Visibility = narrow ? Visibility.Visible : Visibility.Collapsed;
+			if (grid.FindName("ActivityErrorTextBlock") is TextBlock errorText)
+			{
+				errorText.Visibility = string.IsNullOrWhiteSpace(errorText.Text)
+					? Visibility.Collapsed
+					: Visibility.Visible;
 			}
+		}
 
 			private void UpdateActivitySummary()
 			{

@@ -67,9 +67,9 @@
     <GridLength x:Key="DestinationLabelColumnWidth">220</GridLength>
     <GridLength x:Key="DestinationLabelColumnCompactWidth">140</GridLength>
     <x:Double x:Key="DestinationInputMinWidth">0</x:Double>
-    <x:Double x:Key="DestinationFormMaxWidth">960</x:Double>
+    <x:Double x:Key="DestinationFormMaxWidth">840</x:Double>
     <x:Double x:Key="DestinationSecretButtonSize">32</x:Double>
-    <Thickness x:Key="DestinationSecretEditorPadding">12,0,40,0</Thickness>
+    <Thickness x:Key="DestinationSecretEditorPadding">12,5,40,5</Thickness>
     <x:Double x:Key="DestinationActionButtonMinWidth">0</x:Double>
     <x:Double x:Key="DestinationActionGroupWidth">408</x:Double>
     <x:Double x:Key="EmptyStateViewportMinHeight">180</x:Double>

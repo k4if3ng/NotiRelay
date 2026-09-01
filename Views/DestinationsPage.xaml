@@ -28,7 +28,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <Grid x:Name="BarkServerUrlRow" MaxWidth="{StaticResource DestinationFormMaxWidth}" MinHeight="{StaticResource RowHeightSetting}" HorizontalAlignment="Center" Padding="{StaticResource CardFormRowPadding}" ColumnSpacing="{StaticResource SpacingL}" SizeChanged="DestinationFieldRow_SizeChanged">
+                                <Grid x:Name="BarkServerUrlRow" MaxWidth="{StaticResource DestinationFormMaxWidth}" MinHeight="{StaticResource RowHeightSetting}" HorizontalAlignment="Stretch" Padding="{StaticResource CardFormRowPadding}" ColumnSpacing="{StaticResource SpacingL}" SizeChanged="DestinationFieldRow_SizeChanged">
                                     <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions><ColumnDefinition Width="{StaticResource DestinationLabelColumnWidth}" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                     <StackPanel VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
@@ -38,7 +38,7 @@
                                     <TextBox x:Name="BarkServerUrlTextBox" Grid.Column="1" MinWidth="{StaticResource DestinationInputMinWidth}" Height="{StaticResource ActionButtonHeight}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="Editor_TextChanged" />
                                 </Grid>
                                 <Border Grid.Row="1" Style="{StaticResource CardDividerStyle}" />
-                                <Grid x:Name="BarkDeviceKeyRow" Grid.Row="2" MaxWidth="{StaticResource DestinationFormMaxWidth}" MinHeight="{StaticResource RowHeightSetting}" HorizontalAlignment="Center" Padding="{StaticResource CardFormRowPadding}" ColumnSpacing="{StaticResource SpacingL}" SizeChanged="DestinationFieldRow_SizeChanged">
+                                <Grid x:Name="BarkDeviceKeyRow" Grid.Row="2" MaxWidth="{StaticResource DestinationFormMaxWidth}" MinHeight="{StaticResource RowHeightSetting}" HorizontalAlignment="Stretch" Padding="{StaticResource CardFormRowPadding}" ColumnSpacing="{StaticResource SpacingL}" SizeChanged="DestinationFieldRow_SizeChanged">
                                     <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions><ColumnDefinition Width="{StaticResource DestinationLabelColumnWidth}" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                     <StackPanel VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
@@ -46,15 +46,14 @@
                                         <TextBlock Text="{x:Bind BarkDeviceKeyDescription}" Style="{StaticResource DescriptionTextBlockStyle}" />
                                     </StackPanel>
                                     <Grid Grid.Column="1" MinWidth="{StaticResource DestinationInputMinWidth}" Height="{StaticResource ActionButtonHeight}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="{StaticResource DestinationSecretButtonSize}" /></Grid.ColumnDefinitions>
-                                        <PasswordBox x:Name="BarkDeviceKeyPasswordBox" Grid.ColumnSpan="2" Height="{StaticResource ActionButtonHeight}" HorizontalAlignment="Stretch" Padding="{StaticResource DestinationSecretEditorPadding}" PasswordChanged="Editor_PasswordChanged" PasswordRevealMode="Hidden" />
-                                        <Button x:Name="BarkSecretRevealButton" Grid.Column="1" Width="{StaticResource DestinationSecretButtonSize}" Height="{StaticResource DestinationSecretButtonSize}" Visibility="Collapsed" Click="SecretRevealButton_Click" Style="{StaticResource TitleBarIconButtonStyle}">
+                                        <PasswordBox x:Name="BarkDeviceKeyPasswordBox" Height="{StaticResource ActionButtonHeight}" HorizontalAlignment="Stretch" Padding="{StaticResource DestinationSecretEditorPadding}" PasswordChanged="Editor_PasswordChanged" PasswordRevealMode="Hidden" />
+                                        <Button x:Name="BarkSecretRevealButton" Width="{StaticResource DestinationSecretButtonSize}" Height="{StaticResource DestinationSecretButtonSize}" HorizontalAlignment="Right" Visibility="Collapsed" Click="SecretRevealButton_Click" Style="{StaticResource TitleBarIconButtonStyle}">
                                             <FontIcon AutomationProperties.AccessibilityView="Raw" FontSize="{StaticResource NavigationGlyphSize}" Glyph="&#xE890;" />
                                         </Button>
                                     </Grid>
                                 </Grid>
                                 <Border Grid.Row="3" Style="{StaticResource CardDividerStyle}" />
-                                <Grid x:Name="BarkActionFooter" Grid.Row="4" MaxWidth="{StaticResource DestinationFormMaxWidth}" HorizontalAlignment="Center" Padding="{StaticResource CardActionFooterPadding}" ColumnSpacing="{StaticResource SpacingL}">
+                                <Grid x:Name="BarkActionFooter" Grid.Row="4" MaxWidth="{StaticResource DestinationFormMaxWidth}" HorizontalAlignment="Stretch" Padding="{StaticResource CardActionFooterPadding}" ColumnSpacing="{StaticResource SpacingL}">
                                     <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
                                     <TextBlock x:Name="BarkFeedbackText" MinWidth="0" Height="{StaticResource ActionStatusSlotHeight}" MaxLines="1" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" VerticalAlignment="Center" Style="{StaticResource DescriptionTextBlockStyle}" />
                                     <Grid x:Name="BarkActionButtons" Grid.Column="1" Width="{StaticResource DestinationActionGroupWidth}" HorizontalAlignment="Right" VerticalAlignment="Center" ColumnSpacing="{StaticResource SpacingS}">
@@ -88,7 +87,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <Grid x:Name="WebhookEndpointRow" MaxWidth="{StaticResource DestinationFormMaxWidth}" MinHeight="{StaticResource RowHeightSetting}" HorizontalAlignment="Center" Padding="{StaticResource CardFormRowPadding}" ColumnSpacing="{StaticResource SpacingL}" SizeChanged="DestinationFieldRow_SizeChanged">
+                                <Grid x:Name="WebhookEndpointRow" MaxWidth="{StaticResource DestinationFormMaxWidth}" MinHeight="{StaticResource RowHeightSetting}" HorizontalAlignment="Stretch" Padding="{StaticResource CardFormRowPadding}" ColumnSpacing="{StaticResource SpacingL}" SizeChanged="DestinationFieldRow_SizeChanged">
                                     <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions><ColumnDefinition Width="{StaticResource DestinationLabelColumnWidth}" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                     <StackPanel VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
@@ -98,7 +97,7 @@
                                     <TextBox x:Name="WebhookEndpointTextBox" Grid.Column="1" MinWidth="{StaticResource DestinationInputMinWidth}" Height="{StaticResource ActionButtonHeight}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="Editor_TextChanged" />
                                 </Grid>
                                 <Border Grid.Row="1" Style="{StaticResource CardDividerStyle}" />
-                                <Grid x:Name="WebhookTokenRow" Grid.Row="2" MaxWidth="{StaticResource DestinationFormMaxWidth}" MinHeight="{StaticResource RowHeightSetting}" HorizontalAlignment="Center" Padding="{StaticResource CardFormRowPadding}" ColumnSpacing="{StaticResource SpacingL}" SizeChanged="DestinationFieldRow_SizeChanged">
+                                <Grid x:Name="WebhookTokenRow" Grid.Row="2" MaxWidth="{StaticResource DestinationFormMaxWidth}" MinHeight="{StaticResource RowHeightSetting}" HorizontalAlignment="Stretch" Padding="{StaticResource CardFormRowPadding}" ColumnSpacing="{StaticResource SpacingL}" SizeChanged="DestinationFieldRow_SizeChanged">
                                     <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions><ColumnDefinition Width="{StaticResource DestinationLabelColumnWidth}" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                     <StackPanel VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
@@ -106,15 +105,14 @@
                                         <TextBlock Text="{x:Bind WebhookTokenDescription}" Style="{StaticResource DescriptionTextBlockStyle}" />
                                     </StackPanel>
                                     <Grid Grid.Column="1" MinWidth="{StaticResource DestinationInputMinWidth}" Height="{StaticResource ActionButtonHeight}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="{StaticResource DestinationSecretButtonSize}" /></Grid.ColumnDefinitions>
-                                        <PasswordBox x:Name="WebhookTokenPasswordBox" Grid.ColumnSpan="2" Height="{StaticResource ActionButtonHeight}" HorizontalAlignment="Stretch" Padding="{StaticResource DestinationSecretEditorPadding}" PasswordChanged="Editor_PasswordChanged" PasswordRevealMode="Hidden" />
-                                        <Button x:Name="WebhookSecretRevealButton" Grid.Column="1" Width="{StaticResource DestinationSecretButtonSize}" Height="{StaticResource DestinationSecretButtonSize}" Visibility="Collapsed" Click="SecretRevealButton_Click" Style="{StaticResource TitleBarIconButtonStyle}">
+                                        <PasswordBox x:Name="WebhookTokenPasswordBox" Height="{StaticResource ActionButtonHeight}" HorizontalAlignment="Stretch" Padding="{StaticResource DestinationSecretEditorPadding}" PasswordChanged="Editor_PasswordChanged" PasswordRevealMode="Hidden" />
+                                        <Button x:Name="WebhookSecretRevealButton" Width="{StaticResource DestinationSecretButtonSize}" Height="{StaticResource DestinationSecretButtonSize}" HorizontalAlignment="Right" Visibility="Collapsed" Click="SecretRevealButton_Click" Style="{StaticResource TitleBarIconButtonStyle}">
                                             <FontIcon AutomationProperties.AccessibilityView="Raw" FontSize="{StaticResource NavigationGlyphSize}" Glyph="&#xE890;" />
                                         </Button>
                                     </Grid>
                                 </Grid>
                                 <Border Grid.Row="3" Style="{StaticResource CardDividerStyle}" />
-                                <Grid x:Name="WebhookActionFooter" Grid.Row="4" MaxWidth="{StaticResource DestinationFormMaxWidth}" HorizontalAlignment="Center" Padding="{StaticResource CardActionFooterPadding}" ColumnSpacing="{StaticResource SpacingL}">
+                                <Grid x:Name="WebhookActionFooter" Grid.Row="4" MaxWidth="{StaticResource DestinationFormMaxWidth}" HorizontalAlignment="Stretch" Padding="{StaticResource CardActionFooterPadding}" ColumnSpacing="{StaticResource SpacingL}">
                                     <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
                                     <TextBlock x:Name="WebhookFeedbackText" MinWidth="0" Height="{StaticResource ActionStatusSlotHeight}" MaxLines="1" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" VerticalAlignment="Center" Style="{StaticResource DescriptionTextBlockStyle}" />
                                     <Grid x:Name="WebhookActionButtons" Grid.Column="1" Width="{StaticResource DestinationActionGroupWidth}" HorizontalAlignment="Right" VerticalAlignment="Center" ColumnSpacing="{StaticResource SpacingS}">
@@ -148,7 +146,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <Grid x:Name="TelegramTokenRow" MaxWidth="{StaticResource DestinationFormMaxWidth}" MinHeight="{StaticResource RowHeightSetting}" HorizontalAlignment="Center" Padding="{StaticResource CardFormRowPadding}" ColumnSpacing="{StaticResource SpacingL}" SizeChanged="DestinationFieldRow_SizeChanged">
+                                <Grid x:Name="TelegramTokenRow" MaxWidth="{StaticResource DestinationFormMaxWidth}" MinHeight="{StaticResource RowHeightSetting}" HorizontalAlignment="Stretch" Padding="{StaticResource CardFormRowPadding}" ColumnSpacing="{StaticResource SpacingL}" SizeChanged="DestinationFieldRow_SizeChanged">
                                     <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions><ColumnDefinition Width="{StaticResource DestinationLabelColumnWidth}" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                     <StackPanel VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
@@ -156,15 +154,14 @@
                                         <TextBlock Text="{x:Bind TelegramTokenDescription}" Style="{StaticResource DescriptionTextBlockStyle}" />
                                     </StackPanel>
                                     <Grid Grid.Column="1" MinWidth="{StaticResource DestinationInputMinWidth}" Height="{StaticResource ActionButtonHeight}" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-                                        <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="{StaticResource DestinationSecretButtonSize}" /></Grid.ColumnDefinitions>
-                                        <PasswordBox x:Name="TelegramTokenPasswordBox" Grid.ColumnSpan="2" Height="{StaticResource ActionButtonHeight}" HorizontalAlignment="Stretch" Padding="{StaticResource DestinationSecretEditorPadding}" PasswordChanged="Editor_PasswordChanged" PasswordRevealMode="Hidden" />
-                                        <Button x:Name="TelegramSecretRevealButton" Grid.Column="1" Width="{StaticResource DestinationSecretButtonSize}" Height="{StaticResource DestinationSecretButtonSize}" Visibility="Collapsed" Click="SecretRevealButton_Click" Style="{StaticResource TitleBarIconButtonStyle}">
+                                        <PasswordBox x:Name="TelegramTokenPasswordBox" Height="{StaticResource ActionButtonHeight}" HorizontalAlignment="Stretch" Padding="{StaticResource DestinationSecretEditorPadding}" PasswordChanged="Editor_PasswordChanged" PasswordRevealMode="Hidden" />
+                                        <Button x:Name="TelegramSecretRevealButton" Width="{StaticResource DestinationSecretButtonSize}" Height="{StaticResource DestinationSecretButtonSize}" HorizontalAlignment="Right" Visibility="Collapsed" Click="SecretRevealButton_Click" Style="{StaticResource TitleBarIconButtonStyle}">
                                             <FontIcon AutomationProperties.AccessibilityView="Raw" FontSize="{StaticResource NavigationGlyphSize}" Glyph="&#xE890;" />
                                         </Button>
                                     </Grid>
                                 </Grid>
                                 <Border Grid.Row="1" Style="{StaticResource CardDividerStyle}" />
-                                <Grid x:Name="TelegramChatIdRow" Grid.Row="2" MaxWidth="{StaticResource DestinationFormMaxWidth}" MinHeight="{StaticResource RowHeightSetting}" HorizontalAlignment="Center" Padding="{StaticResource CardFormRowPadding}" ColumnSpacing="{StaticResource SpacingL}" SizeChanged="DestinationFieldRow_SizeChanged">
+                                <Grid x:Name="TelegramChatIdRow" Grid.Row="2" MaxWidth="{StaticResource DestinationFormMaxWidth}" MinHeight="{StaticResource RowHeightSetting}" HorizontalAlignment="Stretch" Padding="{StaticResource CardFormRowPadding}" ColumnSpacing="{StaticResource SpacingL}" SizeChanged="DestinationFieldRow_SizeChanged">
                                     <Grid.RowDefinitions><RowDefinition Height="Auto" /><RowDefinition Height="Auto" /></Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions><ColumnDefinition Width="{StaticResource DestinationLabelColumnWidth}" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                     <StackPanel VerticalAlignment="Center" Spacing="{StaticResource SpacingXS}">
@@ -174,7 +171,7 @@
                                     <TextBox x:Name="TelegramChatIdTextBox" Grid.Column="1" MinWidth="{StaticResource DestinationInputMinWidth}" Height="{StaticResource ActionButtonHeight}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="Editor_TextChanged" />
                                 </Grid>
                                 <Border Grid.Row="3" Style="{StaticResource CardDividerStyle}" />
-                                <Grid x:Name="TelegramActionFooter" Grid.Row="4" MaxWidth="{StaticResource DestinationFormMaxWidth}" HorizontalAlignment="Center" Padding="{StaticResource CardActionFooterPadding}" ColumnSpacing="{StaticResource SpacingL}">
+                                <Grid x:Name="TelegramActionFooter" Grid.Row="4" MaxWidth="{StaticResource DestinationFormMaxWidth}" HorizontalAlignment="Stretch" Padding="{StaticResource CardActionFooterPadding}" ColumnSpacing="{StaticResource SpacingL}">
                                     <Grid.ColumnDefinitions><ColumnDefinition Width="*" /><ColumnDefinition Width="Auto" /></Grid.ColumnDefinitions>
                                     <TextBlock x:Name="TelegramFeedbackText" MinWidth="0" Height="{StaticResource ActionStatusSlotHeight}" MaxLines="1" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" VerticalAlignment="Center" Style="{StaticResource DescriptionTextBlockStyle}" />
                                     <Grid x:Name="TelegramActionButtons" Grid.Column="1" Width="{StaticResource DestinationActionGroupWidth}" HorizontalAlignment="Right" VerticalAlignment="Center" ColumnSpacing="{StaticResource SpacingS}">

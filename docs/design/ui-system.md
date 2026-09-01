@@ -373,7 +373,7 @@ a stable 180 px minimum and a bounded nested scroll surface when the collection 
 **Destinations** — one page, three `SettingsExpander` cards. Header is icon, name,
 status, enable toggle, chevron. **Configured and healthy destinations collapse;
 unconfigured or failing ones expand.** Body fields use a 220 px shared label column,
-16 px gap, and a fluid editor column inside a centred 960 px maximum form workspace;
+16 px gap, and a fluid editor column inside a centred 840 px maximum form workspace;
 the label column contracts to 140 px in the compact tier while labels and 32 px-high
 inputs stay on one row. Secret editors reserve a fixed 32 px trailing reveal slot, so
 showing or hiding a secret never changes the editor width. The footer shares the form
@@ -391,9 +391,12 @@ Exclude wins when both groups match. The precedence explanation belongs to the E
 card's description.
 
 **Activity** — the card begins with a vertically centred functional header: `Send
-history` / `发送记录`, its live summary, and the Refresh command. Its list/empty viewport
-has the same 180 px minimum as Apps. Slice 5A keeps the existing event list. Its event
-model, grouping, and filtering belong to Slice 5B; do not add a provisional All/Failed split.
+history` / `发送记录`, its live summary, and the Refresh command. The empty state keeps a
+180 px minimum; a populated list grows from its natural row height to the bounded scroll
+maximum so one send does not reserve empty viewport space. A row's trailing status spans
+its title and metadata lines and is centred against the complete record. Slice 5A keeps
+the existing event list. Its event model, grouping, and filtering belong to Slice 5B; do
+not add a provisional All/Failed split.
 
 **Settings** — three always-visible, non-collapsible group cards whose section title is
 inside the card: Startup and close (Start at sign-in, Silent start, Close action),

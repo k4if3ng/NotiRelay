@@ -594,7 +594,7 @@ public sealed partial class DestinationsPage : Page, IUnsavedChangesGuard
         }
 
         var threshold = (double)Application.Current.Resources["DestinationCompactBreakpoint"];
-        var compact = ActualWidth < threshold;
+        var compact = e.NewSize.Width < threshold;
         grid.ColumnDefinitions[0].Width = (GridLength)Application.Current.Resources[
             compact ? "DestinationLabelColumnCompactWidth" : "DestinationLabelColumnWidth"];
         Grid.SetRow(label, 0);

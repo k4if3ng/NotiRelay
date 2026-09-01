@@ -26,14 +26,17 @@ namespace NotiRelay.Destinations.Bark
 			try
 			{
 				var endpoint = new Uri(destinationProfile.ServerBaseUri, "push");
-					var suffix = LocalizationService.Get("Runtime_TruncatedSuffix");
-					var title = TextTruncator.ToUtf8Bytes(notificationEnvelope.Title, 256, suffix);
-					var remainingBodyBytes = Math.Max(0, 3000 - System.Text.Encoding.UTF8.GetByteCount(title));
-					var body = TextTruncator.ToUtf8Bytes(notificationEnvelope.Body, remainingBodyBytes, suffix);
-					var request = new BarkPushRequest(
-						destinationProfile.DeviceKey,
-						title,
-						body,
+				var suffix = LocalizationService.Get("Runtime_TruncatedSuffix");
+				var sourceTitle = string.IsNullOrWhiteSpace(notificationEnvelope.Title)
+					? notificationEnvelope.SourceApplicationName
+					: $"{notificationEnvelope.SourceApplicationName}：{notificationEnvelope.Title}";
+				var title = TextTruncator.ToUtf8Bytes(sourceTitle, 256, suffix);
+				var remainingBodyBytes = Math.Max(0, 3000 - System.Text.Encoding.UTF8.GetByteCount(title));
+				var body = TextTruncator.ToUtf8Bytes(notificationEnvelope.Body, remainingBodyBytes, suffix);
+				var request = new BarkPushRequest(
+					destinationProfile.DeviceKey,
+					title,
+					body,
 					"NotiRelay");
 				using var response = await _httpClient.PostAsJsonAsync(
 					endpoint,
@@ -42,9 +45,9 @@ namespace NotiRelay.Destinations.Bark
 
 				if (!response.IsSuccessStatusCode)
 				{
-						return DeliveryAttemptResult.Failure(
-							LocalizationService.Format("Bark_HttpError", (int)response.StatusCode),
-							(int)response.StatusCode >= 500 || (int)response.StatusCode is 408 or 429);
+					return DeliveryAttemptResult.Failure(
+						LocalizationService.Format("Bark_HttpError", (int)response.StatusCode),
+						(int)response.StatusCode >= 500 || (int)response.StatusCode is 408 or 429);
 				}
 
 				var barkResponse = await response.Content.ReadFromJsonAsync<BarkPushResponse>(
@@ -53,7 +56,7 @@ namespace NotiRelay.Destinations.Bark
 				return barkResponse?.Code == 200
 					? DeliveryAttemptResult.Success(LocalizationService.Get("Bark_Accepted"))
 					: DeliveryAttemptResult.Failure(
-							LocalizationService.Format("Bark_ApplicationError", barkResponse?.Code ?? 0), false);
+						LocalizationService.Format("Bark_ApplicationError", barkResponse?.Code ?? 0), false);
 			}
 			catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
 			{
